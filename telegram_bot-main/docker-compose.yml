@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    container_name: telegram_bot
+    volumes:
+      - ./data:/app # Сохраняем данные SQLite в директории ./data на хосте
+    restart: unless-stopped
+    environment:
+      - BOT_TOKEN=7207186878:AAGGEFlLavEBD0GXGTvRIgQZ7SLwHzlDHz8
+    networks:
+      - botnet
+
+networks:
+  botnet:
+    driver: bridge
