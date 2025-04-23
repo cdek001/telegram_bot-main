@@ -4,10 +4,10 @@ import json
 
 
 
-def get_city_code(city):
+def get_city_code(city, id):
     url = f'https://api.cdek.ru/v2/location/cities/?city={city}'
     headers = {
-        'Authorization': f'Bearer {get_token()}',
+        'Authorization': f'Bearer {get_token(id)}',
         'Content-Type': 'application/json'
     }
     city = requests.get(url=url, headers=headers)
@@ -16,26 +16,20 @@ def get_city_code(city):
     return city[0]['code']
 
 
-def city_info(city):
+def city_info(city, id):
     global token
     # URL для получения информации об офисах
-    url = f'https://api.cdek.ru/v2/deliverypoints?city_code={get_city_code(city)}'
+    url = f'https://api.cdek.ru/v2/deliverypoints?city_code={get_city_code(city, id)}'
 
     # Заголовки для запросов к API с токеном
     headers = {
-        'Authorization': f'Bearer {get_token()}',
+        'Authorization': f'Bearer {get_token(id)}',
         'Content-Type': 'application/json'
     }
 
     response = requests.get(url=url, headers=headers)
 
     return response.json()
-
-
-
-
-
-
 
 
 

@@ -2,7 +2,7 @@ import requests
 import json
 from token_generator import get_token  # Импортируем функцию get_token
 from cdek_cod_city import get_city  # Импортируем функцию get_city
-from geopy.distance import geodesic
+# from geopy.distance import geodesic  # Удалили импорт geopy.distance
 import asyncio
 import time
 from geopy.geocoders import Nominatim
@@ -10,6 +10,7 @@ from geopy.geocoders import Nominatim
 BASE_URL = "https://api.cdek.ru/v2"  # Или тестовый URL
 
 async def get_delivery_points(
+    id,
     code: str = None,
     type: str = None,
     postal_code: str = None,
@@ -56,7 +57,7 @@ async def get_delivery_points(
         size: int = None
         page: bool = None
     """
-    auth_token = get_token()
+    auth_token = get_token(id)
     url = f"{BASE_URL}/deliverypoints"
     headers = {
         "Content-Type": "application/json",
@@ -113,37 +114,58 @@ async def get_delivery_points(
         response = requests.get(url, headers=headers, params=params, timeout=10000)
         response.raise_for_status()  # Проверка на ошибки HTTP
         delivery_points = response.json()  # Предполагаем, что возвращается список
+        # print(delivery_points)
         return delivery_points
     except requests.exceptions.RequestException as e:
         print(f"Ошибка при получении списка офисов: {e}")
         if response is not None:
             print(f"Response status code: {response.status_code}")
-            print(f"Response text: {response.text}")
+            # print(f"Response text: {response.text}")
         return None
     except json.JSONDecodeError as e:
         print(f"Ошибка при разборе ответа JSON: {e}")
         return None
 
 
-async def get_coordinates(city, address):
-    geolocator = Nominatim(user_agent="MyCdekOfficeLocator/1.0")
-    full_address = f"{city}, {address}"
-    try:
-        location = await asyncio.to_thread(geolocator.geocode, full_address, timeout=10000)
-        if location:
-            print(location.address)
-            print((location.latitude, location.longitude))
-            return (location.latitude, location.longitude)
-        else:
-            print(f"Не удалось найти координаты для адреса: {full_address}")
-            return None
-    except Exception as e:
-        print(f"Ошибка при геокодировании: {e}")
-        return None
-    finally:
-        time.sleep(1)  # Задержка в 1 секунду между запросами
+# async def get_coordinates(city, address):  # Функция больше не нужна
+#     geolocator = Nominatim(user_agent="MyCdekOfficeLocator/1.0")
+#     full_address = f"{city}, {address}"
+#     try:
+#         location = await asyncio.to_thread(geolocator.geocode, full_address, timeout=10000)
+#         if location:
+#             print(location.address)
+#             print((location.latitude, location.longitude))
+#             return (location.latitude, location.longitude)
+#         else:
+#             print(f"Не удалось найти координаты для адреса: {full_address}")
+#             return None
+#     except Exception as e:
+#         print(f"Ошибка при геокодировании: {e}")
+#         return None
+#     finally:
+#         time.sleep(1)  # Задержка в 1 секунду между запросами
 
-async def get_nearest_gdp_offices(city_name: str, my_address: str, max_offices: int = 5):
+from math import radians, sin, cos, sqrt, atan2
+
+def haversine(lat1, lon1, lat2, lon2):
+    """
+    Вычисляет расстояние между двумя точками на сфере (Земле) с использованием формулы гаверсинуса.
+    """
+    R = 6371  # Радиус Земли в километрах
+
+    lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
+
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+
+    a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+    distance = R * c
+    return distance
+
+
+async def get_nearest_gdp_offices(id, city_name: str, my_address: str, max_offices: int = 5):
     """
     Получает список ближайших офисов GDP.
 
@@ -158,7 +180,7 @@ async def get_nearest_gdp_offices(city_name: str, my_address: str, max_offices: 
 
     country_code = "RU"
 
-    city = await get_city(city_name, country_code)  # Получаем информацию о городе
+    city = await get_city(id, city_name, country_code)  # Получаем информацию о городе
 
     if not city:
         print(f"Не удалось найти город '{city_name}'.")
@@ -167,45 +189,47 @@ async def get_nearest_gdp_offices(city_name: str, my_address: str, max_offices: 
     city_code = city.get("code")  # Получаем код города
     print(f"Код города '{city_name}': {city_code}")
 
-    # Получаем координаты моего адреса
-    my_coordinates = await get_coordinates(city_name, my_address)
-
-    if not my_coordinates:
-        print("Не удалось получить координаты вашего адреса.")
+    # Получаем координаты моего адреса. Используем Nominatim для начала
+    geolocator = Nominatim(user_agent="MyApp")  # Замените "MyApp" на имя вашего приложения
+    try:
+        location = geolocator.geocode(f"{city_name}, {my_address}")
+        if location:
+            my_latitude = location.latitude
+            my_longitude = location.longitude
+            my_coordinates = (my_latitude, my_longitude)
+            print(f"Координаты вашего адреса: {my_coordinates}")
+        else:
+            print(f"Не удалось найти координаты для вашего адреса: {my_address}")
+            return None
+    except Exception as e:
+        print(f"Ошибка при геокодировании вашего адреса: {e}")
         return None
 
+
     # Получаем все офисы в городе
-    delivery_points = await get_delivery_points(city_code=city_code, size=1000)  # Больше офисов для поиска
+    delivery_points = await get_delivery_points(id, city_code=city_code, size=1000)  # Больше офисов для поиска
 
     if not delivery_points:
         print("Не удалось получить список офисов.")
         return None
 
     print("Всего найдено офисов:", len(delivery_points))
+    # Фильтруем офисы, оставляем только PVZ
+    pvz_points = [point for point in delivery_points if point.get('type') == 'PVZ']
 
+    print("Найдено PVZ офисов:", len(pvz_points))
     # Рассчитываем расстояние до каждого офиса
     office_distances = []
-    for point in delivery_points:
-        office_address_full = point.get('location', {}).get('address_full')
-        office_code = point.get('code') # Получаем код офиса
-        if office_address_full:
-            # Разделяем адрес на город и улицу с номером дома
-            parts = office_address_full.split(', ')
-            if len(parts) >= 3:
-                office_city = parts[2]  # Город
-                office_address = parts[3]  # Улица и номер дома
-            else:
-                print(f"Некорректный формат адреса для офиса {point.get('code')}: {office_address_full}")
-                continue
+    for point in pvz_points:
+        location_data = point.get('location', {})
+        office_latitude = location_data.get('latitude')
+        office_longitude = location_data.get('longitude')
 
-            office_coordinates = await get_coordinates(office_city, office_address)
-            if office_coordinates:
-                distance = geodesic(my_coordinates, office_coordinates).km  # Расстояние в километрах
-                office_distances.append((point, distance))
-            else:
-                print(f"Не удалось получить координаты для офиса: {point.get('code')}")
+        if office_latitude is not None and office_longitude is not None:  # Проверяем, что координаты существуют
+            distance = haversine(my_latitude, my_longitude, office_latitude, office_longitude) # Haversine calculation
+            office_distances.append((point, distance))
         else:
-            print(f"У офиса {point.get('code')} нет адреса")
+            print(f"Отсутствуют координаты для офиса {point.get('code')}")
 
     # Сортируем офисы по расстоянию
     office_distances.sort(key=lambda x: x[1])
@@ -224,25 +248,3 @@ async def get_nearest_gdp_offices(city_name: str, my_address: str, max_offices: 
         })
 
     return nearest_offices
-
-# --- Пример использования ---
-# if __name__ == "__main__":
-#     async def main():
-#         city_name = "Ленинградская"  # Название города для поиска
-#         my_address = "Западная , 1"  # Твой адрес, сука
-#
-#         nearest_offices = await get_nearest_gdp_offices(city_name, my_address)
-#         print(nearest_offices)
-#         if nearest_offices:
-#             print("Ближайшие офисы GDP:")
-#             for office in nearest_offices:
-#                 print(f"  Код: {office['code']}")
-#                 print(f"  Адрес: {office['address']}")
-#                 print(f"  Расстояние: {office['distance']:.2f} км")
-#                 print(f"  Код города: {office['city_code']}")
-#                 print(f"  Код : {office['kode']}")
-#                 print("-" * 20)
-#         else:
-#             print("Не удалось получить список ближайших офисов GDP.")
-#
-#     asyncio.run(main())

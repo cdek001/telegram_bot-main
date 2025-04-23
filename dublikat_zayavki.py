@@ -279,13 +279,14 @@ def create_call_request_kurier(nom, date, time_begin, time_end, address):
 
 
 import requests
-def create_call_request_kurier_konsol(weight, name, comment, phone_number, city, address, date, start_time, end_time):
+def create_call_request_kurier_konsol(weight, name, comment, phone_number, city, address, date, start_time, end_time, user_id):
     # Set API endpoint and authentication
     print("Creating call request")
+    print(user_id)
     url = "	https://api.cdek.ru/v2/intakes"
 
     headers = {
-        'Authorization': f'Bearer {get_token()}',
+        'Authorization': f'Bearer {get_token(user_id)}',
         'Content-Type': 'application/json'
     }
     payload = {
@@ -322,13 +323,14 @@ def create_call_request_kurier_konsol(weight, name, comment, phone_number, city,
         # Задержка на 3 секунды
         time.sleep(3)
         from info import info_uuid_zayvka
-        uuid_zayvka = info_uuid_zayvka(uuid)
+        uuid_zayvka = info_uuid_zayvka(uuid, user_id)
         requests_list = uuid_zayvka['requests']  # Получаем список requests
+        print(requests_list)
         # Проверяем состояние каждого запроса
         for request in requests_list:
             if request['state'] == 'SUCCESSFUL':
                 print("Все прошло хорошо! UUID запроса:", request['request_uuid'])
-                return "Все прошло хорошо!"
+                return f"Создана заявка на забор груза с адреса {address} {date} в промежутке с {start_time} {end_time}! Необходимо подготовить груз для отправления до приезда курьера. Время ожидания более 15 мин. оплачивается дополнительно"
             else:
                 print(f"Ошибка: состояние запроса - {request['state']}. UUID: {request['request_uuid']}")
                 return f"Ошибка: состояние запроса - {request['state']}. UUID: {request['request_uuid']}"

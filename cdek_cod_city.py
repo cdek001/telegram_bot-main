@@ -6,7 +6,7 @@ from token_generator import get_token  # Импортируем функцию g
 # --- Константы (замени на свои значения) ---
 BASE_URL = "https://api.cdek.ru/v2"  # Или тестовый URL
 
-async def get_city(city_name, country_code="RU", region_code=None):
+async def get_city(id, city_name, country_code="RU", region_code=None):
     """
     Получает информацию о конкретном населенном пункте по его наименованию.
     Возвращает только первый результат, если он есть.
@@ -19,7 +19,7 @@ async def get_city(city_name, country_code="RU", region_code=None):
     Returns:
         dict: Информация о городе (словарь) или None, если город не найден.
     """
-    auth_token = get_token()
+    auth_token = get_token(id)
     url = f"{BASE_URL}/location/suggest/cities"
     headers = {
         "Content-Type": "application/json",

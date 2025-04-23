@@ -2,12 +2,12 @@ from token_generator import get_token
 import requests
 
 
-def otmena(uuid):
+def otmena(uuid, id):
 
     url = f'https://api.cdek.ru/v2/orders/{uuid}/refusal'
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': f'Bearer {get_token()}'
+        'Authorization': f'Bearer {get_token(id)}'
     }
     response = requests.post(url=url, headers=headers)
     response_data = response.json()

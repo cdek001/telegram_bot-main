@@ -3,6 +3,8 @@ import sqlite3
 import os
 import json
 from datetime import timedelta, datetime
+
+import requests
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram.types import InputMediaPhoto
@@ -18,6 +20,7 @@ from aiohttp.web import Request, json_response
 import logging
 from aiogram.dispatcher.filters import Command
 from aiogram.utils.markdown import escape_md
+from datetime import datetime
 from aiogram.utils.markdown import code
 from aiogram.utils.exceptions import TelegramAPIError
 # 10006324754 склад-дверь
@@ -25,9 +28,12 @@ from aiogram.utils.exceptions import TelegramAPIError
 # lYV0wvt14fYGgE7MoWosaIyvOavEqqUm
 # 2ABI0GEJN5giKtlgHh2ZZ1rCsz2iWoHZ
 # Настройка базового логирования
-from token_generator import get_token  # Импортируем функцию get_token
+from token_generator import get_token
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from cedek_blizh_office import get_nearest_gdp_offices
 
 
+MANAGER_ID = 6536870230
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -104,7 +110,8 @@ class Form(StatesGroup):
     change_delivery_date_time_to = State()
     change_delivery_date_comment = State()
     waiting_for_city = State()  # Добавляем новое состояние
-
+    address_confirmation = State()  # Define a new state in your Form class
+    waiting_for_inn = State()  # Состояние ожидания ИНН
 
 
 async def check_user(user_id):
@@ -231,9 +238,77 @@ async def cmd_start1(message: types.Message, state: FSMContext):
 
 
 
-@dp.callback_query_handler(lambda c: c.data == 'register_ek5')
-async def process_register_ek5(callback_query: types.CallbackQuery):
-    await bot.send_message(callback_query.from_user.id, "Сайт для перехода и регистрации в ek5: https://cdek.ru.net/registration/ вы так же можете нажать /faq что бы ознакомиться как пройти регистрацию.")
+# @dp.callback_query_handler(lambda c: c.data == 'register_ek5')
+# async def process_register_ek5(callback_query: types.CallbackQuery):
+#     await bot.send_message(callback_query.from_user.id, "Сайт для перехода и регистрации в ek5: https://cdek.ru.net/registration/ вы так же можете нажать /faq что бы ознакомиться как пройти регистрацию.")
+@dp.callback_query_handler(lambda c: c.data == 'register_ek5', state=None) # Убедимся, что он не сработает, если пользователь уже в каком-то состоянии
+async def process_register_ek5_start(callback_query: types.CallbackQuery, state: FSMContext):
+    """
+    Этот обработчик срабатывает при нажатии кнопки 'register_ek5'.
+    Он запрашивает ИНН и переводит пользователя в состояние ожидания ввода.
+    """
+    await bot.answer_callback_query(callback_query.id) # Отвечаем на колбэк, чтобы убрать "часики" на кнопке
+    await bot.send_message(
+        callback_query.from_user.id,
+        "Пожалуйста, введите ваш ИНН (Индивидуальный Номер Налогоплательщика):"
+    )
+    # Устанавливаем состояние ожидания ИНН для этого пользователя
+    await Form.waiting_for_inn.set()
+    # Можно сохранить user_id в данных состояния, если нужно будет передать дальше
+    # await state.update_data(user_id_to_notify=callback_query.from_user.id)
+
+
+# 3. Создаем обработчик для получения ИНН
+@dp.message_handler(state=Form.waiting_for_inn)
+async def process_inn_input(message: types.Message, state: FSMContext):
+    """
+    Этот обработчик ловит сообщение пользователя, когда он находится
+    в состоянии waiting_for_inn.
+    """
+    user_inn = message.text
+    user_id = message.from_user.id
+    username = message.from_user.username # Получаем @username, если есть
+    first_name = message.from_user.first_name # Имя пользователя
+
+    # --- (Опционально) Валидация ИНН ---
+    # Можно добавить проверку, что введенное значение похоже на ИНН
+    # Например, состоит только из цифр и имеет длину 10 или 12
+    if not user_inn.isdigit() or len(user_inn) not in [10, 12]:
+        await message.reply("ИНН должен состоять из 10 или 12 цифр. Пожалуйста, попробуйте еще раз:")
+        return # Остаемся в том же состоянии, ждем корректный ввод
+    # --- /Валидация ---
+
+    # Формируем сообщение для менеджера
+    manager_message_text = (
+        f"🔔 Новая заявка на регистрацию EK5!\n\n"
+        f"👤 Пользователь: {first_name}\n"
+        f"🆔 User ID: {user_id}\n"
+        f"@{username if username else 'Нет username'}\n\n"
+        f"  ИНН: `{user_inn}`" # Используем Markdown для выделения ИНН
+    )
+
+    try:
+        # Отправляем сообщение менеджеру
+        await bot.send_message(MANAGER_ID, manager_message_text)
+        # Отправляем подтверждение пользователю
+        await message.reply("✅ Спасибо! Ваш ИНН получен и отправлен менеджеру на рассмотрение.")
+
+    except Exception as e:
+        logging.error(f"Ошибка отправки сообщения менеджеру {MANAGER_ID}: {e}")
+        # Сообщаем пользователю об ошибке
+        await message.reply("❌ Произошла ошибка при отправке данных менеджеру. Пожалуйста, попробуйте позже или свяжитесь с поддержкой.")
+
+    finally:
+        # Сбрасываем состояние пользователя, чтобы он мог использовать бота дальше
+        await state.finish()
+
+
+
+
+
+
+
+
 
 @dp.callback_query_handler(lambda c: c.data == 'docs')
 async def process_doc(callback_query: types.CallbackQuery):
@@ -318,88 +393,256 @@ async def process_register_ek5(callback_query: types.CallbackQuery):
         package_number = message.text
         response = ots_l_p(package_number)  # Функция для получения данных о посылке
         try:
-            if response:
-                order = response['result']['order']
-                pwz = response['result']['updateInfo']['possibleDeliveryMode']
-                sender = order['sender']
-                receiver = order['receiver']
-                sender_name_parts = sender['name'].split()
-                sender_initials = ' '.join(
-                    [part[0] for part in sender_name_parts if part[0].isalpha()]) + '.' if sender_name_parts else ''
+            if response:  # Проверяем, что ответ вообще есть
+                if 'result' in response and response['result']:  # Проверяем наличие ключа result
+                    result = response['result']
+                    if 'order' in result and 'statuses' in result:  # Проверяем наличие заказа и статусов
+                        order = result['order']
+                        # pwz = result['updateInfo']['possibleDeliveryMode'] # Эта переменная не используется, можно убрать или использовать позже
+                        sender = order['sender']
+                        receiver = order['receiver']
+                        sender_name_parts = sender['name'].split()
+                        # Более надежное получение инициалов
+                        sender_initials_list = [part[0].upper() for part in sender_name_parts if
+                                                part and part[0].isalpha()]
+                        sender_initials = '.'.join(sender_initials_list) + '.' if sender_initials_list else sender[
+                            'name']  # Возвращаем имя если инициалы не получились
 
-                # Определение типа доставки
-                delivery_modes = {
-                    "1": "дверь-дверь",
-                    "2": "дверь-склад",
-                    "3": "склад-дверь",
-                    "4": "склад-склад",
-                    "5": "терминал-терминал",
-                    "6": "дверь-постамат",
-                    "7": "склад-постамат",
-                }
-                delivery_mode = delivery_modes.get(order['trueDeliveryMode'], "неизвестный тип доставки")
+                        # Определение типа доставки
+                        delivery_modes = {
+                            "1": "дверь-дверь",
+                            "2": "дверь-склад",
+                            "3": "склад-дверь",
+                            "4": "склад-склад",
+                            "5": "терминал-терминал",
+                            "6": "дверь-постамат",
+                            "7": "склад-постамат",
+                        }
+                        delivery_mode = delivery_modes.get(order.get('trueDeliveryMode'), "неизвестный тип доставки")
 
-                message_text = (
-                    "📦 *Данные о посылке:*\n\n"
-                    f"🆔 *Номер заказа:* ` {order['number']} `\n"
-                    f"📦 *Количество мест:* {order['packagesCount']}\n"
-                    f"📅 *Дата создания:* {order['creationTimestamp'][:10]}\n"
-                    f"⚖️ *Расчетный вес:* {order['weight']} кг\n"
-                    f"🚛 *Тип доставки:* {delivery_mode}\n\n"
+                        message_text = (
+                            "📦 *ДАННЫЕ ПОСЫЛКИ*\n"
+                            "---\n"
+                            f"🆔 *Номер заказа:* `{order.get('number', 'N/A')}`\n"
+                            f"📦 *Количество мест:* {order.get('packagesCount', 'N/A')}\n"
+                            f"📅 *Создан:* {order.get('creationTimestamp', 'N/A')[:10]}\n"
+                            f"⚖️ *Вес:* {order.get('weight', 'N/A')} кг\n"
+                            f"🚛 *Тип доставки:* {delivery_mode}\n\n"
 
-                    "👤 *Отправитель:*\n"
-                    f"  *Имя:* {sender_initials}\n"
-                    f"  🏙️ *Город:* {sender['address']['city']['name']}\n\n"
+                            "👤 *ОТПРАВИТЕЛЬ*\n"
+                            "---\n"
+                            f"├─ *Имя:* {sender_initials}\n"
+                            f"└─ 🏙️ *Город:* {sender.get('address', {}).get('city', {}).get('name', 'N/A')}\n\n"  # Добавил .get для безопасности
 
-                    "📬 *Получатель:*\n"
-                    f"  *Инициалы:* {receiver['initials']}\n"
-                )
-
-                # Проверка на наличие офиса
-                if 'office' in receiver['address']:
-                    office = receiver['address']['office']
-                    message_text += (
-                        f"  🏢 *Адрес {office['type']}:* {receiver['address']['title']}, {receiver['address']['city']['name']}\n"
-                        f"  *Офис:* {office['type']}\n"
-                        f"  *Комментарий:* {office['comment']}\n"
-                        f"  *По вопросам доставки звоните:* {office['phones'][0]['number']}\n\n"
-                    )
-
-                    # Добавление графика работы
-                    message_text += "📅 *График работы:*\n"
-                    for schedule in office['schedule']:
-                        days = f"{schedule['startDay'][:3]} - {schedule['endDay'][:3]}" if schedule['startDay'] != \
-                                                                                           schedule['endDay'] else \
-                        schedule['startDay'][:3]
-                        working_hours = f"{schedule['startTime'][:5]} - {schedule['endTime'][:5]}"
-                        message_text += f"  • *{days}:* {working_hours}\n"
-
-                message_text += "📊 *Статусы доставки:*\n"
-
-                for status in response['result']['statuses']:
-                    city_info = f" {status['currentCity']['name']}" if 'currentCity' in status else ''
-                    message_text += f"  🔄 *{status['name']}*{city_info}  {status['timestamp'][:10]}\n"
-
-                message_text += "\n"
-
-                # Проверка на необходимость отображения информации о складе
-                if order['trueDeliveryMode'] not in ["1", "3"]:  # Если не двер-дверь и не склад-дверь
-                    if 'warehouse' in response['result']:
-                        warehouse = response['result']['warehouse']
-                        planned_end_date = warehouse.get('acceptance', {}).get('plannedEndDate', 'недоступно')
-
-                        # Проверка наличия данных о хранении
-                        if 'storage' in warehouse and 'days' in warehouse['storage']:
-                            storage_days =f"{warehouse['storage']['days']} дней"
-                        else:
-                            storage_days = 'недоступно'  # Указываем по умолчанию, если данные отсутствуют
-
-                        message_text += (
-                            f"  📆 *Планируемая дата поступления в пункт выдачи:* {planned_end_date}\n"
-                            f"  🗄️ *Хранение:* {storage_days}\n"
+                            "📬 *ПОЛУЧАТЕЛЬ*\n"
+                            "---\n"
+                            f"├─ *Инициалы:* {receiver.get('initials', 'N/A')}\n"
+                            # Всегда выводим адрес получателя
+                            f"└─ 🏠 *Адрес:* {receiver.get('address', {}).get('title', 'N/A')}, {receiver.get('address', {}).get('city', {}).get('name', 'N/A')}\n\n"
+                        # Используем └─ здесь
                         )
-                else:
-                    message_text += ""
+
+                        # --- ИСТОРИЯ ДОСТАВКИ (теперь всегда выводится) ---
+                        message_text += (
+                            "📊 *ИСТОРИЯ ДОСТАВКИ*\n"
+                            "---\n"
+                        )
+                        # Проверяем, что статусы существуют и это список
+                        statuses = result.get('statuses', [])
+                        if statuses:
+                            for status in statuses:
+                                city_info = f" {status['currentCity']['name']}" if 'currentCity' in status and status[
+                                    'currentCity'] else ''
+                                timestamp = status.get('timestamp', 'N/A')[:10]
+                                message_text += f"├─ 🔄 *{status.get('name', 'Статус неизвестен')}*{city_info}  {timestamp}\n"
+                        else:
+                            message_text += "├─ История доставки недоступна.\n"
+                        message_text += "\n"  # Добавляем пустую строку после истории
+
+                        # --- ДЕТАЛИ ПВЗ/ОФИСА (только если есть ключ 'office') ---
+                        if 'office' in receiver.get('address', {}):
+                            office = receiver['address']['office']
+                            message_text += f"🏢 *ИНФОРМАЦИЯ О ПУНКТЕ ВЫДАЧИ ({office.get('type', 'ПВЗ')})*\n"  # Используем тип офиса, если есть
+                            message_text += "---\n"
+                            # Можно переопределить адрес, если он отличается от основного адреса получателя
+                            # message_text += f"├─ *Адрес ПВЗ:* {receiver['address']['title']}, {receiver['address']['city']['name']}\n"
+                            if office.get('comment'):
+                                message_text += f"├─ *Комментарий:* {office['comment']}\n"
+                            if office.get('phones'):
+                                message_text += f"├─ *Контакты:* {office['phones'][0]['number']}\n"  # Берем первый телефон
+
+
+
+                            # Словарь для перевода дней недели на русский (короткие названия)
+                            day_map_ru = {
+                                "MONDAY": "Пн",
+                                "TUESDAY": "Вт",
+                                "WEDNESDAY": "Ср",
+                                "THURSDAY": "Чт",
+                                "FRIDAY": "Пт",
+                                "SATURDAY": "Сб",
+                                "SUNDAY": "Вс"
+                            }
+
+                            # Добавление графика работы
+                            schedule_list = office.get('schedule', [])
+                            if schedule_list:
+                                message_text += "📅 *ГРАФИК РАБОТЫ ПВЗ*\n"
+                                # message_text += "---\n" # Можно убрать дублирующий разделитель
+                                for schedule in schedule_list:
+                                    # Получаем английские названия дней
+                                    startDay_en = schedule.get('startDay')
+                                    endDay_en = schedule.get('endDay')
+
+                                    # Переводим дни на русский, используя словарь
+                                    # Если дня нет в словаре, оставляем английское название как запасной вариант
+                                    startDay_ru = day_map_ru.get(startDay_en, startDay_en)
+                                    endDay_ru = day_map_ru.get(endDay_en, endDay_en)
+
+                                    # Формируем строку с русскими днями
+                                    # Проверяем исходные английские дни для логики
+                                    if startDay_en and endDay_en and startDay_en != endDay_en:
+                                        days = f"{startDay_ru} - {endDay_ru}"
+                                    elif startDay_en:  # Если дни совпадают или endDay отсутствует
+                                        days = startDay_ru
+                                    else:  # Если startDay отсутствует
+                                        days = "N/A"  # Или другое значение по умолчанию
+
+                                    # Формируем строку с часами работы (без изменений)
+                                    working_hours = f"{schedule.get('startTime', 'N/A')[:5]} - {schedule.get('endTime', 'N/A')[:5]}"
+
+                                    # Добавляем строку в сообщение
+                                    message_text += f"├─ • *{days}:* {working_hours}\n"
+
+                            message_text += "\n"  # Добавляем пустую строку после блока ПВЗ
+
+
+
+
+                        # --- ИНФОРМАЦИЯ О СКЛАДЕ (по твоему условию) ---
+                        # Если доставка НЕ дверь-дверь ("1") и НЕ склад-дверь ("3")
+                        if order.get('trueDeliveryMode') not in ["1", "3"]:
+                            if 'warehouse' in result:
+                                warehouse = result['warehouse']
+                                # Используем .get() для безопасного доступа
+                                planned_end_date = warehouse.get('acceptance', {}).get('plannedEndDate', 'недоступно')
+
+                                storage_days = 'недоступно'
+                                if 'storage' in warehouse and 'days' in warehouse['storage']:
+                                    storage_days = f"{warehouse['storage']['days']} дней"
+
+                                message_text += (
+                                    "🏭 *ИНФОРМАЦИЯ О СКЛАДЕ ПРИБЫТИЯ*\n"  # Немного уточнил заголовок
+                                    "---\n"
+                                    f"├─ 📆 *Планируемая дата поступления/выдачи:* {planned_end_date}\n"  # Уточнил текст
+                                    f"└─ 🗄️ *Срок хранения:* {storage_days}\n\n"  # Добавил \n
+                                )
+
+                        # Можно добавить еще информацию, если нужно, например, о курьере
+                        if 'deliveryAgreement' in result and result['deliveryAgreement']:
+                            agreement = result['deliveryAgreement']
+                            message_text += (
+                                "🚚 *ИНФОРМАЦИЯ О ДОСТАВКЕ КУРЬЕРОМ*\n"
+                                "---\n"
+                                f"├─ *Согласованная дата:* {agreement.get('date', 'N/A')}\n"
+                                f"└─ *Согласованное время:* {agreement.get('startTime', 'N/A')[:5]} - {agreement.get('endTime', 'N/A')[:5]}\n\n"
+                            )
+
+                        if 'courierProblem' in result and result['courierProblem']:
+                            problem = result['courierProblem']
+                            message_text += (
+                                "⚠️ *ПРОБЛЕМА С ДОСТАВКОЙ*\n"
+                                "---\n"
+                                f"└─ *Причина:* {problem.get('reasonText', 'Не указана')}\n\n"
+                            )
+            # if response:
+            #     order = response['result']['order']
+            #     pwz = response['result']['updateInfo']['possibleDeliveryMode']
+            #     sender = order['sender']
+            #     receiver = order['receiver']
+            #     sender_name_parts = sender['name'].split()
+            #     sender_initials = ' '.join(
+            #         [part[0] for part in sender_name_parts if part[0].isalpha()]) + '.' if sender_name_parts else ''
+            #
+            #     # Определение типа доставки
+            #     delivery_modes = {
+            #         "1": "дверь-дверь",
+            #         "2": "дверь-склад",
+            #         "3": "склад-дверь",
+            #         "4": "склад-склад",
+            #         "5": "терминал-терминал",
+            #         "6": "дверь-постамат",
+            #         "7": "склад-постамат",
+            #     }
+            #     delivery_mode = delivery_modes.get(order['trueDeliveryMode'], "неизвестный тип доставки")
+            #
+            #     message_text = (
+            #         "📦 *ДАННЫЕ ПОСЫЛКИ*\n"
+            #         "---\n"
+            #         f"🆔 *Номер заказа:* `{order['number']}`\n"
+            #         f"📦 *Количество мест:* {order['packagesCount']}\n"
+            #         f"📅 *Создан:* {order['creationTimestamp'][:10]}\n"
+            #         f"⚖️ *Вес:* {order['weight']} кг\n"
+            #         f"🚛 *Тип доставки:* {delivery_mode}\n\n"
+            #
+            #         "👤 *ОТПРАВИТЕЛЬ*\n"
+            #         "---\n"
+            #         f"├─ *Имя:* {sender_initials}\n"
+            #         f"└─ 🏙️ *Город:* {sender['address']['city']['name']}\n\n"
+            #
+            #         "📬 *ПОЛУЧАТЕЛЬ*\n"
+            #         "---\n"
+            #         f"├─ *Инициалы:* {receiver['initials']}\n"
+            #     )
+            #
+            #     # Проверка на наличие офиса
+            #     if 'office' in receiver['address']:
+            #         office = receiver['address']['office']
+            #         message_text += (
+            #             f"├─ 🏢 *Адрес {office['type']}:* {receiver['address']['title']}, {receiver['address']['city']['name']}\n"
+            #             f"├─ *Офис:* {office['type']}\n"
+            #             f"├─ *Комментарий:* {office['comment']}\n"
+            #             f"└─ *Контакты:* {office['phones'][0]['number']}\n\n"
+            #
+            #             "📊 *ИСТОРИЯ ДОСТАВКИ*\n"
+            #             "---\n"
+            #         )
+            #
+            #         for status in response['result']['statuses']:
+            #             city_info = f" {status['currentCity']['name']}" if 'currentCity' in status else ''
+            #             message_text += f"├─ 🔄 *{status['name']}*{city_info}  {status['timestamp'][:10]}\n"
+            #
+            #         message_text += "\n"
+            #         # Добавление графика работы
+            #         message_text += "📅 *ГРАФИК РАБОТЫ ПВЗ*\n"
+            #         message_text += "---\n"
+            #         for schedule in office['schedule']:
+            #             days = f"{schedule['startDay'][:3]} - {schedule['endDay'][:3]}" if schedule['startDay'] != \
+            #                                                                                schedule['endDay'] else \
+            #             schedule['startDay'][:3]
+            #             working_hours = f"{schedule['startTime'][:5]} - {schedule['endTime'][:5]}"
+            #             message_text += f"├─ • *{days}:* {working_hours}\n"
+            #
+            #     # Проверка на необходимость отображения информации о складе
+            #     if order['trueDeliveryMode'] not in ["1", "3"]:  # Если не двер-дверь и не склад-дверь
+            #         if 'warehouse' in response['result']:
+            #             warehouse = response['result']['warehouse']
+            #             planned_end_date = warehouse.get('acceptance', {}).get('plannedEndDate', 'недоступно')
+            #
+            #             # Проверка наличия данных о хранении
+            #             if 'storage' in warehouse and 'days' in warehouse['storage']:
+            #                 storage_days = f"{warehouse['storage']['days']} дней"
+            #             else:
+            #                 storage_days = 'недоступно'
+            #
+            #             message_text += (
+            #                 "\n🏭 *ИНФОРМАЦИЯ О СКЛАДЕ*\n"
+            #                 "---\n"
+            #                 f"├─ 📆 *Планируемая дата выдачи:* {planned_end_date}\n"
+            #                 f"└─ 🗄️ *Срок хранения:* {storage_days}\n"
+            #             )
+            #     else:
+            #         message_text += ""
 
 
                 def inline_keyboard():
@@ -409,15 +652,14 @@ async def process_register_ek5(callback_query: types.CallbackQuery):
                     return keyboard
 
                 await message.answer(message_text,
-                                    reply_markup=inline_keyboard())
+                                    reply_markup=inline_keyboard(),
+    parse_mode='Markdown')
 
             else:
                 await message.answer("Не удалось найти данные о посылке. Попробуйте снова.")
         except Exception as e:
             await message.answer("Произошла ошибка при обработке. Попробуйте еще раз.")
             print(f"Ошибка: {e}")  # Для отладки
-
-
 
 
 
@@ -433,6 +675,7 @@ async def process_zamena(message: types.Message):
     else:
         await message.answer("Вы не зарегистрированы. Пожалуйста, введите ваш логин для регистрации.")
         await Form.login.set()
+
 
 @dp.message_handler(state=Form.password)
 async def process_password(message: types.Message, state: FSMContext):
@@ -565,20 +808,64 @@ async def mark_chat_completed(message: types.Message):
 
 
 
+# # Обработчик команды /dan_zakaz
+# @dp.message_handler(commands=['dan_zakaz'])
+# async def cmd_dan_zakaz(message: types.Message):
+#     # Получаем user_id из сообщения
+#     user_id_to_check = message.from_user.id  # Используем user_id отправителя сообщения
+#
+#     if check_user_id_exists(user_id_to_check):
+#         await message.reply(
+#             "Введите данные через запятую в формате: вес в кг (5), ФИО (Иванов Иван Иванович), комментарий (ввод коментария без запятых), номер телефона (7XXXXXXXXXX), город (Москва), улица (улица космическая 75)")
+#         await Form.address.set()
+#     else:
+#         print(f'Данные для user_id {user_id_to_check} не найдены. ❌')
+#         await message.answer(f"Данный функционал доступен только договорным клиентам компании СДЭК. Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет или заключить договор с группой компании СДЭК. Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. ❌")
+# Создаем инлайн-клавиатуру с кнопкой отмены
+def get_cancel_inline_markup():
+    markup = InlineKeyboardMarkup()
+    markup.add(InlineKeyboardButton("❌ Отменить ввод", callback_data="cancel_input"))
+    return markup
+
+
 # Обработчик команды /dan_zakaz
 @dp.message_handler(commands=['dan_zakaz'])
 async def cmd_dan_zakaz(message: types.Message):
-    # Получаем user_id из сообщения
-    user_id_to_check = message.from_user.id  # Используем user_id отправителя сообщения
+    user_id_to_check = message.from_user.id
 
     if check_user_id_exists(user_id_to_check):
         await message.reply(
-            "Введите данные через запятую в формате: вес в кг (5), ФИО (Иванов Иван Иванович), комментарий (ввод коментария без запятых), номер телефона (7XXXXXXXXXX), город (Москва), улица (улица космическая 75)")
+            "Введите данные через запятую в формате:\n"
+            "вес в кг (5), ФИО (Иванов Иван Иванович), комментарий (ввод коментария без запятых), "
+            "номер телефона (7XXXXXXXXXX), город (Москва), улица (улица космическая 75)\n\n"
+            "Для отмены нажмите кнопку ниже:",
+            reply_markup=get_cancel_inline_markup()
+        )
         await Form.address.set()
     else:
         print(f'Данные для user_id {user_id_to_check} не найдены. ❌')
-        await message.answer(f"Данный функционал доступен только договорным клиентам компании СДЭК. Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет или заключить договор с группой компании СДЭК. Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. ❌")
+        await message.answer(
+            "Данный функционал доступен только договорным клиентам компании СДЭК.\n"
+            "Чтобы воспользоваться данным функционалом вам необходимо:\n"
+            "1. Войти в личный кабинет\n"
+            "2. Заключить договор с группой компании СДЭК\n\n"
+            f"Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. ❌"
+        )
 
+
+# Обработчик отмены ввода (инлайн-кнопка)
+@dp.callback_query_handler(lambda c: c.data == "cancel_input", state='*')
+async def cancel_input(callback_query: types.CallbackQuery, state: FSMContext):
+    await bot.answer_callback_query(callback_query.id)
+    current_state = await state.get_state()
+    if current_state is None:
+        return
+
+    await state.finish()
+    await bot.send_message(
+        callback_query.from_user.id,
+        "Ввод отменен. Вы можете начать заново с помощью команды /dan_zakaz"
+    )
 
 @dp.message_handler(state=Form.address)
 async def process_address(message: types.Message, state: FSMContext):
@@ -621,32 +908,132 @@ async def cancel_input(callback_query: types.CallbackQuery, state: FSMContext):
     await callback_query.message.edit_text("✅ Ввод отменен. Вы можете начать заново.", reply_markup=None) # Отправляем сообщение
     await callback_query.answer() # Убираем "часики"
 
+# def get_date_keyboard():
+#     keyboard = InlineKeyboardMarkup(row_width=1)
+#     today = datetime.now()
+#     for i in range(1, 6):  # Next 5 days
+#         date = today + timedelta(days=i)
+#         date_str = date.strftime("%Y-%m-%d")
+#         keyboard.add(InlineKeyboardButton(date_str, callback_data=f"date_{date_str}"))
+#     return keyboard
+#
+#
+# def get_time_keyboard():
+#     keyboard = InlineKeyboardMarkup(row_width=1)
+#     for hour in range(10, 14):  # From 10 to 13
+#         time_str = f"{hour:02d}:00"
+#         keyboard.add(InlineKeyboardButton(time_str, callback_data=f"time_{time_str}"))
+#     return keyboard
+#
+#
+# @dp.message_handler(commands=['zabor_konsalid'])
+# async def zabor_konsalid(message: types.Message):
+#     user_id_to_check = message.from_user.id
+#     if check_user_id_exists(user_id_to_check):
+#         await message.answer("Выберите дату:", reply_markup=get_date_keyboard())
+#         await Form.date.set()
+#     else:
+#         await message.answer(f"Данный функционал доступен только договорным клиентам компании СДЭК. Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет или заключить договор с группой компании СДЭК. Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. ❌")
+#
+#
+# @dp.callback_query_handler(lambda c: c.data.startswith('date_'), state=Form.date)
+# async def process_date(callback_query: types.CallbackQuery, state: FSMContext):
+#     await bot.answer_callback_query(callback_query.id)
+#     selected_date = callback_query.data.split('_')[1]
+#     await state.update_data(date=selected_date)
+#     await bot.send_message(callback_query.from_user.id, "Выберите время начала:", reply_markup=get_time_keyboard())
+#     await Form.time.set()
+#
+#
+# @dp.callback_query_handler(lambda c: c.data.startswith('time_'), state=Form.time)
+# async def process_time(callback_query: types.CallbackQuery, state: FSMContext):
+#     await bot.answer_callback_query(callback_query.id)
+#     selected_time = callback_query.data.split('_')[1]
+#     data = await state.get_data()
+#     selected_date = data['date']
+#
+#     # Assume the duration is 5 hours
+#     start_time = datetime.strptime(selected_time, "%H:%M")
+#     end_time = (start_time + timedelta(hours=5)).strftime("%H:%M")
+#
+#     full_data = f"{selected_date} {selected_time} {end_time}"
+#     await state.update_data(konsalid=full_data)
+#     print("------")
+#     await bot.send_message(
+#         callback_query.from_user.id,
+#         f"Вы выбрали следующие данные: {full_data}. Ожидайте, идет обработка данных"
+#     )
+#     print("------")
+#     # Process the data
+#     user_id = callback_query.from_user.id
+#     cursor.execute("""
+#         SELECT weight, name, comment, phone_number, city, address
+#         FROM user_zakaz
+#         WHERE user_id = ?
+#         ORDER BY created_at DESC
+#         LIMIT 1
+#     """, (user_id,))
+#     user_data = cursor.fetchone()
+#     print("------")
+#     if user_data:
+#         from dublikat_zayavki import create_call_request_kurier_konsol
+#         weight, name, comment, phone_number, city, address = user_data
+#         konsol = create_call_request_kurier_konsol(weight, name, comment, phone_number, city, address, selected_date,
+#                                                    selected_time, end_time, user_id)
+#         await bot.send_message(callback_query.from_user.id, konsol)
+#     else:
+#         await bot.send_message(callback_query.from_user.id, f"Пользователь с ID {user_id} не найден в базе данных. Заполните форму /dan_zakaz и вернитесь в это меню")
+#
+#     await state.finish()
 def get_date_keyboard():
-    keyboard = InlineKeyboardMarkup(row_width=1)
+    keyboard = InlineKeyboardMarkup(row_width=2)
     today = datetime.now()
     for i in range(1, 6):  # Next 5 days
         date = today + timedelta(days=i)
         date_str = date.strftime("%Y-%m-%d")
         keyboard.add(InlineKeyboardButton(date_str, callback_data=f"date_{date_str}"))
+    # Добавляем кнопку отмены
+    keyboard.add(InlineKeyboardButton("❌ Отменить ввод", callback_data="cancel_input"))
     return keyboard
 
 
 def get_time_keyboard():
-    keyboard = InlineKeyboardMarkup(row_width=1)
+    keyboard = InlineKeyboardMarkup(row_width=2)
     for hour in range(10, 14):  # From 10 to 13
         time_str = f"{hour:02d}:00"
         keyboard.add(InlineKeyboardButton(time_str, callback_data=f"time_{time_str}"))
+    # Добавляем кнопку отмены
+    keyboard.add(InlineKeyboardButton("❌ Отменить ввод", callback_data="cancel_input"))
     return keyboard
+
+
+# Обработчик отмены ввода
+@dp.callback_query_handler(lambda c: c.data == "cancel_input", state='*')
+async def cancel_input(callback_query: types.CallbackQuery, state: FSMContext):
+    await bot.answer_callback_query(callback_query.id)
+    await state.finish()
+    await bot.send_message(
+        callback_query.from_user.id,
+        "❌ Ввод отменен. Для начала нового ввода используйте команду /zabor_konsalid"
+    )
 
 
 @dp.message_handler(commands=['zabor_konsalid'])
 async def zabor_konsalid(message: types.Message):
     user_id_to_check = message.from_user.id
     if check_user_id_exists(user_id_to_check):
-        await message.answer("Выберите дату:", reply_markup=get_date_keyboard())
+        await message.answer(
+            "Выберите дату:",
+            reply_markup=get_date_keyboard()
+        )
         await Form.date.set()
     else:
-        await message.answer(f"Данный функционал доступен только договорным клиентам компании СДЭК. Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет или заключить договор с группой компании СДЭК. Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. ❌")
+        await message.answer(
+            "Данный функционал доступен только договорным клиентам компании СДЭК. "
+            "Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет "
+            "или заключить договор с группой компании СДЭК.\n\n"
+            f"Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. ❌"
+        )
 
 
 @dp.callback_query_handler(lambda c: c.data.startswith('date_'), state=Form.date)
@@ -654,7 +1041,11 @@ async def process_date(callback_query: types.CallbackQuery, state: FSMContext):
     await bot.answer_callback_query(callback_query.id)
     selected_date = callback_query.data.split('_')[1]
     await state.update_data(date=selected_date)
-    await bot.send_message(callback_query.from_user.id, "Выберите время начала:", reply_markup=get_time_keyboard())
+    await bot.send_message(
+        callback_query.from_user.id,
+        "Выберите время начала:",
+        reply_markup=get_time_keyboard()
+    )
     await Form.time.set()
 
 
@@ -667,16 +1058,16 @@ async def process_time(callback_query: types.CallbackQuery, state: FSMContext):
 
     # Assume the duration is 5 hours
     start_time = datetime.strptime(selected_time, "%H:%M")
-    end_time = (start_time + timedelta(hours=5)).strftime("%H:%M")
+    end_time = (start_time + timedelta(hours=3)).strftime("%H:%M")
 
     full_data = f"{selected_date} {selected_time} {end_time}"
     await state.update_data(konsalid=full_data)
-    print("------")
+
     await bot.send_message(
         callback_query.from_user.id,
         f"Вы выбрали следующие данные: {full_data}. Ожидайте, идет обработка данных"
     )
-    print("------")
+
     # Process the data
     user_id = callback_query.from_user.id
     cursor.execute("""
@@ -687,80 +1078,24 @@ async def process_time(callback_query: types.CallbackQuery, state: FSMContext):
         LIMIT 1
     """, (user_id,))
     user_data = cursor.fetchone()
-    print("------")
+
     if user_data:
         from dublikat_zayavki import create_call_request_kurier_konsol
         weight, name, comment, phone_number, city, address = user_data
-        konsol = create_call_request_kurier_konsol(weight, name, comment, phone_number, city, address, selected_date,
-                                                   selected_time, end_time)
+        konsol = create_call_request_kurier_konsol(
+            weight, name, comment, phone_number,
+            city, address, selected_date,
+            selected_time, end_time, user_id
+        )
         await bot.send_message(callback_query.from_user.id, konsol)
     else:
-        await bot.send_message(callback_query.from_user.id, f"Пользователь с ID {user_id} не найден в базе данных. Заполните форму /dan_zakaz и вернитесь в это меню")
+        await bot.send_message(
+            callback_query.from_user.id,
+            f"Пользователь с ID {user_id} не найден в базе данных. "
+            "Заполните форму /dan_zakaz и вернитесь в это меню"
+        )
 
     await state.finish()
-
-# @dp.message_handler(Text(equals='/zabor_konsalid'))
-# async def zabor_konsalid(message: types.Message):
-#         # Получаем user_id из сообщения
-#         user_id_to_check = message.from_user.id  # Используем user_id отправителя сообщения
-#
-#         if check_user_id_exists(user_id_to_check):
-#             await message.answer(
-#                 "Убедитесь что вы заполнили шаблон /dan_zakaz. Пожалуйста, введите через пробел дату(год-месяц-день), время начала, время конца (2024-07-10 10:00 15:00)",
-#                 reply_markup=cancel_keyboard
-#             )
-#             await Form.konsalid.set()
-#         else:
-#             print(f'Данные для user_id {user_id_to_check} не найдены. ❌')
-#             await message.answer(f"Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. ❌")
-#
-#
-# @dp.callback_query_handler(text="cancel", state="*")
-# async def cancel_handler(call: types.CallbackQuery, state: FSMContext):
-#     await state.finish()
-#     await call.message.answer("Ввод отменен.")
-#     await call.answer()
-
-
-
-# @dp.message_handler(state=Form.konsalid)
-# async def process_zabor_konsalid(message: types.Message, state: FSMContext):
-#     await state.update_data(konsalid=message.text)
-#
-#
-#     data = message.text.split()
-#
-#     await message.answer(f"Вы ввели следующие данные {data}. Ожидайте идет обработка данных")
-#     if len(data) < 3:
-#         await message.reply("Некорректный ввод! Убедитесь, что ввели дату, время и адрес.")
-#         return
-#
-#     user_id = message.from_user.id
-#     date = data[0]
-#     start_time = data[1]
-#     end_time = data[2]
-#
-#     # Получение данных пользователя из базы данных
-#     cursor.execute("""
-#         SELECT weight, name, comment, phone_number, city, address
-#         FROM user_zakaz
-#         WHERE user_id = ?
-#         ORDER BY created_at DESC
-#         LIMIT 1
-#     """, (user_id,))
-#     user_data = cursor.fetchone()
-#
-#     if user_data:
-#         from dublikat_zayavki import create_call_request_kurier_konsol
-#         weight, name, comment, phone_number, city, address = user_data
-#         konsol = create_call_request_kurier_konsol(weight, name, comment, phone_number, city, address, date, start_time, end_time)
-#
-#         await message.reply(konsol)
-#     else:
-#         await message.reply(f"Пользователь с ID {user_id} не найден в базе данных.")
-#
-#     # Завершение состояний
-#     await state.finish()
 
 
 @dp.message_handler(lambda message: message.text == '/nomer')
@@ -825,7 +1160,6 @@ async def handle_list_offices(message: types.Message, state: FSMContext):
         print(f'Данные для user_id {user_id_to_check} не найдены. ❌')
         await message.answer(f"Данный функционал доступен только договорным клиентам компании СДЭК. Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет или заключить договор с группой компании СДЭК. Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. ❌")
 
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 # Создаем общую кнопку для отмены
 cancel_button = InlineKeyboardButton("❌ Отменить ввод", callback_data='cancel_input')
@@ -843,19 +1177,15 @@ async def handle_change_phone(callback_query: types.CallbackQuery, state: FSMCon
 
 @dp.callback_query_handler(lambda c: c.data == 'address')
 async def handle_address(callback_query: types.CallbackQuery, state: FSMContext):
-    await bot.send_message(callback_query.from_user.id, "Пожалуйста, введите адрес:", reply_markup=cancel_keyboard)
+    await bot.send_message(callback_query.from_user.id, "Введите желаемый адрес доставки. Обращаем ваше внимание что адрес доставки должен находиться в пределах конечного населенного пункта (города) доставки посылки. В  формате (Москва, улица Космонавтов 1):", reply_markup=cancel_keyboard)
     await Form.adr.set()
 
 @dp.callback_query_handler(lambda c: c.data == 'change_city')
 async def handle_change_city(callback_query: types.CallbackQuery, state: FSMContext):
-    await bot.send_message(callback_query.from_user.id, "Пожалуйста, введите город через пробел адрес (Москва улица Комарова, 2):", reply_markup=cancel_keyboard)
+    await bot.send_message(callback_query.from_user.id, "Пожалуйста, введите город. Пример (Москва):", reply_markup=cancel_keyboard)
     await Form.cit.set()
 
 
-
-
-
-from cedek_blizh_office import get_nearest_gdp_offices
 
 @dp.callback_query_handler(lambda c: c.data == 'change_pickup_point', state='*')
 async def handle_change_pickup_point(callback_query: types.CallbackQuery, state: FSMContext):
@@ -884,31 +1214,181 @@ async def handle_change_pickup_point(callback_query: types.CallbackQuery, state:
 
 
 
+async def api_address(address):
+    #  Replace with your actual Dadata token and secret
+    token = "28f0c46ebf7a04748add3fc4f2990d2b2b979d44"  # Replace with your Dadata token
+    secret = "576db248eb70b56c0f1649f1242cddeecabc9d92"
 
-# Меняем фильтр, чтобы он проверял состояние
+    #  Replace with your actual Dadata token and secret
+    from dadata import Dadata  # Import here to avoid global scope issues if dadata is not always needed
+
+    dadata = Dadata(token, secret)
+    try:
+        result = dadata.clean("address", address)
+        return json.dumps(result, ensure_ascii=False, indent=2), result
+    except Exception as e:
+        print(f"Ошибка при стандартизации адреса '{address}': {e}")
+        return None, None
+
+
 @dp.message_handler(content_types=types.ContentType.TEXT, state=Form.waiting_for_city)
 async def gdp_city(message: types.Message, state: FSMContext):
-    """Обрабатывает ввод города для GDP."""
+    """Handles the city input for GDP, using Dadata to standardize the address and offering confirmation buttons."""
     print(f"gdp_city called with state: {await state.get_state()}")
-    city = message.text
-    def split_address(address: str):
-        """Пытается разделить адрес на город и улицу по запятой."""
-        parts = address.split(',')
-        if len(parts) == 1:
-            # Нет запятой, считаем, что это только город или только улица
-            return parts[0].strip(), ""  # Возвращаем город, улица пустая
+    address = message.text
+
+    # Анимированный индикатор загрузки
+    loading_symbols = ["\u25D0", "\u25D1", "\u25D2", "\u25D3"]
+    loading_message = await bot.send_message(
+        message.chat.id,
+        "Идет стандартизация адреса...",
+    )
+
+    try:
+        # Запускаем задачу для анимации индикатора
+        async def animate_loading():
+            index = 0
+            while True:
+                await asyncio.sleep(0.5)  # Меняем символ каждые 0.5 секунды
+                index = (index + 1) % len(loading_symbols)
+                new_text = "⏳ Идет стандартизация адреса..." + loading_symbols[index]
+                try:
+                    await bot.edit_message_text(
+                        chat_id=message.chat.id,
+                        message_id=loading_message.message_id,
+                        text=new_text,
+                    )
+                except Exception as e:
+                    logger.warning(f"Не удалось обновить сообщение: {e}")
+
+        animation_task = asyncio.create_task(animate_loading())
+
+        # Call Dadata API to standardize address
+        api_response, api_result = await api_address(address)  # Use await here
+        animation_task.cancel()
+
+        try:
+            await bot.delete_message(chat_id=message.chat.id, message_id=loading_message.message_id)
+        except Exception as e:
+            logger.warning(f"Не удалось удалить сообщение: {e}")
+
+        if api_response:
+
+            # Extract relevant information from the api_result
+            city = api_result.get("settlement") or api_result.get("city") or api_result.get("region") or ""
+            if api_result.get("settlement"):
+                city_type = api_result.get("settlement_type_full") or "населенный пункт"
+                city = f"{city}"
+            elif api_result.get("city"):
+                city_type = api_result.get("city_type_full") or "город"
+                city = f"{city}"
+            elif api_result.get("region"):
+                city_type = api_result.get("region_type_full") or "регион"
+                city = f"{api_result.get('region')}"
+            street = api_result.get("street")
+            house = api_result.get("house")
+
+            formatted_address = f"{city}, ул {street}, д {house}" if house else f"г {city}, ул {street}"
+
+
+
+            # Create inline keyboard for confirmation
+            keyboard = InlineKeyboardMarkup()
+            yes_button = InlineKeyboardButton(text="Да", callback_data="address_yes")
+            no_button = InlineKeyboardButton(text="Нет", callback_data="address_no")
+            cancel_button = InlineKeyboardButton(text="Отмена", callback_data="address_cancel")  # Add cancel button
+
+            keyboard.add(yes_button, no_button, cancel_button)
+
+            # Send the standardized address with confirmation buttons
+            await bot.send_message(
+                message.chat.id,
+                f"Мы стандартизовали ваш адрес:\n\n{formatted_address}\n\nЭто верный адрес?",
+                reply_markup=keyboard,
+            )
+            print(api_result)
+            # Store the standardized address and original address in the state
+            await state.update_data(standardized_address=api_result)
+            await state.update_data(original_address=address)
+            await Form.address_confirmation.set()  # Set state for address confirmation
+            print(f"State set to Form.address_confirmation")
+
         else:
-            city = parts[0].strip()
-            street = ','.join(parts[1:]).strip()  # Соединяем остаток обратно, если запятых несколько
-            return city, street
+            await bot.send_message(
+                message.chat.id, "Не удалось стандартизировать адрес. Пожалуйста, попробуйте еще раз."
+            )
+            await state.finish()
 
-    city, street = split_address(city)
-    await state.update_data(city=city)
-    await state.update_data(street=street)  #Сохраняем улицу для дальнейшего использования
-    data = await state.get_data()
-    product_id = data.get('product_id')
-    print(city, "------", street)
+    except Exception as e:
+        try:
+            await bot.delete_message(chat_id=message.chat.id, message_id=loading_message.message_id)
+        except Exception as e:
+            logger.warning(f"Не удалось удалить сообщение: {e}")
+        logger.exception("Ошибка при стандартизации адреса через Dadata:")
+        await bot.send_message(
+            message.chat.id, f"Произошла ошибка при стандартизации адреса: {e}. Пожалуйста, попробуйте еще раз."
+        )
+        await state.finish()
+    print(f"gdp_city finished")
 
+
+@dp.callback_query_handler(state=Form.address_confirmation)
+async def address_confirmation_callback(query: types.CallbackQuery, state: FSMContext):
+    """Обрабатывает обратный вызов после того, как пользователь подтвердит или отклонит стандартизированный адрес."""
+    if query.data == "address_yes":
+        # User confirmed the address
+        data = await state.get_data()
+        print(data.get("standardized_address"))
+        standardized_address = data.get("standardized_address")
+        if standardized_address:
+            city = standardized_address.get("settlement") or standardized_address.get("city")
+            if standardized_address.get("settlement"):
+                city_type = standardized_address.get("settlement_type_full") or "населенный пункт"
+                city = f"{city}"
+            elif standardized_address.get("city"):
+                city_type = standardized_address.get("city_type_full") or "город"
+                city = f"{city}"
+            elif standardized_address.get("region"):
+                city_type = standardized_address.get("region_type_full") or "регион"
+                city = f"{standardized_address.get('region')}"
+
+            street = standardized_address.get("street") or ""  # get street
+            house = standardized_address.get("house") or ""  # get house number
+            # Combine street and house number (if available)
+            full_street = f"{street} {house}" if street and house else street if street else ""
+
+            print('===================', city, full_street)
+
+            await state.update_data(city=city)
+            await state.update_data(street=full_street)
+
+            # Proceed with getting nearest offices
+            await query.message.edit_text("Спасибо! Начинаю поиск ближайших ПВЗ...")  # Update the message
+            await get_nearest_offices_and_display(query.message, state, city, full_street) # Call function to handle the rest
+        else:
+            await query.message.edit_text("Произошла ошибка. Стандартизованный адрес не найден.")
+            await state.finish()
+
+
+    elif query.data == "address_no":
+        # User rejected the address
+        await query.message.edit_text("Пожалуйста, введите адрес еще раз.")
+        await Form.waiting_for_city.set()  # Go back to waiting for city input
+        print(f"State set back to Form.waiting_for_city")
+
+
+
+    elif query.data == "address_cancel":
+        # User cancelled the operation
+        await query.message.edit_text("Действие отменено.")
+        await state.finish() #finish the state
+
+    await query.answer()  # Acknowledge the callback
+
+
+async def get_nearest_offices_and_display(message: types.Message, state: FSMContext, city: str, street: str):
+    """Helper function to get nearest offices and display them."""
+    id = message.from_user.id
     # Анимированный индикатор загрузки
     loading_symbols = ["\u25D0", "\u25D1", "\u25D2", "\u25D3"]  # ◰ ◱ ◲ ◳
     loading_message = await bot.send_message(
@@ -936,10 +1416,12 @@ async def gdp_city(message: types.Message, state: FSMContext):
         animation_task = asyncio.create_task(animate_loading()) #Запускаем анимацию
 
         # Вызываем функцию для получения ближайших офисов CDEK
-        nearest_offices = await get_nearest_gdp_offices(city, street)  # await тут
+        nearest_offices = await get_nearest_gdp_offices(id, city, street)  # await тут
         animation_task.cancel() #Останавливаем анимацию после получения данных
 
         if nearest_offices:
+            #Сохраняем nearest_offices в state
+            await state.update_data(nearest_offices=nearest_offices)
             keyboard = types.InlineKeyboardMarkup(row_width=1)
 
             def extract_street_and_number(address_string):
@@ -949,9 +1431,24 @@ async def gdp_city(message: types.Message, state: FSMContext):
                     # Извлекаем улицу и номер дома (они находятся в 4-м элементе)
                     street_part = parts[4].strip()  # Удаляем лишние пробелы
 
-                    return street_part
+                    # Теперь разделяем street_part, чтобы отделить улицу от номера дома
+                    street_parts = street_part.split(', ')  # Разделяем по запятой и пробелу
+
+                    if len(street_parts) >= 1:
+                        street = street_parts[0].strip()
+                        number = None
+
+                        # Если есть номер дома
+                        if len(street_parts) > 1:
+                            number = street_parts[1].strip()  # номер дома
+                        elif len(parts) >= 6:
+                            number = parts[5].strip()
+
+                        return street, number
+                    else:
+                        return street_part, None
                 else:
-                    return None  # Или какое-то сообщение об ошибке, если структура адреса неверн
+                    return None, None  # Или какое-то сообщение об ошибке, если структура адреса неверна
 
 
             for office in nearest_offices:
@@ -959,9 +1456,17 @@ async def gdp_city(message: types.Message, state: FSMContext):
                 print(office['address'][2:-1])
                 city_code = office['city_code']
                 button_text = f"{office['address']}"
-                street1 = extract_street_and_number(button_text)
+                address = office['address']
+                street, number = extract_street_and_number(address)  # Получаем и улицу, и номер дома
+
+                if street and number:
+                    button_text = f"{street}, д. {number}"  # Формируем текст для кнопки
+                elif street:
+                    button_text = street
+                else:
+                    button_text = "Адрес не найден"
                 callback_data = f"gdp_office:{office_code}:{city_code}"
-                keyboard.add(types.InlineKeyboardButton(text=street1, callback_data=callback_data))
+                keyboard.add(types.InlineKeyboardButton(text=button_text , callback_data=callback_data))
 
             try:
                 await bot.delete_message(chat_id=message.chat.id, message_id=loading_message.message_id)
@@ -995,18 +1500,17 @@ async def gdp_city(message: types.Message, state: FSMContext):
     print(f"gdp_city finished")
 
 
-
-
 @dp.callback_query_handler(lambda c: c.data.startswith('gdp_office:'), state=Form.pwz)
 async def process_entering_pwz(callback_query: types.CallbackQuery, state: FSMContext):
+    id = callback_query.from_user.id
     """Обрабатывает выбор ПВЗ и передает данные."""
     print(f"process_entering_pwz called with data: {callback_query.data} and state: {await state.get_state()}")
     try:
         office_data = callback_query.data.split(':')
         office_code = office_data[1]
         city_code = office_data[2]
-        data = await state.get_data()
 
+        data = await state.get_data()
         city = data.get('city')
         street = data.get('street')
 
@@ -1018,48 +1522,75 @@ async def process_entering_pwz(callback_query: types.CallbackQuery, state: FSMCo
             await state.finish()
             return
 
-        print(f"Calling change_delivery_point with uuid: {uuid}, office_code: {office_code}, city_code: {city_code}, {street}")  # Лог
-        # Вызываем функцию изменения ПВЗ и передаем office_code и city_code
-        api_response = await change_delivery_point(uuid, office_code, city_code, street)  # Вызываем функцию change_delivery_point и сохраняем ответ
+        # Находим выбранный офис в nearest_offices
+        nearest_offices = data.get('nearest_offices', [])
 
-        if api_response:  # Если запрос успешен
-            #Извлекаем информацию из api_response
-            #Пример (замените на реальную структуру ответа API)
-            try:
-                new_pvz_code = api_response['entity']['delivery_point']
-                #full_address = api_response['entity']['to_location']['address'] #если адрес есть в ответе
-                #work_time = api_response['entity']['work_time'] #если есть время работы
-            except (KeyError, TypeError):
-                new_pvz_code = office_code  #Если не удалось получить из ответа, берем office_code
-                #full_address = "Не удалось получить адрес"
-                #work_time = "Не удалось получить время работы"
+        logger.info(f"callback_query.data: {callback_query.data}")
+        logger.info(f"office_code из callback_data: {office_code}")
+        logger.info(f"city_code из callback_data: {city_code}")
+        logger.info(f"nearest_offices из state: {nearest_offices}")
 
-            message_text = (
-                "ПВЗ успешно изменен!\n"
-                f"Новый ПВЗ: {new_pvz_code}\n"
-               # f"Полный адрес: {full_address}\n"
-               # f"Время работы: {work_time}\n"
-                f"Город: {city}\n"
-                f"Улица: {street}\n"
-            )
+        selected_office = None
+        for office in nearest_offices:
+            logger.info(f"Сравнение: office['code'] == office_code: {office['code']} == {office_code}, office['city_code'] == city_code: {office['city_code']} == {city_code}")
+            if office['code'] == office_code and str(office['city_code']) == city_code: #<----Преобразование в строку
+                selected_office = office
+                break
 
 
-            await bot.send_message(
-                callback_query.from_user.id,
-                message_text,
-                reply_markup=types.ReplyKeyboardRemove()
-            )
-            # здесь обрабатываем ответ от сервера с информацией об успешном изменении ПВЗ
-        else:  # Если неуспешен
-            await bot.send_message(
-                callback_query.from_user.id,
-                "Не удалось изменить ПВЗ. Попробуйте позже.",
-                reply_markup=types.ReplyKeyboardRemove()
-            )
+        if selected_office:
+            # Save the selected office data to the state
+            await state.update_data(selected_office=selected_office)
 
+            # Extract address from selected_office
+            full_address = selected_office.get('address', 'Адрес не найден')
+
+            print(f"Calling change_delivery_point with uuid: {uuid}, office_code: {office_code}, city_code: {city_code}, street: {street}, city: {city}")  # Лог
+            # Вызываем функцию изменения ПВЗ и передаем office_code и city_code
+            api_response = await change_delivery_point(id, uuid, office_code, city_code, full_address)  # Вызываем функцию change_delivery_point и сохраняем ответ
+
+            if api_response:  # Если запрос успешен
+                #Извлекаем информацию из api_response
+                #Пример (замените на реальную структуру ответа API)
+                try:
+                    new_pvz_code = api_response['entity']['delivery_point']
+                    #full_address = api_response['entity']['to_location']['address'] #если адрес есть в ответе
+                    #work_time = api_response['entity']['work_time'] #если есть время работы
+                except (KeyError, TypeError):
+                    new_pvz_code = office_code  #Если не удалось получить из ответа, берем office_code
+                    #full_address = "Не удалось получить адрес"
+                    #work_time = "Не удалось получить время работы"
+
+                message_text = (
+                    "ПВЗ успешно изменен!\n"
+                    f"Новый ПВЗ: {new_pvz_code}\n"
+                    f"Адрес: {full_address}\n" #  <----  Вот где вы используете адрес
+                   # f"Время работы: {work_time}\n"
+
+                )
+
+
+                await bot.send_message(
+                    callback_query.from_user.id,
+                    message_text,
+                    reply_markup=types.ReplyKeyboardRemove()
+                )
+                # здесь обрабатываем ответ от сервера с информацией об успешном изменении ПВЗ
+            else:  # Если неуспешен
+                await bot.send_message(
+                    callback_query.from_user.id,
+                    "Не удалось изменить ПВЗ. Попробуйте позже.",
+                    reply_markup=types.ReplyKeyboardRemove()
+                )
+        else:
+            await bot.send_message(callback_query.from_user.id,
+                                   "Выбранный офис не найден. Пожалуйста, попробуйте заново.")
+            await state.finish()
+            return
         await state.finish()  # Завершаем состояние после выбора ПВЗ
     except Exception as e:  # Ловим ошибку
         print(f"Error in process_entering_pwz: {e}")  # Выводим сообщение об ошибке
+
 
 import aiohttp
 import json
@@ -1068,9 +1599,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-async def change_delivery_point(uuid: str, delivery_point_code: str, city_code: str, new_address: str = None):
-    token = get_token() #  Возвращаем await
-    print('===========', uuid, delivery_point_code, city_code, "=================")
+async def change_delivery_point(id, uuid: str, delivery_point_code: str, city_code: str, new_address: str = None):
+    token = get_token(id) #  Возвращаем await
+    print('===========', uuid, delivery_point_code, city_code, new_address, "=================")
     """
     Асинхронно изменяет пункт выдачи заказов (ПВЗ) для существующего заказа,
     используя delivery_point и city_code.
@@ -1094,6 +1625,7 @@ async def change_delivery_point(uuid: str, delivery_point_code: str, city_code: 
         "uuid": uuid,  # Добавляем UUID
         "type": 1, # Предполагаем, что у вас тип заказа 1
         "delivery_point": delivery_point_code, # Код ПВЗ
+        "tariff_code": 136,
     }
 
     logger.debug(f"URL: {url}")
@@ -1101,7 +1633,7 @@ async def change_delivery_point(uuid: str, delivery_point_code: str, city_code: 
     logger.debug(f"Payload: {payload}")
 
 
-    async with aiohttp.ClientSession() as session:
+    async with (aiohttp.ClientSession() as session):
         try:
             async with session.patch(url, headers=headers, data=json.dumps(payload)) as response:
                 response_text = await response.text()
@@ -1113,14 +1645,26 @@ async def change_delivery_point(uuid: str, delivery_point_code: str, city_code: 
                     print(pvz_response)
                     # Если указан новый адрес, отправляем второй запрос на изменение адреса
                     if new_address:
+                        street = ""
+                        house_number = ""
+                        import re
+
+                        match = new_address
+
+
+                        if new_address:
+                            street_and_house = new_address
+                            print(street_and_house)
+                        else:
+                            print("Улица и дом не найдены")
                         await asyncio.sleep(3)  # Добавляем задержку в 2 секунды
                         address_payload = {
                             "uuid": uuid,  # Добавляем UUID
-                            "type": 1,  # Предполагаем, что у вас тип заказа 1
+                            # "type": 1,  # Предполагаем, что у вас тип заказа 1
                             "to_location": {
-                                "address": new_address,
-                                "city_code": city_code  # Обязательно нужно передавать city_code или city
-                            }
+                                "address": street_and_house,
+                                # "code": city_code  # Обязательно нужно передавать city_code или city
+                            },
                         }
 
                         logger.debug(f"URL (Адрес): {url}")
@@ -1158,25 +1702,6 @@ async def change_delivery_point(uuid: str, delivery_point_code: str, city_code: 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @dp.callback_query_handler(lambda c: c.data == 'izmenit_za_tovar')
 async def handle_izmenit_za_tovar(callback_query: types.CallbackQuery, state: FSMContext):
     await bot.send_message(callback_query.from_user.id, "Пожалуйста, введите через пробел Новая сумма наложенного платежа за товар:", reply_markup=cancel_keyboard)
@@ -1205,27 +1730,29 @@ async def cancel_input(callback_query: types.CallbackQuery, state: FSMContext):
 
 
 
-
-# здесь был код из obrabotka.py
-
-# Функция для обработки ввода информации о заказе
 async def process_order_info(message: types.Message, state: FSMContext, info_function, inline_buttons_data):
     order_number = message.text
     current_time = datetime.now()
     user_id = message.from_user.id
 
-
+    # Проверка, что введенный текст состоит только из цифр
+    if not order_number.isdigit():
+        await message.answer("Неверный формат номера заказа. Пожалуйста, введите только цифры.")
+        await state.finish()
+        return  # Завершаем функцию, если формат неверный
 
     # Check if user has entered data within the last 15 minutes
-    cursor.execute("SELECT * FROM new_orders WHERE user_id = ? AND created_at > ?", (user_id, current_time - timedelta(minutes=15)))
+    cursor.execute("SELECT * FROM new_orders WHERE user_id = ? AND created_at > ?",
+                   (user_id, current_time - timedelta(minutes=15)))
     recent_order = cursor.fetchone()
-    print(recent_order)
+
+    print(user_id)
 
     # Use recent order info if available, otherwise fetch new order info
     if recent_order:
         order_info = recent_order[2]
     else:
-        order_info = info_function(order_number)
+        order_info = info_function(order_number, user_id)
 
     if order_info:
         order_info_str = str(order_info)
@@ -1242,13 +1769,13 @@ async def process_order_info(message: types.Message, state: FSMContext, info_fun
         if isinstance(order_info, dict) and order_info.get('entity', {}).get('delivery_problem'):
             inline_keyboard.add(InlineKeyboardButton("Проблемы доставки ⚠️", callback_data="delivery_problems"))
 
-        await message.answer("Вы находитесь в меню по работе в накладной. Выберите действие:", reply_markup=inline_keyboard)
+        await message.answer("Вы находитесь в меню по работе в накладной. Выберите действие:",
+                             reply_markup=inline_keyboard)
     else:
         await message.answer("Не удалось получить информацию о заказе. Пожалуйста, проверьте номер заказа и попробуйте снова.")
 
     await state.finish()
 
-# Обработчики сообщений
 @dp.message_handler(state=Form.order_number)
 async def process_order_number(message: types.Message, state: FSMContext):
     from info import info
@@ -1256,22 +1783,88 @@ async def process_order_number(message: types.Message, state: FSMContext):
         ("Отследить посылку 📦", "track_parcel"),
         ("Данные по посылке 📝", "parcel_data"),
         ("Внести изменения в заказ (накладную) 📝", "change_order"),
+        ("Удалить заказ 🗑️", "delete_order"),  # Добавлена кнопка "Удалить заказ"
         ("Отменить доставку ❌", "cancel_delivery"),
         ("Изменить дату доставки 📆", "change_delivery_date"),
         ("Редактировать сумму наложенного платежа 💸", "edit_cod_amount"),
     ])
 
+
+
+
 @dp.message_handler(state=Form.order_number2)
 async def process_order_number2(message: types.Message, state: FSMContext):
     from info import info2
+    print(message)
     await process_order_info(message, state, info2, [
         ("Отследить посылку 📦", "track_parcel"),
         ("Данные по посылке 📝", "parcel_data"),
         ("Внести изменения в заказ (накладную) 📝", "change_order"),
+        ("Удалить заказ 🗑️", "delete_order"),  # Добавлена кнопка "Удалить заказ"
         ("Отменить доставку ❌", "cancel_delivery"),
         ("Изменить дату доставки 📆", "change_delivery_date"),
         ("Редактировать сумму наложенного платежа 💸", "edit_cod_amount"),
     ])
+
+# Обработчик callback-запроса для удаления заказа
+@dp.callback_query_handler(lambda c: c.data == 'delete_order')
+async def delete_order(callback_query: types.CallbackQuery):
+    # Создаем inline клавиатуру с кнопками "Да" и "Нет"
+    keyboard = InlineKeyboardMarkup(row_width=2)
+    keyboard.add(
+        InlineKeyboardButton("Да", callback_data="confirm_delete_order"),
+        InlineKeyboardButton("Нет", callback_data="cancel_delete_order")
+    )
+    await callback_query.message.answer("Вы уверены, что хотите удалить этот заказ? ⚠️ Условием возможности удаления заказа является отсутствие движения груза (статус заказа «Создан»).⚠️", reply_markup=keyboard)
+
+# Обработчик подтверждения удаления
+@dp.callback_query_handler(lambda c: c.data == 'confirm_delete_order')
+async def confirm_delete_order(callback_query: types.CallbackQuery):
+    from izmeneniya import delete_order
+    id = callback_query.from_user.id
+    connection = sqlite3.connect('users.db')
+    cursor = connection.cursor()
+
+    cursor.execute('SELECT cdek_number, order_info FROM new_orders WHERE user_id = ? ORDER BY id DESC LIMIT 1',
+                   (callback_query.from_user.id,))
+    order_data = cursor.fetchone()
+
+    if order_data:
+        order_number = order_data[0]
+        order_info_str = order_data[1]
+
+        try:
+            order_info_dict = ast.literal_eval(order_info_str)
+            order_uuid = order_info_dict['entity']['uuid']  # Получаем UUID заказа
+            # Вызываем функцию удаления заказа через API СДЭК
+            response = delete_order(id, order_uuid)
+            if response and response.status_code == 202:  #Успешно удален
+                # Удаляем заказ из базы данных, только если удаление через API прошло успешно
+                cursor.execute("DELETE FROM new_orders WHERE user_id = ? AND cdek_number = ?",
+                               (callback_query.from_user.id, order_number))
+                conn.commit()
+                await callback_query.message.answer(f"Заказ с номером {order_number} и UUID {order_uuid} был успешно удален.", reply_markup=types.ReplyKeyboardRemove())
+            else:
+                await callback_query.message.answer(f"Произошла ошибка при удалении заказа через API СДЭК.  Код ответа:{response.status_code}, текст:{response.text}", reply_markup=types.ReplyKeyboardRemove())
+
+
+        except Exception as e:
+            await callback_query.message.answer(f"Произошла ошибка: {e}", reply_markup=types.ReplyKeyboardRemove())
+    else:
+        await callback_query.message.answer("Информация о заказе не найдена.", reply_markup=types.ReplyKeyboardRemove())
+
+    connection.close()
+
+# Обработчик отмены удаления
+@dp.callback_query_handler(lambda c: c.data == 'cancel_delete_order')
+async def cancel_delete_order(callback_query: types.CallbackQuery):
+    await callback_query.message.answer("Удаление заказа отменено.", reply_markup=types.ReplyKeyboardRemove())
+
+
+
+
+
+
 
 @dp.callback_query_handler(lambda c: c.data == 'delivery_problems')
 async def process_delivery_problems(callback_query: types.CallbackQuery, state: FSMContext):
@@ -1292,30 +1885,74 @@ async def process_delivery_problems(callback_query: types.CallbackQuery, state: 
     # Отвечаем на callback, чтобы убрать "часики" на кнопке
     await callback_query.answer()
 
-@dp.callback_query_handler(lambda c: c.data == 'cancel_delivery')
-async def otmena_zakaza(callback_query: types.CallbackQuery):
-    from otmena_zakaz import otmena
 
+
+
+# dp.callback_query_handler(lambda c: c.data == 'cancel_delivery')
+async def otmena_zakaza(callback_query: types.CallbackQuery):
+    # Создаем кнопки подтверждения и отмены
+    confirmation_keyboard = InlineKeyboardMarkup(row_width=2)
+    confirm_button = InlineKeyboardButton("Подтвердить отмену", callback_data="confirm_cancel1")
+    cancel_button = InlineKeyboardButton("Отмена", callback_data="decline_cancel1")
+    confirmation_keyboard.add(confirm_button, cancel_button)
+
+    # Отправляем сообщение с кнопками
+    await callback_query.message.answer("Вы уверены, что хотите отменить заказ? ⚠️Обращаем ваше внимание что не рекомендуется использовать данную функцию для заказов, которые находятся в статусе 'Создан' и не планируются к отгрузке на склады СДЭК. Для отмены заказа в статусе 'Создан' воспользуйтесь функцией 'Удалить заказ'.⚠️", reply_markup=confirmation_keyboard)
+
+    # Завершаем callback_query, чтобы убрать "часики"
+    await callback_query.answer()
+
+
+@dp.callback_query_handler(lambda c: c.data == 'confirm_cancel1')
+async def confirm_otmena_zakaza(callback_query: types.CallbackQuery):
+    from otmena_zakaz import otmena  # Импорт здесь, чтобы избежать циклического импорта
+    id = callback_query.from_user.id
     connection = sqlite3.connect('users.db')
     cursor = connection.cursor()
 
-    cursor.execute('SELECT order_info FROM new_orders WHERE user_id = ? ORDER BY id DESC LIMIT 1', (callback_query.from_user.id,))
-    order_info = cursor.fetchone()
-    order_info_str = order_info[0]
+    try:
+        cursor.execute('SELECT order_info FROM new_orders WHERE user_id = ? ORDER BY id DESC LIMIT 1', (callback_query.from_user.id,))
+        order_info = cursor.fetchone()
 
-    order_info_dict = ast.literal_eval(order_info_str)
-    uuid = order_info_dict['entity']["statuses"][0]['code']
-    if uuid == "CREATED":
-        await callback_query.message.answer(f"Ваш заказ в статусе CREATED и пока не может быть отменен")
-    else:
-        uuid = order_info_dict['entity']['uuid']
-        otmen = otmena(uuid)
-        if 'status' in otmen and otmen['status'] != 202:
-            print(otmen)
-            await callback_query.message.answer(f"Ошибка: {otmen['error']}")
+        if order_info:
+            order_info_str = order_info[0]
+            order_info_dict = ast.literal_eval(order_info_str)
+
+            try:
+                uuid = order_info_dict['entity']["statuses"][0]['code']
+                if uuid == "CREATED":
+                    await callback_query.message.answer(f"Ваш заказ в статусе Создан и пока не может быть отменен")
+                else:
+                    uuid = order_info_dict['entity']['uuid']
+                    otmen = otmena(uuid, id)
+
+                    if 'status' in otmen and otmen['status'] != 202:
+                        print(otmen)
+                        await callback_query.message.answer(f"Ошибка: {otmen['error']}")
+                    else:
+                        print(otmen)
+                        await callback_query.message.answer(f"Ваш заказ отменен.")
+            except KeyError as e:
+                await callback_query.message.answer(f"Ошибка: Некорректная структура данных заказа. Отсутствует ключ: {e}")
+            except Exception as e:
+                await callback_query.message.answer(f"Произошла ошибка при отмене заказа: {e}")
+
         else:
-            print(otmen)
-            await callback_query.message.answer(f"Ваш заказ отменен {otmen}")
+            await callback_query.message.answer("Информация о заказе не найдена.")
+
+    except Exception as e:
+        print(f"Произошла ошибка: {e}")
+        await callback_query.message.answer(f"Произошла непредвиденная ошибка: {e}")
+
+    finally:
+        connection.close()
+        await callback_query.answer()
+
+
+@dp.callback_query_handler(lambda c: c.data == 'decline_cancel1')
+async def decline_otmena_zakaza(callback_query: types.CallbackQuery):
+    await callback_query.message.answer("Отмена заказа отменена.")
+    await callback_query.answer()  # Убираем "часики"
 
 
 @dp.message_handler(Text(equals='/sklad_dver'))
@@ -1338,6 +1975,7 @@ async def close_web_app(callback_query: types.CallbackQuery):
     await callback_query.answer()
     await callback_query.message.edit_reply_markup(reply_markup=None)
     await callback_query.message.answer("Мини-приложение закрыто.")
+
 
 logging.basicConfig(level=logging.INFO)
 @dp.message_handler(content_types="web_app_data")
@@ -1537,40 +2175,111 @@ async def process_call_request(message: types.Message, state: FSMContext):
 @dp.callback_query_handler(lambda c: c.data == 'go_back_menu')
 async def go_back_menu(callback_query: types.CallbackQuery, state: FSMContext):
     await cmd_start1(callback_query.message, state)
+
+
+# @dp.message_handler(state=Form.npdc)
+# async def process_izmenit_za_dop(message: types.Message, state: FSMContext):
+#     try:
+#         from izmeneniya import nalozh_pay_dop_cbor
+#         text = message.text
+#         if int(text) >= 0:
+#             connection = sqlite3.connect('users.db')
+#             cursor = connection.cursor()
+#
+#             cursor.execute('SELECT order_info FROM new_orders WHERE user_id = ? ORDER BY id DESC LIMIT 1', (message.from_user.id,))
+#             order_info = cursor.fetchone()
+#             order_info_str = order_info[0]
+#
+#             order_info_dict = ast.literal_eval(order_info_str)
+#             uuid = order_info_dict['entity']['uuid']
+#             result = nalozh_pay_dop_cbor(uuid, text)
+#             keyboard = InlineKeyboardMarkup()
+#             keyboard.add(
+#                 InlineKeyboardButton("Назад", callback_data='go_back_menu')
+#             )
+#             print(result['requests'])
+#             await bot.send_message(message.from_user.id, f"Операция выполнена успешно", reply_markup=keyboard)
+#             await state.finish()
+#         else:
+#             await bot.send_message(message.from_user.id, f"Сумма не может быть отрицательной, введите корректное значение")
+#
+#
+#     except Exception as e:
+#         keyboard = InlineKeyboardMarkup()
+#         keyboard.add(
+#             InlineKeyboardButton("Назад", callback_data='go_back_menu')
+#         )
+#         await bot.send_message(message.from_user.id, f"Произошла ошибка при обработке запроса: {e}",
+#                                reply_markup=keyboard)
+#         await state.finish()
+
+# Добавляем обработчик для callback_data 'cancel_input'
+@dp.callback_query_handler(lambda c: c.data == 'cancel_input_1', state='*')
+async def process_cancel_input(callback_query: types.CallbackQuery, state: FSMContext):
+    """Обработчик для отмены ввода."""
+    await bot.answer_callback_query(callback_query.id)
+    await bot.send_message(callback_query.from_user.id, "Ввод отменен.")
+    await state.finish()
+
+
 @dp.message_handler(state=Form.npdc)
 async def process_izmenit_za_dop(message: types.Message, state: FSMContext):
     try:
-        from izmeneniya import nalozh_pay_dop_cbor
+        from izmeneniya import nalozh_pay_dop_cbor  # Под вопросом: лучше импортировать в начале файла
+
         text = message.text
-        if int(text) >= 0:
+
+        # Добавляем кнопку отмены
+        keyboard = InlineKeyboardMarkup()
+        keyboard.add(
+            InlineKeyboardButton("Отмена", callback_data='cancel_input_1')
+        )
+
+        try:
+            amount = int(text)  # Пытаемся преобразовать текст в число
+        except ValueError:
+            await bot.send_message(message.from_user.id, "Пожалуйста, введите корректное число.", reply_markup=keyboard)
+            return  # Прерываем выполнение обработчика, если ввод некорректен.
+
+        if amount >= 0:
             connection = sqlite3.connect('users.db')
             cursor = connection.cursor()
 
             cursor.execute('SELECT order_info FROM new_orders WHERE user_id = ? ORDER BY id DESC LIMIT 1', (message.from_user.id,))
             order_info = cursor.fetchone()
-            order_info_str = order_info[0]
 
-            order_info_dict = ast.literal_eval(order_info_str)
-            uuid = order_info_dict['entity']['uuid']
-            result = nalozh_pay_dop_cbor(uuid, text)
-            keyboard = InlineKeyboardMarkup()
-            keyboard.add(
-                InlineKeyboardButton("Назад", callback_data='go_back_menu')
-            )
-            await bot.send_message(message.from_user.id, f"Операция выполнена успешно.{result['requests']}", reply_markup=keyboard)
-            await state.finish()
+            if order_info:  # Проверяем, что order_info не None
+                order_info_str = order_info[0]
+
+                order_info_dict = ast.literal_eval(order_info_str)
+                uuid = order_info_dict['entity']['uuid']
+                result = nalozh_pay_dop_cbor(uuid, text) # Используется text, а не amount
+                keyboard = InlineKeyboardMarkup()
+                keyboard.add(
+                    InlineKeyboardButton("Назад", callback_data='go_back_menu')
+                )
+                print(result['requests'])
+                await bot.send_message(message.from_user.id, f"Операция выполнена успешно", reply_markup=keyboard)
+                await state.finish()
+            else:
+                await bot.send_message(message.from_user.id, "Заказ не найден.", reply_markup=keyboard)
+                await state.finish()
+
+
         else:
-            await bot.send_message(message.from_user.id, f"Сумма не может быть отрицательной, введите корректное значение")
-
-
+            await bot.send_message(message.from_user.id, f"Сумма не может быть отрицательной, введите корректное значение", reply_markup=keyboard)
     except Exception as e:
         keyboard = InlineKeyboardMarkup()
         keyboard.add(
             InlineKeyboardButton("Назад", callback_data='go_back_menu')
         )
         await bot.send_message(message.from_user.id, f"Произошла ошибка при обработке запроса: {e}",
-                               reply_markup=keyboard)
+            reply_markup=keyboard)
         await state.finish()
+
+
+
+
 @dp.message_handler(state=Form.inpzt)
 async def process_izmenit_za_tovar(message: types.Message, state: FSMContext):
     try:
@@ -1646,7 +2355,11 @@ async def process_list_offices(message: types.Message, state: FSMContext):
 
 async def process_entering_info(message: types.Message, state: FSMContext, info_function):
     await bot.send_message(message.from_user.id, "Идет обработка... ⏳")
+    id = message.from_user.id
+
     entered_text = message.text
+    print("=-=-=-=-=-=")
+    print(id, entered_text)
     connection = sqlite3.connect('users.db')
     cursor = connection.cursor()
 
@@ -1658,7 +2371,7 @@ async def process_entering_info(message: types.Message, state: FSMContext, info_
         try:
             order_info_dict = ast.literal_eval(order_info_str)
             uuid = order_info_dict['entity']['uuid']
-            result = info_function(uuid, entered_text)
+            result = info_function(id, uuid, entered_text)
 
             # Проверка на успешный ответ от API
             if result and 'requests' in result and len(result['requests']) > 0:
@@ -1694,39 +2407,33 @@ async def process_entering_tel(message: types.Message, state: FSMContext):
 @dp.message_handler(state=Form.adr)
 async def process_entering_adr(message: types.Message, state: FSMContext):
     from izmeneniya import adres
+    print(adres,"++++++++++++++++++++++++++++")
     await process_entering_info(message, state, adres)
 
 @dp.message_handler(state=Form.cit)
 async def process_entering_cit(message: types.Message, state: FSMContext):
+    print("----------------")
     entered_text = message.text
+    id = message.from_user.id
     connection = sqlite3.connect('users.db')
     cursor = connection.cursor()
 
-    cursor.execute('SELECT order_info FROM new_orders WHERE user_id = ?', (message.from_user.id,))
+    cursor.execute('SELECT order_info FROM new_orders WHERE user_id = ? ORDER BY id DESC LIMIT 1', (message.from_user.id,))
     order_info = cursor.fetchone()
-
+    print(order_info)
     if order_info:
         order_info_str = order_info[0]
+        print("info")
         try:
+            print('try')
             order_info_dict = ast.literal_eval(order_info_str)
             uuid = order_info_dict['entity']['uuid']
+            address = order_info_dict['entity']['to_location']['address']
+            print(address)
             from izmeneniya import change_city
-            address_parts = entered_text.split(' ', 1)
-            city = address_parts[0]
-            address_parts = address_parts[1:]
-            address = ' '.join(address_parts)
-            print(city, address)
-            result = change_city(uuid, city, address)
-
-    #         await bot.send_message(message.from_user.id, result)
-    #
-    #     except (ValueError, SyntaxError) as e:
-    #         print(f"Failed to evaluate order_info_str as dictionary: {e}")
-    # else:
-    #     print("No order_info found for the user")
-    #
-    # connection.close()
-    # await state.finish()
+            city = [entered_text, address]
+            print(uuid, city)
+            result = change_city(id, uuid, city)
             # Преобразуем JSON в красивый текст
             if result:
                 try:
@@ -1788,86 +2495,257 @@ from aiogram import types
 
 @dp.callback_query_handler(lambda c: c.data)
 async def process_callback(callback_query: types.CallbackQuery):
-
+    id = callback_query.from_user.id
+    # Добавляем константы для кодов статусов, которые нужно исключить
+    EXCLUDED_STATUS_CODES = {"CREATED", "ACCEPTED"}
     connection = sqlite3.connect('users.db')
     cursor = connection.cursor()
+    # ... (начало process_callback) ...
+    print("начало process_callback")
     if callback_query.data == 'track_parcel':
-        # Fetch order info from the database
-        cursor.execute("SELECT order_info FROM new_orders WHERE user_id = ? ORDER BY id DESC LIMIT 1", (callback_query.from_user.id,))
-        order_info = cursor.fetchone()
+        # Удаляем сообщение с кнопками (можно оставить, если хочешь)
+        try:
+            await callback_query.message.delete()
+        except Exception as e:
+            logger.warning(f"User {id}: Не удалось удалить сообщение при track_parcel: {e}")
 
+        import datetime
+        import pytz
+        # import ast  # Убедись, что ast импортирован
+        from collections import defaultdict
+        print("запрос в бд")
+
+        # Fetch order info from the database
+        cursor.execute("SELECT order_info FROM new_orders WHERE user_id = ? ORDER BY id DESC LIMIT 1",
+                       (callback_query.from_user.id,))
+        order_info = cursor.fetchone()
+        print(order_info)
         if order_info:
             order_info_str = order_info[0]
-            print(f"Debug: Fetched order info: {order_info_str}")  # Debugging line
+            logger.debug(
+                f"User {id}: Fetched order info for tracking: {order_info_str[:200]}...")  # Логгируем начало строки
 
             try:
-                order_info_dict = ast.literal_eval(order_info_str)  # Safely evaluate the string as a Python dictionary
+                order_info_dict = ast.literal_eval(
+                    order_info_str)  # Безопаснее использовать json.loads, если храните JSON
 
-                if 'entity' in order_info_dict and 'statuses' in order_info_dict['entity']:
-                    statuses = order_info_dict['entity']['statuses']
-                    statuses_reversed = []
-                    import pytz
-                    moscow_tz = pytz.timezone('Europe/Moscow')
-                    #
-                    # for status in reversed(statuses):
-                    #     date_time_str = status['date_time']
-                    #     # Убираем смещение +0000
-                    #     date_time_str = date_time_str[:-5]  # Удаляем последние 5 символов
-                    #     # Парсим строку даты и времени
-                    #     utc_time = datetime.strptime(date_time_str, '%Y-%m-%dT%H:%M:%S')
-                    #     # Присваиваем UTC временную зону
-                    #     utc_time = pytz.utc.localize(utc_time)
-                    #     # Переводим в московское время
-                    #     moscow_time = utc_time.astimezone(moscow_tz)
-                    #     # Форматируем строку
-                    #     status_str = f"{status['name']} в {status['city']} {moscow_time.strftime('%Y-%m-%d %H:%M:%S')}"
-                    #     statuses_reversed.append(status_str)
-                    # status_text = "\n".join(statuses_reversed)
-                    # await bot.send_message(callback_query.from_user.id, status_text)
-                    from collections import defaultdict
-                    from datetime import datetime
-                    import pytz
-                    statuses_by_date = defaultdict(list)
-                    for status in reversed(statuses):
-                        date_time_str = status['date_time']
-                        date_time_str = date_time_str[:-5]  # Удаляем смещение +0000
+                # --- Проверка наличия статусов ---
+                # Используем .get() для безопасного доступа, по умолчанию пустой список
+                statuses = order_info_dict.get('entity', {}).get('statuses', [])
+                print(statuses)
+                if not statuses:
+                    # Если список статусов пуст или отсутствует
+                    await bot.answer_callback_query(callback_query.id)
+                    await bot.send_message(callback_query.from_user.id,
+                                           "Информация о статусах пока отсутствует.")
+                    logger.info(
+                        f"User {id}: No statuses found for order {order_info_dict.get('entity', {}).get('cdek_number', 'N/A')}")
 
-                        # Парсим строку даты и времени
-                        utc_time = datetime.strptime(date_time_str, '%Y-%m-%dT%H:%M:%S')
-
-                        # Присваиваем UTC временную зону
-                        utc_time = pytz.utc.localize(utc_time)
-
-                        # Переводим в московское время
-                        moscow_time = utc_time.astimezone(moscow_tz)
-
-                        # Форматируем строку статуса (только время)
-                        status_str = f"{status['name']} в {status['city']} {moscow_time.strftime('%H:%M:%S')}"
-
-                        # Группируем статусы по дате
-                        date_key = moscow_time.strftime('%Y-%m-%d')  # Используем дату как ключ
-                        statuses_by_date[date_key].append(status_str)
-
-                    # Формируем итоговый текст сообщения
-                    output_lines = []
-                    for date, status_list in statuses_by_date.items():
-                        output_lines.append(date)  # Добавляем дату как заголовок
-                        for status in status_list:
-                            output_lines.append(f"  - {status}")  # Добавляем отступ для элементов списка.
-
-                    status_text = "\n".join(output_lines)  # Объединяем все строки в один текст
-
-                    await bot.send_message(callback_query.from_user.id, status_text)  # Отправляем сообщение
                 else:
-                    await bot.send_message(callback_query.from_user.id, "Информация о статусе отсутствует. Пожалуйста введите номер посылки по своему договору.")
+                    # --- Проверка, есть ли ТОЛЬКО CREATED/ACCEPTED ---
+                    # Получаем коды всех статусов
+                    status_codes = {status.get('code') for status in statuses if status.get('code')}  # Множество кодов
+
+                    # Проверяем, что все имеющиеся коды входят в EXCLUDED_STATUS_CODES
+                    # ИЛИ, проще, проверяем, что НЕТ кодов, НЕ входящих в EXCLUDED_STATUS_CODES
+                    has_only_excluded = all(code in EXCLUDED_STATUS_CODES for code in status_codes)
+
+                    if has_only_excluded:
+                        # Если все статусы только CREATED или ACCEPTED
+                        await bot.answer_callback_query(callback_query.id)
+                        await bot.send_message(callback_query.from_user.id,
+                                               "✅ Заказ создан, ожидает отправки.")
+                        logger.info(
+                            f"User {id}: Order {order_info_dict.get('entity', {}).get('cdek_number', 'N/A')} has only CREATED/ACCEPTED status.")
+
+                    else:
+                        # --- Если есть другие статусы, показываем историю ---
+                        logger.info(
+                            f"User {id}: Displaying tracking history for {order_info_dict.get('entity', {}).get('cdek_number', 'N/A')}")
+
+                        # Фильтруем статусы для показа (убираем CREATED/ACCEPTED)
+                        filtered_statuses = [
+                            status for status in statuses if status.get('code') not in EXCLUDED_STATUS_CODES
+                        ]
+
+                        # Если после фильтрации что-то осталось (на всякий случай)
+                        if filtered_statuses:
+                            statuses_by_date = defaultdict(list)
+                            moscow_tz = pytz.timezone('Europe/Moscow')
+
+                            for status in reversed(filtered_statuses):  # Используем отфильтрованные статусы
+                                # --- Твой существующий код парсинга даты и группировки ---
+                                date_time_str = status.get('date_time')
+                                if not date_time_str: continue  # Пропускаем статус без даты
+
+                                city = status.get('city', 'Неизвестный город')  # Получаем город
+                                status_name = status.get('name', 'Неизвестный статус')  # Получаем имя статуса
+
+                                dt_format = None
+                                if isinstance(date_time_str, str):
+                                    if '+' in date_time_str:  # Проверяем наличие смещения
+                                        try:  # Пробуем парсить с часовым поясом
+                                            # Убираем ':' в смещении для Python < 3.7, если нужно
+                                            if len(date_time_str) > 6 and date_time_str[-3] == ':':
+                                                date_time_str = date_time_str[:-3] + date_time_str[-2:]
+                                            dt_format = '%Y-%m-%dT%H:%M:%S%z'
+                                            utc_time = datetime.datetime.strptime(date_time_str, dt_format)
+                                        except ValueError:
+                                            # Если не получилось, пробуем без микросекунд
+                                            try:
+                                                date_time_str_no_ms = date_time_str.split('.')[0] + date_time_str[-6:]
+                                                if len(date_time_str_no_ms) > 6 and date_time_str_no_ms[-3] == ':':
+                                                    date_time_str_no_ms = date_time_str_no_ms[
+                                                                          :-3] + date_time_str_no_ms[-2:]
+                                                utc_time = datetime.datetime.strptime(date_time_str_no_ms, dt_format)
+                                            except ValueError:
+                                                logger.warning(f"Could not parse date with timezone: {date_time_str}")
+                                                continue  # Пропускаем этот статус
+                                    else:  # Пробуем парсить как UTC (с 'Z' или без)
+                                        try:
+                                            if date_time_str.endswith('Z'):
+                                                dt_format = '%Y-%m-%dT%H:%M:%SZ'
+                                                utc_time = datetime.datetime.strptime(date_time_str, dt_format)
+                                            else:  # Предполагаем UTC без 'Z' и без смещения
+                                                dt_format = '%Y-%m-%dT%H:%M:%S'
+                                                utc_time = datetime.datetime.strptime(date_time_str, dt_format)
+                                            # Устанавливаем таймзону UTC явно
+                                            utc_time = pytz.utc.localize(utc_time)
+                                        except ValueError:
+                                            logger.warning(f"Could not parse date as UTC: {date_time_str}")
+                                            continue  # Пропускаем этот статус
+
+                                else:  # Если формат даты неожиданный
+                                    logger.warning(f"Unexpected date format: {date_time_str}")
+                                    continue  # Пропускаем
+
+                                # Переводим в московское время
+                                moscow_time = utc_time.astimezone(moscow_tz)
+
+                                # Форматируем строку статуса
+                                # Используем escape_md для города и названия статуса
+                                status_str = f"{moscow_time.strftime('%H:%M:%S')} {escape_md(status_name)} в {escape_md(city)}"
+
+                                # Группируем статусы по дате
+                                date_key = moscow_time.strftime('%d.%m.%Y')
+                                statuses_by_date[date_key].append(status_str)
+                                # --- /Конец твоего кода парсинга даты ---
+
+                            # Формируем итоговый текст сообщения
+                            output_lines = []
+                            # Сортируем даты для вывода в хронологическом порядке
+                            for date_key in sorted(statuses_by_date.keys()):
+                                output_lines.append(f"*{date_key}*")  # ДАТА ЖИРНЫМ
+                                for status_entry in statuses_by_date[date_key]:
+                                    output_lines.append(f"  - {status_entry}")  # Отступ для элементов
+
+                            status_text = "\n".join(output_lines)
+
+                            await bot.answer_callback_query(callback_query.id)
+                            # Используем parse_mode=types.ParseMode.MARKDOWN_V2 если используем escape_md
+                            await bot.send_message(callback_query.from_user.id, status_text,
+                                                    parse_mode="Markdown")
+                            #                 await bot.answer_callback_query(callback_query.id)
+                            #                 await bot.send_message(callback_query.from_user.id, status_text, parse_mode="Markdown")  # Отправляем сообщение
+                            #             else:
+                            #                 await bot.send_message(callback_query.from_user.id,
+                            #                                        "Информация о статусе отсутствует. Пожалуйста введите номер посылки по своему договору.")
+                        else:
+                            # Если после фильтрации ничего не осталось (не должно случиться из-за проверки has_only_excluded)
+                            await bot.answer_callback_query(callback_query.id)
+                            await bot.send_message(callback_query.from_user.id, "Нет данных для отображения истории.")
+                            logger.info(
+                                f"User {id}: No statuses left after filtering for order {order_info_dict.get('entity', {}).get('cdek_number', 'N/A')}")
+    # if callback_query.data == 'track_parcel':
+    #     await callback_query.message.delete()
+    #     import datetime
+    #     import pytz
+    #     # import ast
+    #     from collections import defaultdict
+    #     # Fetch order info from the database
+    #     cursor.execute("SELECT order_info FROM new_orders WHERE user_id = ? ORDER BY id DESC LIMIT 1", (callback_query.from_user.id,))
+    #     order_info = cursor.fetchone()
+    #     if order_info:
+    #         order_info_str = order_info[0]
+    #         print(f"Debug: Fetched order info: {order_info_str}")  # Debugging line
+    #
+    #         try:
+    #             order_info_dict = ast.literal_eval(order_info_str)  # Safely evaluate the string as a Python dictionary
+    #             print(order_info_dict)
+    #             if 'entity' in order_info_dict and 'statuses' in order_info_dict['entity']:
+    #                 statuses = order_info_dict['entity']['statuses']
+    #                 # Фильтруем статусы по коду.
+    #                 filtered_statuses = [
+    #                     status for status in statuses if status['code'] not in EXCLUDED_STATUS_CODES
+    #                 ]
+    #
+    #                 statuses_by_date = defaultdict(list)
+    #                 moscow_tz = pytz.timezone('Europe/Moscow')
+    #                 print("---")
+    #                 print(filtered_statuses)
+    #                 for status in reversed(filtered_statuses):  # Используем отфильтрованные статусы
+    #                     date_time_str = status['date_time']
+    #                     print("222222222")
+    #                     # Проверяем, есть ли смещение часового пояса в строке даты
+    #                     if date_time_str.endswith('+0000'):
+    #                         date_time_str = date_time_str[:-5]  # Удаляем смещение +0000
+    #                         dt_format = '%Y-%m-%dT%H:%M:%S'
+    #                         print("%Y-%m-%dT%H:%M:%S")
+    #                     else:
+    #                         dt_format = '%Y-%m-%dT%H:%M:%SZ'  # Изменено здесь!
+    #                         print("%Y-%m-%dT%H:%M:%SZ")
+    #
+    #                     print("2222222")
+    #
+    #                     try:
+    #                         # Парсим строку даты и времени
+    #                         utc_time = datetime.datetime.strptime(date_time_str, dt_format)
+    #
+    #                         # Присваиваем UTC временную зону (если это необходимо)
+    #                         if dt_format == '%Y-%m-%dT%H:%M:%S':
+    #                             utc_time = pytz.utc.localize(utc_time)
+    #
+    #                         # Переводим в московское время
+    #                         moscow_time = utc_time.astimezone(moscow_tz)
+    #
+    #                         # Форматируем строку статуса (только время)
+    #                         status_str = f"{moscow_time.strftime('%H:%M:%S')} {status['name']} в {status['city']}"
+    #
+    #                         # Группируем статусы по дате
+    #                         date_key = moscow_time.strftime('%d.%m.%Y')  # <<<=== ИЗМЕНЕН ФОРМАТ КЛЮЧА
+    #                         statuses_by_date[date_key].append(status_str)
+    #                         print("-------------------")
+    #                     except ValueError as e:
+    #                         print(f"Ошибка при парсинге даты: {e}")
+    #                         await bot.send_message(callback_query.from_user.id,
+    #                                                f"Ошибка при обработке даты статуса: {e}.  Обратитесь к администратору.")
+    #                         return  # Прекращаем обработку, чтобы не вызвать дальнейшие ошибки
+    #
+    #                 # Формируем итоговый текст сообщения
+    #                 output_lines = []
+    #                 for date, status_list in statuses_by_date.items():
+    #                     output_lines.append(f"*{date}*") # <<<=== ДАТА ЖИРНЫМ
+    #                     for status in status_list:
+    #                         output_lines.append(f"  - {status}")  # Добавляем отступ для элементов списка.
+    #
+    #                 status_text = "\n".join(output_lines)  # Объединяем все строки в один текст
+    #
+    #                 print(status_text)
+    #                 await bot.answer_callback_query(callback_query.id)
+    #                 await bot.send_message(callback_query.from_user.id, status_text, parse_mode="Markdown")  # Отправляем сообщение
+    #             else:
+    #                 await bot.send_message(callback_query.from_user.id,
+    #                                        "Информация о статусе отсутствует. Пожалуйста введите номер посылки по своему договору.")
             except (ValueError, SyntaxError) as e:
-                await bot.send_message(callback_query.from_user.id, "Error decoding order information. Please try again later.")
+                await bot.send_message(callback_query.from_user.id,
+                                       "Error decoding order information. Please try again later.")
                 print(f"Error: {e}")
         else:
             await bot.send_message(callback_query.from_user.id, "No order information found.")
 
 
     elif callback_query.data == 'track_parcel2':
+        await callback_query.message.delete()
         # Fetch order info from the database
         cursor.execute("SELECT order_info FROM new_orders WHERE user_id = ? ORDER BY id DESC LIMIT 1", (callback_query.from_user.id,))
         order_info = cursor.fetchone()
@@ -1893,88 +2771,619 @@ async def process_callback(callback_query: types.CallbackQuery):
 
 
 
+
     elif callback_query.data == 'parcel_data':
-        # Fetch order info from the database
+        await callback_query.message.delete()
+        import datetime
+        import pytz
+
+        def calculate_overdue_days(planned_delivery_date, actual_delivery_date):
+            """
+            Рассчитывает количество дней просрочки доставки.
+
+            Аргументы:
+            planned_delivery_date (str или datetime): Планируемая дата доставки в формате строки ISO 8601 или объект datetime.
+            actual_delivery_date (str или datetime): Фактическая дата доставки в формате строки ISO 8601 или объект datetime.
+
+            Возвращает:
+            int: Количество дней просрочки (положительное число, если доставка просрочена, 0 или отрицательное, если нет данных или доставка была вовремя).
+            None: Если одна из дат не указана.
+            """
+
+            print(planned_delivery_date, actual_delivery_date)
+            if not planned_delivery_date or not actual_delivery_date:
+                return None  # Если нет данных о датах, то и просрочку не посчитать
+
+            try:
+                # Преобразование строк в datetime, если необходимо
+                if isinstance(planned_delivery_date, str):
+                    planned_delivery_date = datetime.datetime.strptime(planned_delivery_date, "%d.%m.%Y")
+                if isinstance(actual_delivery_date, str):
+                    actual_delivery_date = datetime.datetime.strptime(actual_delivery_date, "%d.%m.%Y")
+
+                # Расчет разницы в днях
+                overdue_days = (actual_delivery_date - planned_delivery_date).days
+
+                return overdue_days if overdue_days > 0 else 0  # Возвращаем 0 если нет просрочки или доставка раньше срока
+
+            except ValueError:
+                print("Ошибка: Некорректный формат даты.  Убедитесь, что дата в формате ДД.ММ.ГГГГ")
+                return None  # Если формат даты некорректный, возвращаем None
+
+        def calculate_delivery_time(sender_city_code, recipient_city_code, weight, length, width, height,
+                                    cost, id):  # Add cost
+            """
+            Функция для расчета срока доставки с использованием API СДЭК (tarifflist).
+            """
+            url = "https://api.cdek.ru/v2/calculator/tarifflist"
+            headers = {
+                "Content-Type": "application/json",
+                'Authorization': f'Bearer {get_token(id)}'
+            }
+
+            # Get current date and time in the format required by the API
+            current_time = datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%S+0000')
+
+            data = {
+                "date": current_time,
+                "type": 1,  # Тип заказа (интернет-магазин)
+                "currency": 0,  # Валюта
+                "lang": "rus",
+                "from_location": {
+                    "code": sender_city_code,
+                },
+                "to_location": {
+                    "code": recipient_city_code
+                },
+                "packages": [
+                    {
+                        "weight": weight,  # Вес в граммах
+                        "length": length,  # Длина в см
+                        "width": width,  # Ширина в см
+                        "height": height,  # Высота в см
+                        "cost": cost  # Объявленная стоимость (для страховки)
+                    }
+                ]
+            }
+
+            print("Data being sent to API:", json.dumps(data))
+            try:
+                response = requests.post(url, headers=headers, data=json.dumps(data))
+                response.raise_for_status()
+                response_data = response.json()
+                print("API Response:", json.dumps(response_data, indent=2))  # Pretty print
+
+                # Extract the tariff codes and delivery periods
+                tariff_codes = response_data.get("tariff_codes", [])
+                if tariff_codes:
+                    # Find the tariff with the same code as the original order
+                    matching_tariff = next((t for t in tariff_codes if t['tariff_code'] == tariff_code),
+                                           None)  # Find the matching tariff
+
+                    if matching_tariff:
+                        delivery_period_min = matching_tariff.get("period_min")
+                        delivery_period_max = matching_tariff.get("period_max")
+                        if delivery_period_min is not None and delivery_period_max is not None:
+                            return f"{delivery_period_min}-{delivery_period_max} дней"
+                        else:
+                            return "Срок доставки не указан"
+                    else:
+                        return "Соответствующий тариф не найден"
+                else:
+                    return "Нет доступных тарифов"
+
+            except requests.exceptions.RequestException as e:
+                print(f"Ошибка при запросе к API СДЭК: {e}")
+                if response is not None:
+                    print(f"Response content: {response.text}")
+                return "Ошибка API"
+            except json.JSONDecodeError as e:
+                print(f"Ошибка при обработке ответа API СДЭК: {e}")
+                return "Ошибка формата ответа API"
+
+        def get_delivery_dates(cdek_number, id):
+            """
+            Функция для получения планируемой и фактической даты доставки и информации о проблемах.
+            """
+            url = f"https://api.cdek.ru/v2/orders?cdek_number={cdek_number}"
+            headers = {
+                "Content-Type": "application/json",
+                'Authorization': f'Bearer {get_token(id)}'
+            }
+
+            planned_delivery_date = "ожидается"
+            actual_delivery_date = "ожидается"
+            delivery_problem_reason = "Нет проблем"  # Значение по умолчанию
+
+            try:
+                response = requests.get(url, headers=headers)
+                response.raise_for_status()
+                response_data = response.json()
+                print("==================================================================")
+                print("Tracking API Response:", json.dumps(response_data, indent=2))
+
+                #  Check if there are any errors
+                if 'errors' in response_data and response_data['errors']:
+                    print(f"Tracking API returned errors: {response_data['errors']}")
+                    return planned_delivery_date, actual_delivery_date, delivery_problem_reason
+
+                # Extract data from the 'entity'
+                if 'entity' in response_data and response_data['entity']:
+                    entity = response_data['entity']
+
+                    # Extract planned delivery date
+                    planned_delivery_date_str = entity.get('planned_delivery_date')
+                    if planned_delivery_date_str:
+                        try:
+                            # Попытка преобразования с форматом даты и времени
+                            planned_delivery_date = datetime.datetime.strptime(planned_delivery_date_str,
+                                                                               "%Y-%m-%dT%H:%M:%S%z").strftime(
+                                "%d.%m.%Y")
+                        except ValueError:
+                            try:
+                                # Попытка преобразования только с форматом даты
+                                planned_delivery_date = datetime.datetime.strptime(planned_delivery_date_str,
+                                                                                   "%Y-%m-%d").strftime("%d.%m.%Y")
+                            except ValueError:
+                                print("Ошибка: Некорректный формат planned_delivery_date из API")
+                                planned_delivery_date = "_ошибка формата_"
+
+                    # Extract actual delivery date from statuses
+                    statuses = entity.get('statuses', [])
+                    for status in statuses:
+                        if status.get('code') == 'DELIVERED':
+                            actual_delivery_date_str = status.get('date_time')
+                            if actual_delivery_date_str:
+                                try:
+                                    # Попытка преобразования с форматом даты и времени
+                                    actual_delivery_date = datetime.datetime.strptime(actual_delivery_date_str,
+                                                                                      "%Y-%m-%dT%H:%M:%S%z").strftime(
+                                        "%d.%m.%Y")
+                                except ValueError:
+                                    try:
+                                        # Попытка преобразования только с форматом даты
+                                        actual_delivery_date = datetime.datetime.strptime(actual_delivery_date_str,
+                                                                                          "%Y-%m-%d").strftime(
+                                            "%d.%m.%Y")
+                                    except ValueError:
+                                        print("Ошибка: Некорректный формат actual_delivery_date из API")
+                                        actual_delivery_date = "_ошибка формата_"
+                                break  # Exit loop after finding delivered status
+                        elif status.get('code') == 'NOT_DELIVERED':
+                            # Get the reason for the delivery problem
+                            delivery_problem_reason_code = status.get('status_reason_code')
+                            if delivery_problem_reason_code:
+                                delivery_problem_reason = f"Проблема с доставкой (код: {delivery_problem_reason_code})"
+                            else:
+                                delivery_problem_reason = "Проблема с доставкой (причина не указана)"
+
+                else:
+                    return planned_delivery_date, actual_delivery_date, delivery_problem_reason  # Or a message indicating no entity found
+
+                return planned_delivery_date, actual_delivery_date, delivery_problem_reason
+
+            except requests.exceptions.RequestException as e:
+                print(f"Ошибка при запросе к Tracking API: {e}")
+                return "_ожидается_", "_ожидается_", "Ошибка API"
+            except json.JSONDecodeError as e:
+                print(f"Ошибка при обработке ответа Tracking API: {e}")
+                return "_ожидается_", "_ожидается_", "Ошибка формата API"
+
+        # Функция для получения названия режима доставки
+        def get_delivery_mode_text(delivery_mode):
+            if delivery_mode == '1':
+                return "Курьер заберет отправление у отправителя"
+            elif delivery_mode == '2':
+                return "Отправление будет доставлено курьером получателю"
+            elif delivery_mode == '3':
+                return "Отправление будет сдано в пункт выдачи СДЭК в городе отправителе"
+            elif delivery_mode == '4':
+                return "Отправление будет забрано получателем из ПВЗ СДЭК"
+            elif delivery_mode == '5':
+                return "Доставка в постамат"
+            else:
+                return "Неизвестен"
+
+        # Функция для получения названия тарифа
+        def get_tariff_name(tariff_code):
+            """
+            Возвращает название тарифа по его коду.
+
+            Args:
+                tariff_code (int): Код тарифа.
+
+            Returns:
+                str: Название тарифа или "Неизвестен", если код не найден.
+            """
+            tariff_names = {
+                1: "Экспресс лайт",
+                7: "Международный экспресс документы дверь-дверь",
+                8: "Международный экспресс грузы дверь-дверь",
+                10: "Экономичный экспресс",
+                11: "Экспресс плюс",
+                15: "Международный экспресс",
+                16: "Импорт",
+                17: "Международный экономичный",
+                57: "Китайский экспресс",
+                62: "СДЭК-Посылка",
+                63: "CDEK Express",
+                136: "Посылка склад-склад",
+                137: "Посылка склад-дверь",
+                138: "Посылка дверь-склад",
+                139: "Посылка дверь-дверь",
+                184: "E-com Standard дверь-дверь",
+                185: "E-com Standard склад-склад",
+                186: "E-com Standard склад-дверь",
+                187: "E-com Standard дверь-склад",
+                231: "Экономичная посылка дверь-дверь",
+                232: "Экономичная посылка дверь-склад",
+                233: "Экономичная посылка склад-дверь",
+                234: "Экономичная посылка склад-склад",
+                291: "E-com Express склад-склад",
+                293: "E-com Express дверь-дверь",
+                294: "E-com Express склад-дверь",
+                295: "E-com Express дверь-склад",
+                358: "Фулфилмент выдача",
+                366: "Посылка дверь-постамат",
+                368: "Посылка склад-постамат",
+                378: "Экономичная посылка склад-постамат",
+                497: "E-com Standard дверь-постамат",
+                498: "E-com Standard склад-постамат",
+                509: "E-com Express дверь-постамат",
+                510: "E-com Express склад-постамат",
+                2261: "Documents Express дверь-дверь",
+                2262: "Documents Express дверь-склад",
+                2263: "Documents Express склад-дверь",
+                2264: "Documents Express склад-склад",
+                2266: "Documents Express дверь-постамат",
+                2267: "Documents Express склад-постамат",
+                2321: "Экономичный экспресс дверь-склад",
+                2322: "Экономичный экспресс склад-дверь",
+                2323: "Экономичный экспресс склад-склад",
+                2360: "Доставка день в день",
+                2536: "Один офис (ИМ)"
+
+            }
+            return tariff_names.get(tariff_code, "Неизвестен")
+
+        print(f"Debug: Callback query data: {callback_query.data}")
+
         cursor.execute("SELECT order_info FROM new_orders WHERE user_id = ? ORDER BY id DESC LIMIT 1",
                        (callback_query.from_user.id,))
         order_info = cursor.fetchone()
+        id = callback_query.from_user.id
         if order_info:
             order_info_str = order_info[0]
-            print(f"Debug: Fetched order info: {order_info_str}")  # Debugging line
+            print(f"Debug: Fetched order info: {order_info_str}")
+
             try:
-                import pytz
-                order_info_dict = ast.literal_eval(order_info_str)  # Safely evaluate the string as a Python dictionary
+                order_info_dict = ast.literal_eval(order_info_str)
                 if 'entity' in order_info_dict:
                     entity_info = order_info_dict['entity']
-                    # Обработка статусов
-                    statuses = entity_info.get('statuses', [])
-                    status_text = ""
-                    moscow_tz = pytz.timezone('Europe/Moscow')
 
-                    for status in statuses:
-                        # Убираем смещение +0000
-                        date_time_str = status['date_time'][:-5]  # Удаляем последние 5 символов
-                        # Парсим строку даты и времени
-                        utc_time = datetime.strptime(date_time_str, '%Y-%m-%dT%H:%M:%S')
-                        # Присваиваем UTC временную зону
-                        utc_time = pytz.utc.localize(utc_time)
-                        # Переводим в московское время
-                        moscow_time = utc_time.astimezone(moscow_tz)
+                    # Получаем режим доставки и название тарифа, используя функции
+                    delivery_mode = entity_info.get('delivery_mode', 'N/A')
+                    delivery_mode_text = get_delivery_mode_text(delivery_mode)
+                    tariff_code = entity_info.get('tariff_code', 'N/A')
+                    tariff_name = get_tariff_name(tariff_code)
+                    print(tariff_name)
 
-                        # Форматируем строку
-                        status_text += f"📌 *Стус:* {status['name']} ({status['code']}) - {moscow_time.strftime('%Y-%m-%d %H:%M:%S')} - {status['city']}\n"
+                    # Extract sender and recipient information, handling potential None values
+                    sender_company = entity_info.get('sender', {}).get('company', 'N/A')
+                    sender_name = entity_info.get('sender', {}).get('name', 'N/A')
+                    recipient_company = entity_info.get('recipient', {}).get('company', 'N/A')
 
-                    # Format the output
-                    entity_text = (
-                        f"📦 *Информация об отправлении:*\n\n"
-                        f"📝 *Номер отправления:* {entity_info.get('cdek_number', 'N/A')}\n\n"
-                        f"  💬 *Комментарий:* {entity_info.get('comment', 'N/A')}\n\n"
-                        f"📍 *Пункт доставки:* {entity_info.get('delivery_point', 'N/A')}\n"
-                        f"  👥 *Отправитель:* {entity_info['sender'].get('company', 'N/A')} - {entity_info['sender'].get('name', 'N/A')}\n"
-                        f"  👥 *Получатель:* {entity_info['recipient'].get('company', 'N/A')} - {entity_info['recipient'].get('name', 'N/A')}\n"
-                        f"  🚚 *Итоговая стоимость заказа: {entity_info.get('delivery_detail', {}).get('total_sum', 'N/A')} руб.\n\n"
-                        f"👤 *Отправитель:* {entity_info.get('sender', {}).get('name', 'N/A')}\n"
-                        f"  📞 *Телефон отправителя:* {entity_info.get('sender', {}).get('phones', [{}])[0].get('number', 'N/A')}\n\n"
-                        # f"🏢 *Компания получателя:* {entity_info.get('recipient', {}).get('company', 'N/A')}\n"
-                        f"👤 *Получатель:* {entity_info.get('recipient', {}).get('name', 'N/A')}\n"
-                        f"  📞 *Телефон получателя:* {entity_info.get('recipient', {}).get('phones', [{}])[0].get('number', 'N/A')}\n\n"
-                        f"📌 *Отправлено из:* {entity_info.get('from_location', {}).get('country', 'N/A')}, {entity_info.get('from_location', {}).get('city', 'N/A')}, {entity_info.get('from_location', {}).get('address', 'N/A')}\n"
-                        f"📌 *Отправлено в:* {entity_info.get('to_location', {}).get('country', 'N/A')}, {entity_info.get('to_location', {}).get('city', 'N/A')}, {entity_info.get('to_location', {}).get('address', 'N/A')}\n\n"
-                        f"📦 *Данные о поссылки:*\n"
-                    )
+                    # Initialize recipient_name with a default value
+                    recipient_name = 'N/A'
+                    recipient_data = entity_info.get('recipient', {})
+                    if recipient_data:  # Check if recipient data exists
+                        recipient_name = recipient_data.get('name', 'N/A')
 
-                    # Добавление информации о пакетах
+                    # Clean up company names (remove quotes and handle potential Unicode issues)
+                    sender_company = sender_company.replace('"', '').encode('utf-8').decode('utf-8', 'replace')
+                    sender_name = sender_name.replace('"', '').encode('utf-8').decode('utf-8', 'replace')
+                    recipient_company = recipient_company.replace('"', '').encode('utf-8').decode('utf-8', 'replace')
+                    recipient_name = recipient_name.replace('"', '').encode('utf-8').decode('utf-8', 'replace')
+
+                    # Формируем текст для вывода
+                    entity_text = "🔍 *Основная информация:*\n"
+                    entity_text += f"- Номер отправления: {entity_info.get('cdek_number', 'N/A')}\n"
+                    entity_text += f"- Пункт доставки: {entity_info.get('delivery_point', 'N/A')}\n"
+                    entity_text += f"- Отправлено в Адрес получения доставки: {entity_info.get('to_location', {}).get('country', 'N/A')}, {entity_info.get('to_location', {}).get('city', 'N/A')}, {entity_info.get('to_location', {}).get('address', 'N/A')}\n"
+                    entity_text += f"- Тариф: {tariff_name} (Код: {tariff_code})\n"
+                    entity_text += f"- Итоговая стоимость заказа услуги (тариф + Дополнительный сбор за объявленную стоимость): {entity_info.get('delivery_detail', {}).get('total_sum', 'N/A')} руб.\n"
+                    entity_text += f"- Оплата за товар: {entity_info.get('items_cost', 'N/A')} ₽\n"  # Предположил название ключа
+                    entity_text += f"- Доп. сбор с получателя за доставку: 0,00 ₽\n"  # Нужно уточнить, где это хранится
+                    entity_text += "- Сумма наложенного платежа, которую взяли с получателя:\n\n"  # Нужно уточнить, где это хранится
+
+                    # entity_text += "✅Информация о вручении:\n\n"
+                    entity_text += "👥 *Контакты отправителя:*\n"
+                    entity_text += f"- Отправитель: {sender_company} - {sender_name}\n"
+                    entity_text += f"- 📞 Телефон отправителя: {entity_info.get('sender', {}).get('phones', [{}])[0].get('number', 'N/A')}\n"
+
+                    entity_text += "👥 *Контакты получателя:*\n"
+                    entity_text += f"- Получатель: {recipient_company} - {recipient_name}\n"
+                    entity_text += f"- 📞 Телефон получателя: {entity_info.get('recipient', {}).get('phones', [{}])[0].get('number', 'N/A')}\n\n"
+
+                    entity_text += "🎁 *Содержимое посылки:*\n"
+                    i = 1
                     for package in entity_info.get('packages', []):
-                        entity_text += (
-                            f"    - 📦 Номер место: {package.get('number', 'N/A')}, "
-                            f"Вес: {package.get('weight', 'N/A')} г, "
-                            f"Размеры: {package.get('length', 'N/A')}x{package.get('width', 'N/A')}x{package.get('height', 'N/A')} см\n"
-                            f"      *Содержимое:*\n"
-                        )
+                        entity_text += f"{i}) Номер места: {package.get('number', 'N/A')}, Вес: {package.get('weight', 'N/A')} г, Размеры: {package.get('length', 'N/A')}x{package.get('width', 'N/A')}x{package.get('height', 'N/A')} см\n"
                         for item in package.get('items', []):
-                            entity_text += (
-                                f"        - 🎁 {item.get('name', 'N/A')}: "
-                                f"Вес: {item.get('weight', 'N/A')} г, "
-                                f"Стоимость: {item.get('cost', 'N/A')} руб.\n"
-                            )
+                            item_name = item.get('name', 'N/A').replace('_', '\\_')  # Экранируем _
+                            entity_text += f"- {item_name}: Вес: {item.get('weight', 'N/A')} г, Стоимость: {item.get('cost', 'N/A')} руб.\n"
+                        i += 1
 
-                    # entity_text += "🔚 *Конец информации.*"                    # Add your code to process and send the entity information
+                    # Добавляем раздел о проблемах доставки
+                    delivery_problems_section = ""
+                    if 'statuses' in entity_info and len(entity_info['statuses']) > 0:
+                        last_status = entity_info['statuses'][-1]
+                        if 'delivery_detail' in last_status and last_status['delivery_detail']:
+                            delivery_problems_section = (
+                                "\n⚠️ *Проблемы доставки до двери (комментарий от курьера):*\n"
+                                f"- {last_status['delivery_detail']}\n\n"
+                            )
+                        else:
+                            delivery_problems_section = "\n✅ *Проблем с доставкой нет*\n\n"
+                    else:
+                        delivery_problems_section = "\nℹ️ *Информация о статусе доставки отсутствует*\n\n"
+
+                    entity_text += delivery_problems_section
+
+                    # def format_delivery_problems(entity_info):
+                    #     """Форматирует информацию о проблемах доставки согласно спецификации СДЭК"""
+                    #     problems = []
+                    #     status_codes = {s['code']: s for s in entity_info.get('statuses', [])}
+                    #
+                    #     # 1. Проверка статусов, указывающих на проблемы
+                    #     problem_statuses = {
+                    #         'NOT_DELIVERED': '❌ Доставка не осуществлена',
+                    #         'PARTIAL_DELIVERED': '⚠️ Частичная доставка',
+                    #         'RETURNED': '↩️ Посылка возвращена',
+                    #         'RETURNED_TO_SENDER_CITY_WAREHOUSE': '↩️ Возврат в город отправителя',
+                    #         'RETURNED_TO_RECIPIENT_CITY_WAREHOUSE': '↩️ Возврат на склад доставки',
+                    #         'LOST': '❗ Посылка утеряна',
+                    #         'DAMAGED': '❗ Посылка повреждена'
+                    #     }
+                    #
+                    #     for code, message in problem_statuses.items():
+                    #         if code in status_codes:
+                    #             status = status_codes[code]
+                    #             problem_details = f"{message} ({status.get('city', '')})"
+                    #             if 'reason' in status:
+                    #                 problem_details += f"\n   - Причина: {status['reason']}"
+                    #             if 'courier_comment' in status:
+                    #                 problem_details += f"\n   -Комментарий курьера: {status['courier_comment']}"
+                    #             problems.append(problem_details)
+                    #
+                    #     # 2. Проверка переносов доставки
+                    #     if 'calls' in entity_info:
+                    #         for call in entity_info['calls'].get('rescheduled_calls', []):
+                    #             problems.append(
+                    #                 f"⏱ Перенос доставки на {call.get('date_next', '?')}\n"
+                    #                 f"   └─ Причина: {call.get('comment', 'не указана')}"
+                    #             )
+                    #     from datetime import datetime
+                    #     # 3. Проверка задержки доставки
+                    #     planned_date = entity_info.get('planned_delivery_date')
+                    #     actual_date = entity_info.get('delivery_date')
+                    #     if planned_date and actual_date and planned_date != actual_date:
+                    #         try:
+                    #             delta = (datetime.strptime(actual_date, "%Y-%m-%d") -
+                    #                      datetime.strptime(planned_date, "%Y-%m-%d")).days
+                    #             if delta > 0:
+                    #                 problems.append(f"⌛ Задержка доставки: {delta} дней")
+                    #         except ValueError:
+                    #             pass
+                    #
+                    #     # 4. Форматирование результата
+                    #     if problems:
+                    #         problems_text = "\n".join([f"- {p}" for p in problems])
+                    #         return (
+                    #             "\n⚠️ *Проблемы с доставкой:*\n"
+                    #             f"{problems_text}\n"
+                    #             "ℹ️ *Рекомендация:* Уточните детали в службе поддержки СДЭК\n"
+                    #         )
+                    #     return "\n✅ *Проблем с доставкой не зафиксировано*\n"
+                    #
+                    # # Использование в основном коде:
+                    # entity_text += format_delivery_problems(entity_info)
+                    entity_text += f"\n"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    # entity_text += f"\n🚚 *Режим доставки:* {delivery_mode_text}\n"
+                    # entity_text += f"📋 Тариф: {tariff_name} (Код: {tariff_code})\n\n"
+
+                    # Extract data for delivery time calculation
+                    sender_city_code = entity_info.get('from_location', {}).get('code', None)
+                    recipient_city_code = entity_info.get('to_location', {}).get('code', None)
+                    tariff_code = entity_info.get('tariff_code', None)
+                    # Assuming all packages have the same dimensions; you might need to average or find the largest
+                    if entity_info.get('packages'):
+                        first_package = entity_info['packages'][0]
+                        weight = first_package.get('weight', 1000)  # Default weight
+                        length = first_package.get('length', 10)  # Default dimension
+                        width = first_package.get('width', 10)  # Default dimension
+                        height = first_package.get('height', 10)  # Default dimension
+                        cost = first_package.get('cost', 10)  # Default dimension
+                        print(cost)
+                    else:
+                        weight = 1000
+                        length = 10
+                        width = 10
+                        height = 10
+                        cost = 10
+
+                    # Calculate delivery time (replace with actual API call)
+                    if sender_city_code and recipient_city_code and tariff_code:
+                        delivery_time = calculate_delivery_time(sender_city_code, recipient_city_code, weight, length,
+                                                                width, height, cost, id)
+                    else:
+                        delivery_time = "Недостаточно данных для расчета"
+                    print(delivery_time)
+                    entity_text += "📅 *Сроки:*\n"
+                    entity_text += f"- Прайсовый срок: {delivery_time}\n"
+                    # Inside your main code, where you create entity_text
+                    cdek_number = entity_info.get('cdek_number')  # Get the CDEK number
+                    if cdek_number:
+                        planned_delivery_date, actual_delivery_date, delivery_problem_reason = get_delivery_dates(
+                            cdek_number, id)
+                    else:
+                        planned_delivery_date = "ожидается"  # Handle the case where cdek_number is missing
+                        actual_delivery_date = "ожидается"
+                        delivery_problem_reason = "Номер СДЭК отсутствует"  # Handle the case where cdek_number is missing
+
+
+
+
+
+                    # Добавляем информацию о планируемой доставке
+                    if planned_delivery_date and planned_delivery_date != "ожидается":
+                        entity_text += f"- Планируемая дата доставки: {planned_delivery_date}\n"
+                    else:
+                        entity_text += "*Информация о планируемой доставке:* Отсутствует\n"
+                    # Добавляем информацию о хранении на ПВЗ (если есть)
+                    if 'warehouse' in entity_info and 'storage' in entity_info['warehouse']:
+                        storage_date = entity_info['warehouse']['storage'].get('end_date')
+                        if storage_date:
+                            try:
+                                storage_date = datetime.datetime.strptime(storage_date, "%Y-%m-%d").strftime("%d.%m.%Y")
+                                entity_text += f"- Хранение на ПВЗ до: {storage_date}\n"
+                            except ValueError:
+                                entity_text += "- Хранение на ПВЗ до: не указано\n"
+                        else:
+                            entity_text += "- Хранение на ПВЗ до: не указано\n"
+                    else:
+                        entity_text += "- Хранение на ПВЗ до: не предусмотрено\n"
+
+
+
+
+
+
+
+                    # Выводим информацию из related_entities текстом
+                    related_entities = order_info_dict.get('related_entities', [])
+                    if related_entities:
+                        entity_text += "- Дата доставки :"
+                        for delivery_info in related_entities:
+                            delivery_date_str = delivery_info.get('date')
+                            time_from_str = delivery_info.get('time_from')
+                            time_to_str = delivery_info.get('time_to')
+
+                            # Форматируем дату и время (если они есть)
+                            formatted_delivery_date = ""
+                            formatted_time_from = ""
+                            formatted_time_to = ""
+
+                            if delivery_date_str:
+                                try:
+                                    delivery_date = datetime.datetime.strptime(delivery_date_str, "%Y-%m-%d")
+                                    formatted_delivery_date = delivery_date.strftime("%d.%m.%Y")
+                                except ValueError:
+                                    formatted_delivery_date = "Ошибка формата даты"
+
+                            if time_from_str:
+                                formatted_time_from = time_from_str  # Время уже в нужном формате
+
+                            if time_to_str:
+                                formatted_time_to = time_to_str  # Время уже в нужном формате
+
+                            # Собираем строку информации
+                            delivery_text = ""
+                            if formatted_delivery_date:
+                                delivery_text += f"  Дата: {formatted_delivery_date}, "
+                            if formatted_time_from:
+                                delivery_text += f"с {formatted_time_from} "
+                            if formatted_time_to:
+                                delivery_text += f"до {formatted_time_to}"
+
+                            # Убираем последнюю запятую и пробел, если есть
+                            delivery_text = delivery_text.rstrip(', ')
+
+                            if delivery_text:
+                                entity_text += f"{delivery_text}\n"
+                            else:
+                                entity_text += "- Нет данных о планируемой доставке\n"
+
+
+                    else:
+                        entity_text += "- Информация о планируемой доставке: Отсутствует\n"
+
+                    entity_text += f"- Фактическая доставка: {actual_delivery_date}\n"
+
+                    # Рассчитываем просрочку
+                    overdue = calculate_overdue_days(planned_delivery_date, actual_delivery_date)
+
+                    # if overdue is not None:  # Проверяем, что вернулось не None (значит, даты были валидны)
+                    #     entity_text += f"- Просрочка: {overdue} дней\n"
+                    # else:
+                    #     entity_text += "- Просрочка: Нет данных (ожидается доставка или некорректные даты)\n"
+
+                    # Добавляем информацию о проблеме с доставкой
+                    # entity_text += f"- Проблемы с доставкой: {delivery_problem_reason}\n"
+                    entity_text += f"💬 Комментарий: {entity_info.get('comment', 'N/A')}\n"
+
+                    print(entity_text)
+
                     keyboard = InlineKeyboardMarkup()
                     keyboard.add(
                         InlineKeyboardButton("Телефон офиса ответственного за вручение посылки",
-                                             callback_data='delivery_office_phone'),
-                        InlineKeyboardButton("Назад", callback_data='go_back')
+                                             callback_data='delivery_office_phone')
                     )
-                    await bot.send_message(callback_query.from_user.id, entity_text, reply_markup=keyboard)
+                    # Добавляем кнопку "Поделиться"
+                    keyboard.add(
+                        InlineKeyboardButton("↗️ Поделиться",
+                                             switch_inline_query=f"Данные по посылке: {entity_text}")
+                    )
+
+                    max_length = 4000
+                    if len(entity_text) > max_length:
+                        split_index = entity_text.rfind('\n', 0, max_length)
+                        if split_index == -1:
+                            split_index = max_length
+
+                        first_part = entity_text[:split_index]
+                        second_part = entity_text[split_index:]
+
+                        await bot.send_message(callback_query.from_user.id, first_part, parse_mode='Markdown')
+                        await bot.send_message(callback_query.from_user.id, second_part, reply_markup=keyboard,
+                                               parse_mode='Markdown')
+                    else:
+                        await bot.send_message(callback_query.from_user.id, entity_text, reply_markup=keyboard,
+                                               parse_mode='Markdown')
+
                 else:
-                    await bot.send_message(callback_query.from_user.id, "Пожалуйста введите номер накладной по вашему договору.")
+                    await bot.send_message(callback_query.from_user.id,
+                                           "Пожалуйста введите номер накладной по вашему договору.")
+
             except (ValueError, SyntaxError) as e:
-                await bot.send_message(callback_query.from_user.id, "Ошибка декодирования информации о заказе. Попробуйте еще раз позже.")
+                await bot.send_message(callback_query.from_user.id,
+                                       "Ошибка декодирования информации о заказе. Попробуйте еще раз позже.")
                 print(f"Error: {e}")
+            except Exception as e:
+                await bot.send_message(callback_query.from_user.id, f"Произошла непредвиденная ошибка: {e}")
+                print(f"Unexpected error: {e}")
         else:
             await bot.send_message(callback_query.from_user.id, "Информация о заказе не найдена.")
 
+
     elif callback_query.data == 'parcel_data2':
+        await callback_query.message.delete()
         # Fetch order info from the database
         cursor.execute("SELECT order_info FROM new_orders WHERE user_id = ? ORDER BY id DESC LIMIT 1",
                        (callback_query.from_user.id,))
@@ -1983,16 +3392,73 @@ async def process_callback(callback_query: types.CallbackQuery):
             order_info_str = order_info[0]
             print(f"Debug: Fetched order info: {order_info_str}")  # Debugging line
             try:
+                print("-----------------------------------------------------")
                 order_info_dict = ast.literal_eval(order_info_str)  # Safely evaluate the string as a Python dictionary
+                print("order_info_dict")
                 if 'entity' in order_info_dict:
+                    print("entity")
                     entity_info = order_info_dict['entity']
                     # Обработка статусов
                     statuses = entity_info.get('statuses', [])
                     status_text = ""
                     for status in statuses:
-                        status_text += f"📌 *Стус:* {status['name']} ({status['code']}) - {status['date_time']} - {status['city']}\n"
+                        status_text += f"📌 *Статус:* {status['name']} ({status['code']}) - {status['date_time']} - {status['city']}\n"
+                    print("status")
+                    # Определяем способ доставки
+                    delivery_mode = entity_info.get('delivery_mode', 'N/A')
+                    delivery_mode_text = "Неизвестен"
+                    if delivery_mode == '1':
+                        delivery_mode_text = "Курьер заберет отправление у отправителя"
+                    elif delivery_mode == '2':
+                        delivery_mode_text = "Отправление будет доставлено курьером получателю"
+                    elif delivery_mode == '3':
+                        delivery_mode_text = "Отправление будет сдано в пункт выдачи СДЭК в городе отправителе"
+                    elif delivery_mode == '4':
+                        delivery_mode_text = "Отправление будет забрано получателем из ПВЗ СДЭК"
+                    else:
+                        delivery_mode_text = f""  # Для отладки
+                    print(delivery_mode_text)
+                    # Определяем тариф (по коду, требуется соответствие кодов и названий тарифов!)
+                    tariff_code = entity_info.get('tariff_code', 'N/A')
+                    tariff_name = "Неизвестен"  # Значение по умолчанию
+                    if tariff_code == 1:
+                        tariff_name = "Экспресс лайт"  # или "Express лайт" - уточните написание
+                    elif tariff_code == 3:
+                        tariff_name = "Супер-экспресс до 10:00"
+                    elif tariff_code == 5:
+                        tariff_name = "Супер-экспресс до 18:00"
+                    elif tariff_code == 10:
+                        tariff_name = "Экономичный экспресс"
+                    elif tariff_code == 11:
+                        tariff_name = "Экспресс плюс"
+                    elif tariff_code == 15:
+                        tariff_name = "Международный экспресс"
+                    elif tariff_code == 16:
+                        tariff_name = "Импорт"
+                    elif tariff_code == 17:
+                        tariff_name = "Международный экономичный"
+                    elif tariff_code == 57:
+                        tariff_name = "Китайский экспресс"
+                    elif tariff_code == 62:
+                        tariff_name = "СДЭК-Посылка"  # или "CDEK-Посылка"
+                    elif tariff_code == 63:
+                        tariff_name = "CDEK Express"
+                    elif tariff_code == 136:
+                        tariff_name = "Посылка дверь-дверь"  # Самый популярный для e-commerce
+                    elif tariff_code == 137:
+                        tariff_name = "Посылка склад-склад"
+                    elif tariff_code == 139:
+                        tariff_name = "Экономичная посылка склад-склад"
+                    elif tariff_code == 233:
+                        tariff_name = "Prime"
+                    elif tariff_code == 291:
+                        tariff_name = "LTL"
+                    elif tariff_code == 292:
+                        tariff_name = "FTL"
+                    else:
+                        tariff_name = f"Неизвестный тариф (код {tariff_code})"  # Для отладки
 
-                    # Format the output
+                    print(tariff_name)
                     entity_text = (
                         f"📦 *Информация об отправлении:*\n\n"
                         f"🔑 *UUID:* {entity_info.get('uuid', 'N/A')}\n"
@@ -2002,6 +3468,7 @@ async def process_callback(callback_query: types.CallbackQuery):
                         f"  👥 *Отправитель:* {entity_info['sender'].get('company', 'N/A')} - {entity_info['sender'].get('name', 'N/A')}\n"
                         f"  👥 *Получатель:* {entity_info['recipient'].get('company', 'N/A')} - {entity_info['recipient'].get('name', 'N/A')}\n"
                         f"📋 *Тарифный код:* {entity_info.get('tariff_code', 'N/A')}\n"
+                        f"📋 *Тариф:* {tariff_name} (Код: {tariff_code})\n"  # Добавлено название тарифа
                         f"🏢 *Пункт отправления:* {entity_info.get('shipment_point', 'N/A')}\n"
                         f"💵 *Стоимость товаров (в валюте):* {entity_info.get('items_cost_currency', 'N/A')}\n"
                         f"🚚 *Итоговая стоимость заказа:* {entity_info.get('delivery_recipient_cost', {}).get('value', 'N/A')}\n\n"
@@ -2012,8 +3479,10 @@ async def process_callback(callback_query: types.CallbackQuery):
                         f"  📞 *Телефон получателя:* {entity_info.get('recipient', {}).get('phones', [{}])[0].get('number', 'N/A')}\n"
                         f"📌 *Отправлено из:* {entity_info.get('from_location', {}).get('city', 'N/A')}, {entity_info.get('from_location', {}).get('country', 'N/A')}\n"
                         f"📌 *Отправлено в:* {entity_info.get('to_location', {}).get('city', 'N/A')}, {entity_info.get('to_location', {}).get('country', 'N/A')}\n"
-                        f"{status_text}"
+                        f"🚚 *Режим доставки:* {delivery_mode_text}\n"  # Добавлено название режима доставки
+                        # f"{status_text}"
                     )
+                    print(entity_text)
                     # Add your code to process and send the entity information
                     keyboard = InlineKeyboardMarkup()
                     keyboard.add(
@@ -2021,9 +3490,26 @@ async def process_callback(callback_query: types.CallbackQuery):
                                              callback_data='delivery_office_phone'),
                         InlineKeyboardButton("Назад", callback_data='go_back')
                     )
-                    await bot.send_message(callback_query.from_user.id, entity_text, reply_markup=keyboard)
+                    max_length = 4000
+
+                    if len(entity_text) > max_length:
+                        # Находим последнее допустимое место для разрыва строки, чтобы не сломать Markdown
+                        split_index = entity_text.rfind('\n', 0, max_length)  # Ищем последнюю новую строку
+
+                        if split_index == -1:
+                            split_index = max_length  # Если нет новой строки, просто обрезаем по максимальной длине
+
+                        first_part = entity_text[:split_index]
+                        second_part = entity_text[split_index:]
+
+                        await bot.send_message(callback_query.from_user.id, first_part)
+                        await bot.send_message(callback_query.from_user.id, second_part, reply_markup=keyboard)
+                    else:
+                        await bot.send_message(callback_query.from_user.id, entity_text, reply_markup=keyboard)
                 else:
-                    await bot.send_message(callback_query.from_user.id, "Пожалуйста введите номер накладжной по вашему договору.")
+                    await bot.send_message(callback_query.from_user.id,
+                                           "Пожалуйста введите номер накладной по вашему договору.")
+
             except (ValueError, SyntaxError) as e:
                 await bot.send_message(callback_query.from_user.id, "Ошибка декодирования информации о заказе. Попробуйте еще раз позже.")
                 print(f"Error: {e}")
@@ -2033,9 +3519,11 @@ async def process_callback(callback_query: types.CallbackQuery):
 
 
     elif callback_query.data == 'delivery_office_phone':
+        await callback_query.message.delete()
         cursor.execute("SELECT order_info FROM new_orders WHERE user_id = ? ORDER BY id DESC LIMIT 1",
                        (callback_query.from_user.id,))
         order_info = cursor.fetchone()
+        id = callback_query.from_user.id
         if order_info:
             order_info_str = order_info[0]
             print(f"Debug: Fetched order info: {order_info_str}")  # Debugging line
@@ -2043,15 +3531,16 @@ async def process_callback(callback_query: types.CallbackQuery):
                 order_info_dict = ast.literal_eval(order_info_str)  # Safely evaluate the string as a Python dictionary
                 if 'entity' in order_info_dict:
                     entity_info = order_info_dict['entity']
+
                     delivery_point_code = entity_info.get('delivery_point')
                     print(delivery_point_code)
                     from Delivery_Arrangement_Information import deliverypoints, format_deliverypoint_info
                     if delivery_point_code:
-                        response = deliverypoints(delivery_point_code)
+                        response = deliverypoints(id, delivery_point_code)
                         if response:
                             formatted_info = format_deliverypoint_info(response[0])
                             await callback_query.message.answer(
-                                f"Обратитесь к закрепленному менеджеру:\n\n{formatted_info}")
+                                f"{formatted_info}")
                         else:
                             await callback_query.message.answer("Информация о пункте выдачи не найдена.")
                     else:
@@ -2070,12 +3559,19 @@ async def process_callback(callback_query: types.CallbackQuery):
 
 
 
+
+
+
+
+
+
     elif callback_query.data == 'change_order':
+        await callback_query.message.delete()
         keyboard_markup = types.InlineKeyboardMarkup(row_width=1)
         buttons = [
             types.InlineKeyboardButton(text="Изменить ФИО получателя", callback_data='change_fullname'),
             types.InlineKeyboardButton(text="Изменить телефон получателя", callback_data='change_phone'),
-            types.InlineKeyboardButton(text="Изменить адрес получателя", callback_data='change_address')
+            types.InlineKeyboardButton(text="Изменить адрес\офис доставкиТариф", callback_data='change_address')
         ]
         keyboard_markup.add(*buttons)
         await bot.send_message(callback_query.from_user.id, "Выберите что хотите изменить",
@@ -2083,18 +3579,21 @@ async def process_callback(callback_query: types.CallbackQuery):
     elif callback_query.data == 'change_address':
         keyboard_markup = types.InlineKeyboardMarkup(row_width=1)
         buttons = [
-            types.InlineKeyboardButton(text="Изменить адрес получателя", callback_data='address'),
-            types.InlineKeyboardButton(text="Изменить ПВЗ в городе получателе", callback_data='change_pickup_point'),
-            types.InlineKeyboardButton(text="Изменить город получателя (город назначения + адрес получателя)", callback_data='change_city')
+            types.InlineKeyboardButton(text="Изменить адрес доставки (для режима «…до двери»)", callback_data='address'),
+            types.InlineKeyboardButton(text="Изменить офис доставки (ПВЗ)", callback_data='change_pickup_point'),
+            # types.InlineKeyboardButton(text="Изменить город получателя", callback_data='change_city')
         ]
         keyboard_markup.add(*buttons)
         await bot.send_message(callback_query.from_user.id, "Выберите что хотите изменить",
                                reply_markup=keyboard_markup)
 
     elif callback_query.data == 'cancel_delivery':
-        await bot.send_message(callback_query.from_user.id, "Функция отмены доставки в разработке.")
-    elif callback_query.data == 'change_delivery_date':
+        await callback_query.message.delete()
 
+        await otmena_zakaza(callback_query)
+        # await bot.send_message(callback_query.from_user.id, "Функция отмены доставки в разработке.")
+    elif callback_query.data == 'change_delivery_date':
+        await callback_query.message.delete()
         # await bot.send_message(callback_query.from_user.id, "Функция изменения даты доставки в разработке.")
         await change_delivery_date(callback_query)
 
@@ -2102,6 +3601,7 @@ async def process_callback(callback_query: types.CallbackQuery):
 
 
     elif callback_query.data == 'edit_cod_amount':
+        await callback_query.message.delete()
         keyboard_markup = types.InlineKeyboardMarkup(row_width=1)
         buttons = [
             types.InlineKeyboardButton(text="Отменить все наложенные платежи", callback_data='otmena_vcex_plat'),
@@ -2113,18 +3613,55 @@ async def process_callback(callback_query: types.CallbackQuery):
                                reply_markup=keyboard_markup)
 
     elif callback_query.data == 'otmena_vcex_plat':
-        from izmeneniya import nalozh_pay_otmena_vse
-        cursor.execute('SELECT order_info FROM new_orders WHERE user_id = ?', (callback_query.from_user.id,))
+        from izmeneniya import nalozh_pay_otmena_vse_3
+        id = callback_query.from_user.id
+        cursor.execute('SELECT order_info FROM new_orders WHERE user_id = ? ORDER BY id DESC LIMIT 1', (callback_query.from_user.id,))
         order_info = cursor.fetchone()
-
+        print(order_info)
         if order_info:
-            order_info_str = order_info[0]
+            try:
+                order_info_str = order_info[0]
+                order_info_dict = ast.literal_eval(order_info_str)
 
-            order_info_dict = ast.literal_eval(order_info_str)
-            uuid = order_info_dict['entity']['uuid']
-            nalozh_pay_otmena = nalozh_pay_otmena_vse(uuid)
-            await callback_query.message.answer(
-                f"Отменены все наложенные платежи:\n\n{nalozh_pay_otmena}")
+                # Извлекаем необходимые поля из order_info_dict для передачи в nalozh_pay_otmena_vse
+                uuid = order_info_dict['entity']['uuid']
+                tariff_code = order_info_dict['entity'].get('tariff_code',
+                                                            None)  # Используйте .get(), чтобы избежать ошибки, если ключ отсутствует
+                sender_city_id = order_info_dict['entity'].get('sender_city_id', None)
+                delivery_recipient_cost_value = order_info_dict['entity'].get('delivery_recipient_cost', {}).get('value',
+                                                                                                                 None)  # извлекаем значение наложенного платежа
+                # и другие поля, которые могут потребоваться для полного обновления заказа
+
+                nalozh_pay_otmena = nalozh_pay_otmena_vse_3(
+                    cdek_number=uuid,
+                    tariff_code=tariff_code,
+                    sender_city_id=sender_city_id,
+                    delivery_recipient_cost_value=delivery_recipient_cost_value,
+                    id = id,
+                    # Передайте остальные необходимые поля
+                )
+
+                # Проверяем ответ от API и отправляем соответствующее сообщение
+                if isinstance(nalozh_pay_otmena, dict) and 'entity' in nalozh_pay_otmena and nalozh_pay_otmena[
+                    'entity'].get('uuid') == uuid and 'requests' in nalozh_pay_otmena and len(
+                        nalozh_pay_otmena['requests']) > 0 and nalozh_pay_otmena['requests'][0]['state'] == 'ACCEPTED':
+                    await callback_query.message.answer(
+                        "Наложенный платеж успешно отменен!")  # или другое сообщение об успехе
+                else:
+                    await callback_query.message.answer(
+                        f"Произошла ошибка при отмене наложенного платежа: {nalozh_pay_otmena}")  # Выводим ответ API для отладки
+
+            except Exception as e:  # Ловим возможные ошибки при обработке или отмене
+                await callback_query.message.answer(f"Произошла ошибка: {e}")
+
+        else:
+            await callback_query.message.answer("Информация о заказе не найдена.")
+
+
+
+
+
+
 
 
 
@@ -2190,6 +3727,69 @@ async def process_callback(callback_query: types.CallbackQuery):
 
 
 
+# # Клавиатура с датами
+# def create_date_keyboard():
+#     keyboard = InlineKeyboardMarkup(row_width=2)
+#     # Начинаем с завтрашнего дня
+#     today = datetime.now() + timedelta(days=1)
+#     for i in range(5):
+#         date = today + timedelta(days=i)
+#         date_str = date.strftime('%Y-%m-%d')
+#         keyboard.add(InlineKeyboardButton(text=date_str, callback_data=f"date_{date_str}"))
+#     return keyboard
+#
+# # Функция для создания клавиатуры с временем
+# def create_time_keyboard():
+#     keyboard = InlineKeyboardMarkup(row_width=3)
+#     keyboard.add(InlineKeyboardButton(text="09:00-14:00", callback_data="time_09:00-14:00"))
+#     keyboard.add(InlineKeyboardButton(text="14:00-18:00", callback_data="time_14:00-18:00"))
+#     keyboard.add(InlineKeyboardButton(text="09:00-18:00", callback_data="time_09:00-18:00"))
+#     return keyboard
+#
+# # Обработчик выбора даты
+# async def change_delivery_date(callback_query: types.CallbackQuery):
+#     await bot.send_message(callback_query.from_user.id, "Выберите дату доставки:", reply_markup=create_date_keyboard())
+#     await Form.change_delivery_date_date.set()
+#
+# # Обработчик выбора даты
+# @dp.callback_query_handler(lambda c: c.data.startswith('date_'), state=Form.change_delivery_date_date)
+# async def process_change_delivery_date_date(callback_query: types.CallbackQuery, state: FSMContext):
+#     date = callback_query.data.split('_')[1]
+#     await state.update_data(change_delivery_date_date=date)
+#     await bot.send_message(callback_query.from_user.id, "Выберите время доставки:", reply_markup=create_time_keyboard())
+#     await Form.change_delivery_date_time_from.set()
+#
+# # Обработчик выбора времени
+# @dp.callback_query_handler(lambda c: c.data.startswith('time_'), state=Form.change_delivery_date_time_from)
+# async def process_change_delivery_date_time_from(callback_query: types.CallbackQuery, state: FSMContext):
+#     time_range = callback_query.data.split('_')[1]
+#     time_from = time_range.split('-')[0]
+#     time_to = time_range.split('-')[1]
+#
+#     await state.update_data(change_delivery_date_time_from=time_from)
+#     await state.update_data(change_delivery_date_time_to=time_to) # Записываем time_to
+#     await bot.send_message(callback_query.from_user.id, "Введите комментарий к изменению даты доставки:")
+#     await Form.change_delivery_date_comment.set()
+#
+# # Обработчик ввода комментария
+# @dp.message_handler(state=Form.change_delivery_date_comment)
+# async def process_change_delivery_date_comment(message: types.Message, state: FSMContext):
+#     print('-------------------------------------------------------')
+#     comment = message.text
+#     print(comment)
+#     await state.update_data(change_delivery_date_comment=comment)
+#
+#     # Получаем все данные из FSM
+#     data = await state.get_data()
+#     print(data)
+#     date = data['change_delivery_date_date']
+#     time_from = data['change_delivery_date_time_from']
+#     time_to = data['change_delivery_date_time_to']
+#     comment = data['change_delivery_date_comment']
+#
+#
+#     # Вызываем функцию для отправки запроса в API СДЭК
+#     await send_delivery_date_change_request(message, state, date, time_from, time_to, comment)
 # Клавиатура с датами
 def create_date_keyboard():
     keyboard = InlineKeyboardMarkup(row_width=2)
@@ -2199,6 +3799,9 @@ def create_date_keyboard():
         date = today + timedelta(days=i)
         date_str = date.strftime('%Y-%m-%d')
         keyboard.add(InlineKeyboardButton(text=date_str, callback_data=f"date_{date_str}"))
+
+    # Добавляем кнопку "Отмена"
+    keyboard.add(InlineKeyboardButton(text="❌ Отменить ввод", callback_data="cancel_change_date"))
     return keyboard
 
 # Функция для создания клавиатуры с временем
@@ -2207,6 +3810,9 @@ def create_time_keyboard():
     keyboard.add(InlineKeyboardButton(text="09:00-14:00", callback_data="time_09:00-14:00"))
     keyboard.add(InlineKeyboardButton(text="14:00-18:00", callback_data="time_14:00-18:00"))
     keyboard.add(InlineKeyboardButton(text="09:00-18:00", callback_data="time_09:00-18:00"))
+
+    # Добавляем кнопку "Отмена"
+    keyboard.add(InlineKeyboardButton(text="❌ Отменить ввод", callback_data="cancel_change_time"))
     return keyboard
 
 # Обработчик выбора даты
@@ -2231,7 +3837,7 @@ async def process_change_delivery_date_time_from(callback_query: types.CallbackQ
 
     await state.update_data(change_delivery_date_time_from=time_from)
     await state.update_data(change_delivery_date_time_to=time_to) # Записываем time_to
-    await bot.send_message(callback_query.from_user.id, "Введите комментарий к изменению даты доставки:")
+    await bot.send_message(callback_query.from_user.id, "Введите комментарий к изменению даты доставки:", reply_markup=cancel_keyboard) # cancel_keyboard already defined!
     await Form.change_delivery_date_comment.set()
 
 # Обработчик ввода комментария
@@ -2249,23 +3855,41 @@ async def process_change_delivery_date_comment(message: types.Message, state: FS
     time_from = data['change_delivery_date_time_from']
     time_to = data['change_delivery_date_time_to']
     comment = data['change_delivery_date_comment']
+    user_id = message.from_user.id
 
 
     # Вызываем функцию для отправки запроса в API СДЭК
-    await send_delivery_date_change_request(message, state, date, time_from, time_to, comment)
+    await send_delivery_date_change_request(message, state, date, time_from, time_to, comment, user_id)
 
+# Обработчик отмены для выбора даты
+@dp.callback_query_handler(lambda c: c.data == "cancel_change_date", state=Form.change_delivery_date_date)
+async def cancel_change_date(callback_query: types.CallbackQuery, state: FSMContext):
+    await state.finish()
+    await bot.send_message(callback_query.from_user.id, "Ввод даты отменен.")
+
+# Обработчик отмены для выбора времени
+@dp.callback_query_handler(lambda c: c.data == "cancel_change_time", state=Form.change_delivery_date_time_from)
+async def cancel_change_time(callback_query: types.CallbackQuery, state: FSMContext):
+    await state.reset_state(with_data=False) # or state.finish()
+    await bot.send_message(callback_query.from_user.id, "Ввод времени отменен.")
+
+# Обработчик отмены для комментария
+@dp.callback_query_handler(lambda c: c.data == 'cancel', state=Form.change_delivery_date_comment)
+async def cancel_comment(callback_query: types.CallbackQuery, state: FSMContext):
+    await state.finish()
+    await bot.send_message(callback_query.from_user.id, "Ввод комментария отменен.")
 
 
 
 
 
 #Функция запроса к API
-async def send_delivery_date_change_request(message: types.Message, state: FSMContext, date, time_from, time_to, comment):
+async def send_delivery_date_change_request(message: types.Message, state: FSMContext, date, time_from, time_to, comment, user_id):
     import requests
     import json
     from info import get_token
 
-    token = get_token()
+    token = get_token(user_id)
     print(token)
 
     headers = {

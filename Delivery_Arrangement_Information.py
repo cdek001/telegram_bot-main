@@ -2,8 +2,8 @@ from token_generator import get_token
 import requests
 
 
-def deliverypoints(q):
-    token = get_token()
+def deliverypoints(id, q):
+    token = get_token(id)
     url = 'https://api.cdek.ru/v2/deliverypoints'
     headers = {
         'Authorization': f'Bearer {token}',
@@ -21,7 +21,7 @@ def format_deliverypoint_info(info):
     formatted_info = (
         f"Код: {info.get('code', 'N/A')}\n"
         f"Название: {info.get('name', 'N/A')}\n"
-        f"UUID: {info.get('uuid', 'N/A')}\n"
+        # f"UUID: {info.get('uuid', 'N/A')}\n"
         f"Комментарий к адресу: {info.get('address_comment', 'N/A')}\n"
         f"Ближайшая станция: {info.get('nearest_station', 'N/A')}\n"
         f"Время работы: {info.get('work_time', 'N/A')}\n"
@@ -29,7 +29,7 @@ def format_deliverypoint_info(info):
         f"Электронная почта: {info.get('email', 'N/A')}\n"
         f"Примечание: {info.get('note', 'N/A')}\n"
         f"Тип: {info.get('type', 'N/A')}\n"
-        f"Код владельца: {info.get('owner_code', 'N/A')}\n"
+        # f"Код владельца: {info.get('owner_code', 'N/A')}\n"
         f"Только прием: {'Да' if info.get('take_only') else 'Нет'}\n"
         f"Пункт выдачи: {'Да' if info.get('is_handout') else 'Нет'}\n"
         f"Прием заказов: {'Да' if info.get('is_reception') else 'Нет'}\n"

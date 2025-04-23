@@ -189,4 +189,84 @@ from token_generator import get_token
 #     conn.close()
 
 
+entity_info = order_info_dict['entity']
+# Обработка статусов
+statuses = entity_info.get('statuses', [])
+status_text = ""
+moscow_tz = pytz.timezone('Europe/Moscow')
+
+for status in statuses:
+    # Убираем смещение +0000
+    date_time_str = status['date_time'][:-5]  # Удаляем последние 5 символов
+    # Парсим строку даты и времени
+    utc_time = datetime.strptime(date_time_str, '%Y-%m-%dT%H:%M:%S')
+    # Присваиваем UTC временную зону
+    utc_time = pytz.utc.localize(utc_time)
+    # Переводим в московское время
+    moscow_time = utc_time.astimezone(moscow_tz)
+
+    # Форматируем строку
+    status_text += f"📌 *Стус:* {status['name']} ({status['code']}) - {moscow_time.strftime('%Y-%m-%d %H:%M:%S')} - {status['city']}\n"
+
+# Format the output
+entity_text = (
+    f"📦 *Информация об отправлении:*\n\n"
+    f"📝 *Номер отправления:* {entity_info.get('cdek_number', 'N/A')}\n\n"
+    f"  💬 *Комментарий:* {entity_info.get('comment', 'N/A')}\n\n"
+    f"📍 *Пункт доставки:* {entity_info.get('delivery_point', 'N/A')}\n"
+    f"  👥 *Отправитель:* {entity_info['sender'].get('company', 'N/A')} - {entity_info['sender'].get('name', 'N/A')}\n"
+    f"  👥 *Получатель:* {entity_info['recipient'].get('company', 'N/A')} - {entity_info['recipient'].get('name', 'N/A')}\n"
+    f"  🚚 *Итоговая стоимость заказа: {entity_info.get('delivery_detail', {}).get('total_sum', 'N/A')} руб.\n\n"
+    f"👤 *Отправитель:* {entity_info.get('sender', {}).get('name', 'N/A')}\n"
+    f"  📞 *Телефон отправителя:* {entity_info.get('sender', {}).get('phones', [{}])[0].get('number', 'N/A')}\n\n"
+    # f"🏢 *Компания получателя:* {entity_info.get('recipient', {}).get('company', 'N/A')}\n"
+    f"👤 *Получатель:* {entity_info.get('recipient', {}).get('name', 'N/A')}\n"
+    f"  📞 *Телефон получателя:* {entity_info.get('recipient', {}).get('phones', [{}])[0].get('number', 'N/A')}\n\n"
+    f"📌 *Отправлено из:* {entity_info.get('from_location', {}).get('country', 'N/A')}, {entity_info.get('from_location', {}).get('city', 'N/A')}, {entity_info.get('from_location', {}).get('address', 'N/A')}\n"
+    f"📌 *Отправлено в:* {entity_info.get('to_location', {}).get('country', 'N/A')}, {entity_info.get('to_location', {}).get('city', 'N/A')}, {entity_info.get('to_location', {}).get('address', 'N/A')}\n\n"
+    f"📦 *Данные о посылки:*\n"
+)
+
+# Добавление информации о пакетах
+for package in entity_info.get('packages', []):
+    entity_text += (
+        f"    - 📦 Номер место: {package.get('number', 'N/A')}, "
+        f"Вес: {package.get('weight', 'N/A')} г, "
+        f"Размеры: {package.get('length', 'N/A')}x{package.get('width', 'N/A')}x{package.get('height', 'N/A')} см\n"
+        f"      *Содержимое:*\n"
+    )
+    for item in package.get('items', []):
+        entity_text += (
+            f"        - 🎁 {item.get('name', 'N/A')}: "
+            f"Вес: {item.get('weight', 'N/A')} г, "
+            f"Стоимость: {item.get('cost', 'N/A')} руб.\n"
+        )
+
+# entity_text += "🔚 *Конец информации.*"                    # Add your code to process and send the entity information
+keyboard = InlineKeyboardMarkup()
+keyboard.add(
+    InlineKeyboardButton("Телефон офиса ответственного за вручение посылки",
+                         callback_data='delivery_office_phone'),
+    InlineKeyboardButton("Назад", callback_data='go_back')
+)
+await bot.send_message(callback_query.from_user.id, entity_text, reply_markup=keyboard)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
