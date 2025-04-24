@@ -2503,11 +2503,11 @@ async def process_callback(callback_query: types.CallbackQuery):
     # ... (начало process_callback) ...
     print("начало process_callback")
     if callback_query.data == 'track_parcel':
-        # Удаляем сообщение с кнопками (можно оставить, если хочешь)
-        try:
-            await callback_query.message.delete()
-        except Exception as e:
-            logger.warning(f"User {id}: Не удалось удалить сообщение при track_parcel: {e}")
+        # # Удаляем сообщение с кнопками (можно оставить, если хочешь)
+        # try:
+        #     await callback_query.message.delete()
+        # except Exception as e:
+        #     logger.warning(f"User {id}: Не удалось удалить сообщение при track_parcel: {e}")
 
         import datetime
         import pytz
@@ -2745,7 +2745,7 @@ async def process_callback(callback_query: types.CallbackQuery):
 
 
     elif callback_query.data == 'track_parcel2':
-        await callback_query.message.delete()
+        # await callback_query.message.delete()
         # Fetch order info from the database
         cursor.execute("SELECT order_info FROM new_orders WHERE user_id = ? ORDER BY id DESC LIMIT 1", (callback_query.from_user.id,))
         order_info = cursor.fetchone()
@@ -2773,7 +2773,7 @@ async def process_callback(callback_query: types.CallbackQuery):
 
 
     elif callback_query.data == 'parcel_data':
-        await callback_query.message.delete()
+        # await callback_query.message.delete()
         import datetime
         import pytz
 
@@ -3383,7 +3383,7 @@ async def process_callback(callback_query: types.CallbackQuery):
 
 
     elif callback_query.data == 'parcel_data2':
-        await callback_query.message.delete()
+        # await callback_query.message.delete()
         # Fetch order info from the database
         cursor.execute("SELECT order_info FROM new_orders WHERE user_id = ? ORDER BY id DESC LIMIT 1",
                        (callback_query.from_user.id,))
@@ -3519,7 +3519,7 @@ async def process_callback(callback_query: types.CallbackQuery):
 
 
     elif callback_query.data == 'delivery_office_phone':
-        await callback_query.message.delete()
+        # await callback_query.message.delete()
         cursor.execute("SELECT order_info FROM new_orders WHERE user_id = ? ORDER BY id DESC LIMIT 1",
                        (callback_query.from_user.id,))
         order_info = cursor.fetchone()
@@ -3566,7 +3566,7 @@ async def process_callback(callback_query: types.CallbackQuery):
 
 
     elif callback_query.data == 'change_order':
-        await callback_query.message.delete()
+        # await callback_query.message.delete()
         keyboard_markup = types.InlineKeyboardMarkup(row_width=1)
         buttons = [
             types.InlineKeyboardButton(text="Изменить ФИО получателя", callback_data='change_fullname'),
@@ -3588,12 +3588,12 @@ async def process_callback(callback_query: types.CallbackQuery):
                                reply_markup=keyboard_markup)
 
     elif callback_query.data == 'cancel_delivery':
-        await callback_query.message.delete()
+        # await callback_query.message.delete()
 
         await otmena_zakaza(callback_query)
         # await bot.send_message(callback_query.from_user.id, "Функция отмены доставки в разработке.")
     elif callback_query.data == 'change_delivery_date':
-        await callback_query.message.delete()
+        # await callback_query.message.delete()
         # await bot.send_message(callback_query.from_user.id, "Функция изменения даты доставки в разработке.")
         await change_delivery_date(callback_query)
 
@@ -3601,7 +3601,7 @@ async def process_callback(callback_query: types.CallbackQuery):
 
 
     elif callback_query.data == 'edit_cod_amount':
-        await callback_query.message.delete()
+        # await callback_query.message.delete()
         keyboard_markup = types.InlineKeyboardMarkup(row_width=1)
         buttons = [
             types.InlineKeyboardButton(text="Отменить все наложенные платежи", callback_data='otmena_vcex_plat'),
