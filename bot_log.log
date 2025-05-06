@@ -1,0 +1,495 @@
+2025-04-24 11:59:59,654 - aiogram - INFO - Bot: CDEK [@Cdek_ru_net_bot]
+2025-04-24 11:59:59,749 - aiogram - WARNING - Updates were skipped successfully.
+2025-04-24 11:59:59,749 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2025-04-24 12:00:11,774 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:6980] in chat [private:5169943586]
+2025-04-24 12:00:11,851 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611701]: [success] (in 77 ms)
+2025-04-24 12:00:13,775 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:6982] in chat [private:5169943586]
+2025-04-24 12:00:14,038 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611702]: [success] (in 263 ms)
+2025-04-24 12:00:15,567 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994554618396878] from user [ID:5169943586] for message [ID:6983] in chat [private:5169943586] with data: track_parcel originally posted by user [ID:7351691962]
+2025-04-24 12:00:15,709 - __main__ - INFO - User 5169943586: No statuses found for order N/A
+2025-04-24 12:00:15,710 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994554618396878] from user [ID:5169943586] for message [ID:6983] in chat [private:5169943586] with data: track_parcel originally posted by user [ID:7351691962]
+2025-04-24 12:00:15,710 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611703]: [success] (in 143 ms)
+2025-04-24 12:00:16,385 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994552002904548] from user [ID:5169943586] for message [ID:6983] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-04-24 12:00:16,466 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994552002904548] from user [ID:5169943586] for message [ID:6983] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-04-24 12:00:16,466 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611704]: [success] (in 82 ms)
+2025-04-24 12:00:29,626 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:6986] in chat [private:5169943586]
+2025-04-24 12:00:29,708 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611705]: [success] (in 82 ms)
+2025-04-24 12:00:31,160 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:6988] in chat [private:5169943586]
+2025-04-24 12:00:31,367 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611706]: [success] (in 207 ms)
+2025-04-24 12:00:32,671 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994551911653505] from user [ID:5169943586] for message [ID:6989] in chat [private:5169943586] with data: track_parcel originally posted by user [ID:7351691962]
+2025-04-24 12:00:32,678 - __main__ - INFO - User 5169943586: Displaying tracking history for 10104176031
+2025-04-24 12:00:32,918 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994551911653505] from user [ID:5169943586] for message [ID:6989] in chat [private:5169943586] with data: track_parcel originally posted by user [ID:7351691962]
+2025-04-24 12:00:32,918 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611707]: [success] (in 247 ms)
+2025-04-24 12:00:35,263 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994551387952173] from user [ID:5169943586] for message [ID:6989] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-04-24 12:00:35,951 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994551387952173] from user [ID:5169943586] for message [ID:6989] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-04-24 12:00:35,951 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611708]: [success] (in 688 ms)
+2025-04-24 12:02:02,406 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994554584352524] from user [ID:5169943586] for message [ID:6989] in chat [private:5169943586] with data: change_order originally posted by user [ID:7351691962]
+2025-04-24 12:02:02,599 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994554584352524] from user [ID:5169943586] for message [ID:6989] in chat [private:5169943586] with data: change_order originally posted by user [ID:7351691962]
+2025-04-24 12:02:02,599 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611709]: [success] (in 193 ms)
+2025-04-24 12:12:54,843 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994553554477962] from user [ID:5169943586] for message [ID:6989] in chat [private:5169943586] with data: track_parcel originally posted by user [ID:7351691962]
+2025-04-24 12:12:54,850 - __main__ - INFO - User 5169943586: Displaying tracking history for 10104176031
+2025-04-24 12:12:54,979 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994553554477962] from user [ID:5169943586] for message [ID:6989] in chat [private:5169943586] with data: track_parcel originally posted by user [ID:7351691962]
+2025-04-24 12:12:54,979 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611710]: [success] (in 136 ms)
+2025-04-24 14:11:56,653 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:6994] in chat [private:1032555966]
+2025-04-24 14:11:56,721 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611711]: [success] (in 68 ms)
+2025-04-25 11:47:22,395 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:7196734552088433009] from user [ID:5970587633] for message [ID:6943] in chat [private:5970587633] with data: otsl originally posted by user [ID:7351691962]
+2025-04-25 11:47:22,562 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:7196734552088433009] from user [ID:5970587633] for message [ID:6943] in chat [private:5970587633] with data: otsl originally posted by user [ID:7351691962]
+2025-04-25 11:47:22,562 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611712]: [success] (in 167 ms)
+2025-04-25 11:47:41,303 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:6997] in chat [private:5970587633]
+2025-04-25 11:47:41,514 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611713]: [success] (in 211 ms)
+2025-04-25 11:50:04,419 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:6999] in chat [private:5970587633]
+2025-04-25 11:50:04,711 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611714]: [success] (in 292 ms)
+2025-04-26 04:51:58,248 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:7196734549350006277] from user [ID:5970587633] for message [ID:7000] in chat [private:5970587633] with data: otsl originally posted by user [ID:7351691962]
+2025-04-26 04:51:58,314 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:7196734549350006277] from user [ID:5970587633] for message [ID:7000] in chat [private:5970587633] with data: otsl originally posted by user [ID:7351691962]
+2025-04-26 04:51:58,314 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611715]: [success] (in 66 ms)
+2025-04-26 04:52:11,978 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7002] in chat [private:5970587633]
+2025-04-26 04:52:12,176 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611716]: [success] (in 198 ms)
+2025-04-26 04:52:47,465 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:7196734549941177467] from user [ID:5970587633] for message [ID:7003] in chat [private:5970587633] with data: otsl originally posted by user [ID:7351691962]
+2025-04-26 04:52:47,564 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:7196734549941177467] from user [ID:5970587633] for message [ID:7003] in chat [private:5970587633] with data: otsl originally posted by user [ID:7351691962]
+2025-04-26 04:52:47,564 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611717]: [success] (in 100 ms)
+2025-04-26 04:53:25,387 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7005] in chat [private:5970587633]
+2025-04-26 04:53:25,568 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611718]: [success] (in 181 ms)
+2025-04-26 05:15:12,266 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7007] in chat [private:5970587633]
+2025-04-26 05:15:12,630 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611719]: [success] (in 364 ms)
+2025-04-28 10:28:39,877 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7009] in chat [private:1211168593]
+2025-04-28 10:28:39,949 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611720]: [success] (in 73 ms)
+2025-04-28 13:22:47,802 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7011] in chat [private:719133526]
+2025-04-28 13:22:47,972 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611721]: [success] (in 170 ms)
+2025-04-28 13:23:13,964 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3088654977657503087] from user [ID:719133526] for message [ID:7012] in chat [private:719133526] with data: docs originally posted by user [ID:7351691962]
+2025-04-28 13:23:14,104 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3088654977657503087] from user [ID:719133526] for message [ID:7012] in chat [private:719133526] with data: docs originally posted by user [ID:7351691962]
+2025-04-28 13:23:14,104 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611722]: [success] (in 140 ms)
+2025-04-28 13:39:16,709 - aiogram.contrib.middlewares.logging - INFO - Received chat member update for user [ID:719133526]. Old state: {'user': {'id': 7351691962, 'is_bot': True, 'first_name': 'CDEK', 'username': 'Cdek_ru_net_bot'}, 'status': 'member'} New state: {'user': {'id': 7351691962, 'is_bot': True, 'first_name': 'CDEK', 'username': 'Cdek_ru_net_bot'}, 'status': 'kicked', 'until_date': 10800} 
+2025-04-28 13:39:16,716 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611723]: [success] (in 7 ms)
+2025-04-28 16:55:37,921 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7014] in chat [private:5169943586]
+2025-04-28 16:55:38,028 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611724]: [success] (in 107 ms)
+2025-04-30 18:46:42,968 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527746930652020] from user [ID:6536870230] for message [ID:6868] in chat [private:6536870230] with data: cancel_order originally posted by user [ID:7351691962]
+2025-04-30 18:46:42,972 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527746930652020] from user [ID:6536870230] for message [ID:6868] in chat [private:6536870230] with data: cancel_order originally posted by user [ID:7351691962]
+2025-04-30 18:46:42,973 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611725]: [success] (in 6 ms)
+2025-04-30 18:46:45,443 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7016] in chat [private:6536870230]
+2025-04-30 18:46:45,610 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611726]: [success] (in 167 ms)
+2025-04-30 18:46:52,075 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7018] in chat [private:6536870230]
+2025-04-30 18:46:52,418 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611727]: [success] (in 343 ms)
+2025-04-30 18:46:53,953 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527747512590348] from user [ID:6536870230] for message [ID:7019] in chat [private:6536870230] with data: cancel_delivery originally posted by user [ID:7351691962]
+2025-04-30 18:46:54,215 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527747512590348] from user [ID:6536870230] for message [ID:7019] in chat [private:6536870230] with data: cancel_delivery originally posted by user [ID:7351691962]
+2025-04-30 18:46:54,215 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611728]: [success] (in 262 ms)
+2025-04-30 18:46:57,254 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527746256849768] from user [ID:6536870230] for message [ID:7019] in chat [private:6536870230] with data: track_parcel originally posted by user [ID:7351691962]
+2025-04-30 18:46:57,268 - __main__ - INFO - User 6536870230: Displaying tracking history for 10111988209
+2025-04-30 18:46:57,402 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527746256849768] from user [ID:6536870230] for message [ID:7019] in chat [private:6536870230] with data: track_parcel originally posted by user [ID:7351691962]
+2025-04-30 18:46:57,402 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611729]: [success] (in 148 ms)
+2025-04-30 18:47:04,504 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527747384396987] from user [ID:6536870230] for message [ID:7020] in chat [private:6536870230] with data: confirm_cancel1 originally posted by user [ID:7351691962]
+2025-04-30 18:47:04,746 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527747384396987] from user [ID:6536870230] for message [ID:7020] in chat [private:6536870230] with data: confirm_cancel1 originally posted by user [ID:7351691962]
+2025-04-30 18:47:04,747 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611730]: [success] (in 243 ms)
+2025-04-30 18:49:45,894 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527747830358741] from user [ID:6536870230] for message [ID:7019] in chat [private:6536870230] with data: track_parcel originally posted by user [ID:7351691962]
+2025-04-30 18:49:45,898 - __main__ - INFO - User 6536870230: Displaying tracking history for 10111988209
+2025-04-30 18:49:46,195 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527747830358741] from user [ID:6536870230] for message [ID:7019] in chat [private:6536870230] with data: track_parcel originally posted by user [ID:7351691962]
+2025-04-30 18:49:46,196 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611731]: [success] (in 303 ms)
+2025-04-30 21:03:03,727 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7024] in chat [private:6536870230]
+2025-04-30 21:03:03,806 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611732]: [success] (in 79 ms)
+2025-04-30 21:03:07,764 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7026] in chat [private:6536870230]
+2025-04-30 21:03:08,002 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611733]: [success] (in 238 ms)
+2025-04-30 21:03:11,153 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527749168100526] from user [ID:6536870230] for message [ID:7027] in chat [private:6536870230] with data: track_parcel originally posted by user [ID:7351691962]
+2025-04-30 21:03:11,162 - __main__ - INFO - User 6536870230: Displaying tracking history for 10110038984
+2025-04-30 21:03:11,289 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527749168100526] from user [ID:6536870230] for message [ID:7027] in chat [private:6536870230] with data: track_parcel originally posted by user [ID:7351691962]
+2025-04-30 21:03:11,289 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611734]: [success] (in 136 ms)
+2025-04-30 21:03:19,382 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527747239523559] from user [ID:6536870230] for message [ID:7027] in chat [private:6536870230] with data: parcel_data originally posted by user [ID:7351691962]
+2025-04-30 21:03:19,842 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527747239523559] from user [ID:6536870230] for message [ID:7027] in chat [private:6536870230] with data: parcel_data originally posted by user [ID:7351691962]
+2025-04-30 21:03:19,843 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611735]: [success] (in 461 ms)
+2025-04-30 21:05:22,116 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527748299829213] from user [ID:6536870230] for message [ID:7027] in chat [private:6536870230] with data: change_order originally posted by user [ID:7351691962]
+2025-04-30 21:05:22,190 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527748299829213] from user [ID:6536870230] for message [ID:7027] in chat [private:6536870230] with data: change_order originally posted by user [ID:7351691962]
+2025-04-30 21:05:22,191 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611736]: [success] (in 75 ms)
+2025-04-30 21:05:25,391 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527749007643074] from user [ID:6536870230] for message [ID:7030] in chat [private:6536870230] with data: change_address originally posted by user [ID:7351691962]
+2025-04-30 21:05:25,575 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527749007643074] from user [ID:6536870230] for message [ID:7030] in chat [private:6536870230] with data: change_address originally posted by user [ID:7351691962]
+2025-04-30 21:05:25,576 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611737]: [success] (in 185 ms)
+2025-04-30 21:05:30,866 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527749553333482] from user [ID:6536870230] for message [ID:7031] in chat [private:6536870230] with data: change_pickup_point originally posted by user [ID:7351691962]
+2025-04-30 21:05:30,980 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527749553333482] from user [ID:6536870230] for message [ID:7031] in chat [private:6536870230] with data: change_pickup_point originally posted by user [ID:7351691962]
+2025-04-30 21:05:30,981 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611738]: [success] (in 115 ms)
+2025-04-30 21:05:46,564 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7033] in chat [private:6536870230]
+2025-04-30 21:05:46,979 - httpx - INFO - HTTP Request: POST https://cleaner.dadata.ru/api/v1/clean/address "HTTP/1.1 403 "
+2025-04-30 21:05:47,272 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611739]: [success] (in 709 ms)
+2025-04-30 22:30:29,803 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7036] in chat [private:6536870230]
+2025-04-30 22:30:29,900 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611740]: [success] (in 97 ms)
+2025-04-30 22:30:36,253 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7038] in chat [private:6536870230]
+2025-04-30 22:30:36,522 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611741]: [success] (in 270 ms)
+2025-04-30 22:30:45,764 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527746299127067] from user [ID:6536870230] for message [ID:7039] in chat [private:6536870230] with data: change_order originally posted by user [ID:7351691962]
+2025-04-30 22:30:45,902 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527746299127067] from user [ID:6536870230] for message [ID:7039] in chat [private:6536870230] with data: change_order originally posted by user [ID:7351691962]
+2025-04-30 22:30:45,903 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611742]: [success] (in 139 ms)
+2025-04-30 22:30:47,109 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527748763270064] from user [ID:6536870230] for message [ID:7040] in chat [private:6536870230] with data: change_address originally posted by user [ID:7351691962]
+2025-04-30 22:30:47,195 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527748763270064] from user [ID:6536870230] for message [ID:7040] in chat [private:6536870230] with data: change_address originally posted by user [ID:7351691962]
+2025-04-30 22:30:47,195 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611743]: [success] (in 86 ms)
+2025-04-30 22:30:48,094 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527746095407194] from user [ID:6536870230] for message [ID:7041] in chat [private:6536870230] with data: change_pickup_point originally posted by user [ID:7351691962]
+2025-04-30 22:30:48,176 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527746095407194] from user [ID:6536870230] for message [ID:7041] in chat [private:6536870230] with data: change_pickup_point originally posted by user [ID:7351691962]
+2025-04-30 22:30:48,176 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611744]: [success] (in 82 ms)
+2025-04-30 22:30:56,149 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7043] in chat [private:6536870230]
+2025-04-30 22:30:56,335 - httpx - INFO - HTTP Request: POST https://cleaner.dadata.ru/api/v1/clean/address "HTTP/1.1 403 "
+2025-04-30 22:30:56,505 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611745]: [success] (in 356 ms)
+2025-04-30 22:31:06,898 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7046] in chat [private:6536870230]
+2025-04-30 22:31:06,899 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611746]: [success] (in 2 ms)
+2025-04-30 22:31:17,652 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527748264809854] from user [ID:6536870230] for message [ID:7041] in chat [private:6536870230] with data: change_pickup_point originally posted by user [ID:7351691962]
+2025-04-30 22:31:17,746 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527748264809854] from user [ID:6536870230] for message [ID:7041] in chat [private:6536870230] with data: change_pickup_point originally posted by user [ID:7351691962]
+2025-04-30 22:31:17,746 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611747]: [success] (in 94 ms)
+2025-04-30 22:31:22,520 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7048] in chat [private:6536870230]
+2025-04-30 22:31:22,686 - httpx - INFO - HTTP Request: POST https://cleaner.dadata.ru/api/v1/clean/address "HTTP/1.1 403 "
+2025-04-30 22:31:22,916 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611748]: [success] (in 396 ms)
+2025-04-30 22:31:27,295 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527748625486083] from user [ID:6536870230] for message [ID:7041] in chat [private:6536870230] with data: change_pickup_point originally posted by user [ID:7351691962]
+2025-04-30 22:31:27,407 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527748625486083] from user [ID:6536870230] for message [ID:7041] in chat [private:6536870230] with data: change_pickup_point originally posted by user [ID:7351691962]
+2025-04-30 22:31:27,408 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611749]: [success] (in 113 ms)
+2025-04-30 22:31:36,470 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7052] in chat [private:6536870230]
+2025-04-30 22:31:36,623 - httpx - INFO - HTTP Request: POST https://cleaner.dadata.ru/api/v1/clean/address "HTTP/1.1 403 "
+2025-04-30 22:31:36,784 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611750]: [success] (in 314 ms)
+2025-05-01 02:22:13,069 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 128, in check_result
+    raise exceptions.TelegramAPIError(description)
+aiogram.utils.exceptions.TelegramAPIError: Bad Gateway
+2025-05-02 02:38:09,947 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 128, in check_result
+    raise exceptions.TelegramAPIError(description)
+aiogram.utils.exceptions.TelegramAPIError: Bad Gateway
+2025-05-02 12:51:38,586 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 1167, in __aenter__
+    self._resp = await self._coro
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 586, in _request
+    await resp.start(conn)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client_reqrep.py", line 905, in start
+    message, payload = await protocol.read()  # type: ignore[union-attr]
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\streams.py", line 616, in read
+    await self._waiter
+aiohttp.client_exceptions.ClientOSError: [WinError 121] Превышен таймаут семафора
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 142, in make_request
+    raise exceptions.NetworkError(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientOSError: [WinError 121] Превышен таймаут семафора
+2025-05-02 14:50:21,596 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 1167, in __aenter__
+    self._resp = await self._coro
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 586, in _request
+    await resp.start(conn)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client_reqrep.py", line 905, in start
+    message, payload = await protocol.read()  # type: ignore[union-attr]
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\streams.py", line 616, in read
+    await self._waiter
+aiohttp.client_exceptions.ClientOSError: [WinError 121] Превышен таймаут семафора
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 142, in make_request
+    raise exceptions.NetworkError(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientOSError: [WinError 121] Превышен таймаут семафора
+2025-05-02 18:16:05,567 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 980, in _wrap_create_connection
+    return await self._loop.create_connection(*args, **kwargs)  # type: ignore[return-value]  # noqa
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1103, in create_connection
+    transport, protocol = await self._create_connection_transport(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1133, in _create_connection_transport
+    await waiter
+ConnectionAbortedError: SSL handshake is taking longer than 60.0 seconds: aborting the connection
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 1167, in __aenter__
+    self._resp = await self._coro
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 562, in _request
+    conn = await self._connector.connect(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 540, in connect
+    proto = await self._create_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 901, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1209, in _create_direct_connection
+    raise last_exc
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1178, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 988, in _wrap_create_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [None]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 142, in make_request
+    raise exceptions.NetworkError(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [None]
+2025-05-04 12:03:33,357 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7055] in chat [private:6536870230]
+2025-05-04 12:03:33,430 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611751]: [success] (in 73 ms)
+2025-05-04 12:03:38,969 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7057] in chat [private:6536870230]
+2025-05-04 12:03:39,446 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611752]: [success] (in 477 ms)
+2025-05-04 12:03:41,422 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527748089130858] from user [ID:6536870230] for message [ID:7058] in chat [private:6536870230] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-04 12:03:41,982 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527748089130858] from user [ID:6536870230] for message [ID:7058] in chat [private:6536870230] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-04 12:03:41,983 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611753]: [success] (in 562 ms)
+2025-05-04 12:03:43,048 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527745866116086] from user [ID:6536870230] for message [ID:7059] in chat [private:6536870230] with data: delivery_office_phone originally posted by user [ID:7351691962]
+2025-05-04 12:03:43,282 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527745866116086] from user [ID:6536870230] for message [ID:7059] in chat [private:6536870230] with data: delivery_office_phone originally posted by user [ID:7351691962]
+2025-05-04 12:03:43,282 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611754]: [success] (in 234 ms)
+2025-05-05 08:59:44,533 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7061] in chat [private:5169943586]
+2025-05-05 08:59:44,676 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611755]: [success] (in 143 ms)
+2025-05-05 12:40:41,357 - aiogram.dispatcher.dispatcher - INFO - Stop polling...
+2025-05-05 12:40:41,359 - aiogram - WARNING - Goodbye!
+2025-05-05 12:40:49,977 - aiogram - INFO - Bot: CDEK [@Cdek_ru_net_bot]
+2025-05-05 12:40:50,072 - aiogram - WARNING - Updates were skipped successfully.
+2025-05-05 12:40:50,073 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2025-05-05 12:40:54,725 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7063] in chat [private:5169943586]
+2025-05-05 12:40:54,825 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611756]: [success] (in 100 ms)
+2025-05-05 18:57:12,576 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7065] in chat [private:6536870230]
+2025-05-05 18:57:12,650 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611757]: [success] (in 74 ms)
+2025-05-05 18:57:18,845 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7067] in chat [private:6536870230]
+2025-05-05 18:57:19,094 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611758]: [success] (in 249 ms)
+2025-05-05 18:57:20,930 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527746630999072] from user [ID:6536870230] for message [ID:7068] in chat [private:6536870230] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-05 18:57:21,293 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527746630999072] from user [ID:6536870230] for message [ID:7068] in chat [private:6536870230] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-05 18:57:21,293 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611759]: [success] (in 363 ms)
+2025-05-05 18:57:25,184 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527749541217225] from user [ID:6536870230] for message [ID:7068] in chat [private:6536870230] with data: track_parcel originally posted by user [ID:7351691962]
+2025-05-05 18:57:25,190 - __main__ - INFO - User 6536870230: Displaying tracking history for 10110971838
+2025-05-05 18:57:25,311 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527749541217225] from user [ID:6536870230] for message [ID:7068] in chat [private:6536870230] with data: track_parcel originally posted by user [ID:7351691962]
+2025-05-05 18:57:25,312 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611760]: [success] (in 128 ms)
+2025-05-05 20:18:19,898 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7071] in chat [private:6536870230]
+2025-05-05 20:18:19,989 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611761]: [success] (in 91 ms)
+2025-05-05 20:18:26,572 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7073] in chat [private:6536870230]
+2025-05-05 20:18:26,680 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611762]: [success] (in 108 ms)
+2025-05-05 20:18:30,644 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527747762101938] from user [ID:6536870230] for message [ID:7072] in chat [private:6536870230] with data: cancel_order_im originally posted by user [ID:7351691962]
+2025-05-05 20:18:30,646 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527747762101938] from user [ID:6536870230] for message [ID:7072] in chat [private:6536870230] with data: cancel_order_im originally posted by user [ID:7351691962]
+2025-05-05 20:18:30,647 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611763]: [success] (in 3 ms)
+2025-05-05 20:18:37,453 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7075] in chat [private:6536870230]
+2025-05-05 20:18:37,526 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611764]: [success] (in 73 ms)
+2025-05-05 20:18:48,768 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7077] in chat [private:6536870230]
+2025-05-05 20:18:49,136 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611765]: [success] (in 368 ms)
+2025-05-05 20:18:52,042 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527746910767502] from user [ID:6536870230] for message [ID:7078] in chat [private:6536870230] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-05 20:18:52,543 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527746910767502] from user [ID:6536870230] for message [ID:7078] in chat [private:6536870230] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-05 20:18:52,543 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611766]: [success] (in 501 ms)
+2025-05-05 20:19:02,346 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527747662462209] from user [ID:6536870230] for message [ID:7078] in chat [private:6536870230] with data: track_parcel originally posted by user [ID:7351691962]
+2025-05-05 20:19:02,353 - __main__ - INFO - User 6536870230: Displaying tracking history for 10112915649
+2025-05-05 20:19:02,490 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527747662462209] from user [ID:6536870230] for message [ID:7078] in chat [private:6536870230] with data: track_parcel originally posted by user [ID:7351691962]
+2025-05-05 20:19:02,491 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611767]: [success] (in 145 ms)
+2025-05-06 02:12:26,303 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 1167, in __aenter__
+    self._resp = await self._coro
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 586, in _request
+    await resp.start(conn)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client_reqrep.py", line 905, in start
+    message, payload = await protocol.read()  # type: ignore[union-attr]
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\streams.py", line 616, in read
+    await self._waiter
+aiohttp.client_exceptions.ClientOSError: [WinError 121] Превышен таймаут семафора
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 142, in make_request
+    raise exceptions.NetworkError(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientOSError: [WinError 121] Превышен таймаут семафора
+2025-05-06 02:13:14,300 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 1167, in __aenter__
+    self._resp = await self._coro
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 586, in _request
+    await resp.start(conn)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client_reqrep.py", line 905, in start
+    message, payload = await protocol.read()  # type: ignore[union-attr]
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\streams.py", line 616, in read
+    await self._waiter
+aiohttp.client_exceptions.ClientOSError: [WinError 121] Превышен таймаут семафора
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 142, in make_request
+    raise exceptions.NetworkError(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientOSError: [WinError 121] Превышен таймаут семафора
+2025-05-06 02:13:40,305 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 980, in _wrap_create_connection
+    return await self._loop.create_connection(*args, **kwargs)  # type: ignore[return-value]  # noqa
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\proactor_events.py", line 709, in sock_connect
+    return await self._proactor.connect(sock, address)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 826, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 613, in finish_connect
+    ov.getresult()
+OSError: [WinError 121] Превышен таймаут семафора
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 1167, in __aenter__
+    self._resp = await self._coro
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 562, in _request
+    conn = await self._connector.connect(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 540, in connect
+    proto = await self._create_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 901, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1209, in _create_direct_connection
+    raise last_exc
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1178, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 988, in _wrap_create_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Превышен таймаут семафора]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 142, in make_request
+    raise exceptions.NetworkError(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Превышен таймаут семафора]
+2025-05-06 02:14:06,388 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 980, in _wrap_create_connection
+    return await self._loop.create_connection(*args, **kwargs)  # type: ignore[return-value]  # noqa
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\proactor_events.py", line 709, in sock_connect
+    return await self._proactor.connect(sock, address)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 826, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 613, in finish_connect
+    ov.getresult()
+OSError: [WinError 121] Превышен таймаут семафора
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 1167, in __aenter__
+    self._resp = await self._coro
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 562, in _request
+    conn = await self._connector.connect(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 540, in connect
+    proto = await self._create_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 901, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1209, in _create_direct_connection
+    raise last_exc
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1178, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 988, in _wrap_create_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Превышен таймаут семафора]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 142, in make_request
+    raise exceptions.NetworkError(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Превышен таймаут семафора]
+2025-05-06 08:48:33,922 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7081] in chat [private:5169943586]
+2025-05-06 08:48:34,034 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611768]: [success] (in 112 ms)
+2025-05-06 08:48:35,560 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7083] in chat [private:5169943586]
+2025-05-06 08:48:35,971 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611769]: [success] (in 411 ms)
+2025-05-06 08:48:37,787 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994552755216140] from user [ID:5169943586] for message [ID:7084] in chat [private:5169943586] with data: track_parcel originally posted by user [ID:7351691962]
+2025-05-06 08:48:37,796 - __main__ - INFO - User 5169943586: Displaying tracking history for 10104176031
+2025-05-06 08:48:37,990 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994552755216140] from user [ID:5169943586] for message [ID:7084] in chat [private:5169943586] with data: track_parcel originally posted by user [ID:7351691962]
+2025-05-06 08:48:37,990 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611770]: [success] (in 203 ms)
+2025-05-06 09:00:31,077 - aiogram.dispatcher.dispatcher - INFO - Stop polling...
+2025-05-06 09:00:31,078 - aiogram - WARNING - Goodbye!
+2025-05-06 09:00:33,902 - aiogram - INFO - Bot: CDEK [@Cdek_ru_net_bot]
+2025-05-06 09:00:33,988 - aiogram - WARNING - Updates were skipped successfully.
+2025-05-06 09:00:33,988 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2025-05-06 09:00:39,239 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7086] in chat [private:5169943586]
+2025-05-06 09:00:39,308 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611771]: [success] (in 70 ms)
+2025-05-06 09:00:40,546 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7088] in chat [private:5169943586]
+2025-05-06 09:00:40,929 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611772]: [success] (in 383 ms)
+2025-05-06 09:00:44,075 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994554122473429] from user [ID:5169943586] for message [ID:7089] in chat [private:5169943586] with data: track_parcel originally posted by user [ID:7351691962]
+2025-05-06 09:00:44,083 - __main__ - INFO - User 5169943586: Displaying tracking history for 10104176031
+2025-05-06 09:00:44,219 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994554122473429] from user [ID:5169943586] for message [ID:7089] in chat [private:5169943586] with data: track_parcel originally posted by user [ID:7351691962]
+2025-05-06 09:00:44,219 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611773]: [success] (in 144 ms)
+2025-05-06 09:02:16,277 - aiogram.dispatcher.dispatcher - INFO - Stop polling...
+2025-05-06 09:02:16,279 - aiogram - WARNING - Goodbye!
+2025-05-06 09:02:18,190 - aiogram - INFO - Bot: CDEK [@Cdek_ru_net_bot]
+2025-05-06 09:02:18,284 - aiogram - WARNING - Updates were skipped successfully.
+2025-05-06 09:02:18,284 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2025-05-06 09:02:22,275 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7091] in chat [private:5169943586]
+2025-05-06 09:02:22,413 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611774]: [success] (in 138 ms)
+2025-05-06 09:02:23,426 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7093] in chat [private:5169943586]
+2025-05-06 09:02:23,968 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611775]: [success] (in 542 ms)
+2025-05-06 09:02:25,069 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994550464546193] from user [ID:5169943586] for message [ID:7094] in chat [private:5169943586] with data: track_parcel originally posted by user [ID:7351691962]
+2025-05-06 09:02:25,078 - __main__ - INFO - User 5169943586: Displaying tracking history for 10104176031
+2025-05-06 09:02:25,202 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994550464546193] from user [ID:5169943586] for message [ID:7094] in chat [private:5169943586] with data: track_parcel originally posted by user [ID:7351691962]
+2025-05-06 09:02:25,203 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611776]: [success] (in 134 ms)

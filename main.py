@@ -1206,7 +1206,7 @@ async def handle_change_pickup_point(callback_query: types.CallbackQuery, state:
             await bot.send_message(callback_query.from_user.id, f"Ошибка при обработке данных заказа: {e}")
             await state.finish()
             return
-        await bot.send_message(callback_query.from_user.id, "Пожалуйста, введите город в формате (Москва, улица Космонавтов 1):", reply_markup=cancel_keyboard)
+        await bot.send_message(callback_query.from_user.id, "Пожалуйста, введите город и улицу через запятую в формате (Москва, улица Космонавтов 1):", reply_markup=cancel_keyboard)
         await Form.waiting_for_city.set()
     else:
         await bot.send_message(callback_query.from_user.id, "Информация о заказе не найдена.")
@@ -2633,14 +2633,24 @@ async def process_callback(callback_query: types.CallbackQuery):
 
                             # Формируем итоговый текст сообщения
                             output_lines = []
-                            # Сортируем даты для вывода в хронологическом порядке
-                            for date_key in sorted(statuses_by_date.keys()):
+                            # # Сортируем даты для вывода в хронологическом порядке
+                            # for date_key in sorted(statuses_by_date.keys()):
+                            #     output_lines.append(f"*{date_key}*")  # ДАТА ЖИРНЫМ
+                            #     for status_entry in statuses_by_date[date_key]:
+                            #         output_lines.append(f"  - {status_entry}")  # Отступ для элементов
+                            #
+                            # status_text = "\n".join(output_lines)
+                            # После группировки по дате, сортируем даты и статусы внутри них
+                            output_lines = []
+                            # Сортируем даты в хронологическом порядке (от старых к новым)
+                            for date_key in sorted(statuses_by_date.keys(),
+                                                   key=lambda x: datetime.datetime.strptime(x, "%d.%m.%Y")):
                                 output_lines.append(f"*{date_key}*")  # ДАТА ЖИРНЫМ
+                                # Статусы внутри даты уже идут в правильном порядке (от старых к новым)
                                 for status_entry in statuses_by_date[date_key]:
                                     output_lines.append(f"  - {status_entry}")  # Отступ для элементов
 
                             status_text = "\n".join(output_lines)
-
                             await bot.answer_callback_query(callback_query.id)
                             # Используем parse_mode=types.ParseMode.MARKDOWN_V2 если используем escape_md
                             await bot.send_message(callback_query.from_user.id, status_text,
