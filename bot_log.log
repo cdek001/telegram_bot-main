@@ -493,3 +493,1038 @@ aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientCon
 2025-05-06 09:02:25,078 - __main__ - INFO - User 5169943586: Displaying tracking history for 10104176031
 2025-05-06 09:02:25,202 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994550464546193] from user [ID:5169943586] for message [ID:7094] in chat [private:5169943586] with data: track_parcel originally posted by user [ID:7351691962]
 2025-05-06 09:02:25,203 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611776]: [success] (in 134 ms)
+2025-05-06 10:51:20,167 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7096] in chat [private:5169943586]
+2025-05-06 10:51:20,254 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611777]: [success] (in 87 ms)
+2025-05-06 10:51:21,301 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7098] in chat [private:5169943586]
+2025-05-06 10:51:21,656 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611778]: [success] (in 355 ms)
+2025-05-06 10:51:22,997 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994552550883471] from user [ID:5169943586] for message [ID:7099] in chat [private:5169943586] with data: track_parcel originally posted by user [ID:7351691962]
+2025-05-06 10:51:23,125 - __main__ - INFO - User 5169943586: Order 10106289133 has only CREATED/ACCEPTED status.
+2025-05-06 10:51:23,125 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994552550883471] from user [ID:5169943586] for message [ID:7099] in chat [private:5169943586] with data: track_parcel originally posted by user [ID:7351691962]
+2025-05-06 10:51:23,126 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611779]: [success] (in 130 ms)
+2025-05-06 10:51:25,907 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994551063206107] from user [ID:5169943586] for message [ID:7099] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 10:51:26,287 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994551063206107] from user [ID:5169943586] for message [ID:7099] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 10:51:26,288 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611780]: [success] (in 381 ms)
+2025-05-06 12:42:36,639 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7102] in chat [private:5169943586]
+2025-05-06 12:42:36,733 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611781]: [success] (in 94 ms)
+2025-05-06 12:42:38,467 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7104] in chat [private:5169943586]
+2025-05-06 12:42:38,822 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611782]: [success] (in 356 ms)
+2025-05-06 12:42:40,091 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994552733361572] from user [ID:5169943586] for message [ID:7105] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 12:42:40,646 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994552733361572] from user [ID:5169943586] for message [ID:7105] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 12:42:40,647 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611783]: [success] (in 556 ms)
+2025-05-06 12:49:07,680 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7107] in chat [private:5169943586]
+2025-05-06 12:49:07,809 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611784]: [success] (in 130 ms)
+2025-05-06 12:49:09,539 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7109] in chat [private:5169943586]
+2025-05-06 12:49:09,756 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611785]: [success] (in 217 ms)
+2025-05-06 12:49:11,120 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994552844388864] from user [ID:5169943586] for message [ID:7110] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 12:49:11,758 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994552844388864] from user [ID:5169943586] for message [ID:7110] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 12:49:11,758 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611786]: [success] (in 638 ms)
+2025-05-06 12:50:16,161 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7112] in chat [private:5169943586]
+2025-05-06 12:50:16,226 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611787]: [success] (in 65 ms)
+2025-05-06 12:50:19,146 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7114] in chat [private:5169943586]
+2025-05-06 12:50:19,326 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611788]: [success] (in 179 ms)
+2025-05-06 12:50:20,602 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994553068245416] from user [ID:5169943586] for message [ID:7115] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 12:50:21,043 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994553068245416] from user [ID:5169943586] for message [ID:7115] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 12:50:21,044 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611789]: [success] (in 442 ms)
+2025-05-06 12:53:58,196 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7117] in chat [private:5169943586]
+2025-05-06 12:53:58,292 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611790]: [success] (in 96 ms)
+2025-05-06 12:53:59,960 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7119] in chat [private:5169943586]
+2025-05-06 12:54:00,177 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611791]: [success] (in 217 ms)
+2025-05-06 12:54:01,224 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994554053985293] from user [ID:5169943586] for message [ID:7120] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 12:54:01,661 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994554053985293] from user [ID:5169943586] for message [ID:7120] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 12:54:01,661 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611792]: [success] (in 437 ms)
+2025-05-06 12:56:43,956 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7122] in chat [private:5169943586]
+2025-05-06 12:56:44,044 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611793]: [success] (in 88 ms)
+2025-05-06 12:56:45,810 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7124] in chat [private:5169943586]
+2025-05-06 12:56:46,091 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611794]: [success] (in 280 ms)
+2025-05-06 12:56:47,295 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994551203379601] from user [ID:5169943586] for message [ID:7125] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 12:56:47,770 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994551203379601] from user [ID:5169943586] for message [ID:7125] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 12:56:47,771 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611795]: [success] (in 477 ms)
+2025-05-06 12:59:08,246 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994550493991109] from user [ID:5169943586] for message [ID:7125] in chat [private:5169943586] with data: change_order originally posted by user [ID:7351691962]
+2025-05-06 12:59:40,817 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7127] in chat [private:5169943586]
+2025-05-06 12:59:40,821 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7128] in chat [private:5169943586]
+2025-05-06 12:59:40,823 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7129] in chat [private:5169943586]
+2025-05-06 12:59:40,839 - aiogram.dispatcher.dispatcher - INFO - Stop polling...
+2025-05-06 12:59:40,840 - aiogram - WARNING - Goodbye!
+2025-05-06 12:59:43,214 - aiogram - INFO - Bot: CDEK [@Cdek_ru_net_bot]
+2025-05-06 12:59:43,302 - aiogram - WARNING - Updates were skipped successfully.
+2025-05-06 12:59:43,302 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2025-05-06 12:59:53,735 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7132] in chat [private:5169943586]
+2025-05-06 12:59:53,737 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611800]: [success] (in 2 ms)
+2025-05-06 12:59:56,434 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7133] in chat [private:5169943586]
+2025-05-06 12:59:56,528 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611801]: [success] (in 95 ms)
+2025-05-06 12:59:58,366 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7135] in chat [private:5169943586]
+2025-05-06 12:59:58,758 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611802]: [success] (in 392 ms)
+2025-05-06 13:00:00,377 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994552407883204] from user [ID:5169943586] for message [ID:7136] in chat [private:5169943586] with data: change_order originally posted by user [ID:7351691962]
+2025-05-06 13:00:00,448 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994552407883204] from user [ID:5169943586] for message [ID:7136] in chat [private:5169943586] with data: change_order originally posted by user [ID:7351691962]
+2025-05-06 13:00:00,448 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611803]: [success] (in 71 ms)
+2025-05-06 13:00:02,554 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994553398604197] from user [ID:5169943586] for message [ID:7137] in chat [private:5169943586] with data: change_address originally posted by user [ID:7351691962]
+2025-05-06 13:00:02,628 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994553398604197] from user [ID:5169943586] for message [ID:7137] in chat [private:5169943586] with data: change_address originally posted by user [ID:7351691962]
+2025-05-06 13:00:02,628 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611804]: [success] (in 74 ms)
+2025-05-06 13:00:05,254 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994553877176759] from user [ID:5169943586] for message [ID:7138] in chat [private:5169943586] with data: address originally posted by user [ID:7351691962]
+2025-05-06 13:00:05,387 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994553877176759] from user [ID:5169943586] for message [ID:7138] in chat [private:5169943586] with data: address originally posted by user [ID:7351691962]
+2025-05-06 13:00:05,387 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611805]: [success] (in 133 ms)
+2025-05-06 13:00:12,911 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994551873983886] from user [ID:5169943586] for message [ID:7139] in chat [private:5169943586] with data: cancel originally posted by user [ID:7351691962]
+2025-05-06 13:00:13,034 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994551873983886] from user [ID:5169943586] for message [ID:7139] in chat [private:5169943586] with data: cancel originally posted by user [ID:7351691962]
+2025-05-06 13:00:13,035 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611806]: [success] (in 125 ms)
+2025-05-06 13:05:43,178 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7140] in chat [private:5169943586]
+2025-05-06 13:05:43,253 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611807]: [success] (in 75 ms)
+2025-05-06 13:05:45,386 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7142] in chat [private:5169943586]
+2025-05-06 13:05:45,568 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611808]: [success] (in 182 ms)
+2025-05-06 13:05:46,864 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994553820855477] from user [ID:5169943586] for message [ID:7143] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:05:47,342 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994553820855477] from user [ID:5169943586] for message [ID:7143] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:05:47,342 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611809]: [success] (in 478 ms)
+2025-05-06 13:12:14,075 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7145] in chat [private:5169943586]
+2025-05-06 13:12:14,149 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611810]: [success] (in 75 ms)
+2025-05-06 13:12:15,568 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7147] in chat [private:5169943586]
+2025-05-06 13:12:15,781 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611811]: [success] (in 213 ms)
+2025-05-06 13:12:17,589 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994554021654686] from user [ID:5169943586] for message [ID:7148] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:12:18,008 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994554021654686] from user [ID:5169943586] for message [ID:7148] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:12:18,008 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611812]: [success] (in 419 ms)
+2025-05-06 13:18:22,723 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7150] in chat [private:5169943586]
+2025-05-06 13:18:22,798 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611813]: [success] (in 75 ms)
+2025-05-06 13:18:24,545 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7152] in chat [private:5169943586]
+2025-05-06 13:18:24,776 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611814]: [success] (in 231 ms)
+2025-05-06 13:18:26,049 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994552676595820] from user [ID:5169943586] for message [ID:7153] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:18:26,510 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994552676595820] from user [ID:5169943586] for message [ID:7153] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:18:26,511 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611815]: [success] (in 462 ms)
+2025-05-06 13:18:49,410 - aiogram.dispatcher.dispatcher - INFO - Stop polling...
+2025-05-06 13:18:49,411 - aiogram - WARNING - Goodbye!
+2025-05-06 13:18:52,080 - aiogram - INFO - Bot: CDEK [@Cdek_ru_net_bot]
+2025-05-06 13:18:52,165 - aiogram - WARNING - Updates were skipped successfully.
+2025-05-06 13:18:52,166 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2025-05-06 13:34:56,005 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7155] in chat [private:5169943586]
+2025-05-06 13:35:03,465 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7156] in chat [private:5169943586]
+2025-05-06 13:35:03,466 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611817]: [success] (in 1 ms)
+2025-05-06 13:35:03,482 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611816]: [success] (in 7478 ms)
+2025-05-06 13:35:03,482 - aiogram.dispatcher.dispatcher - INFO - Stop polling...
+2025-05-06 13:35:05,950 - aiogram - INFO - Bot: CDEK [@Cdek_ru_net_bot]
+2025-05-06 13:35:06,037 - aiogram - WARNING - Updates were skipped successfully.
+2025-05-06 13:35:06,038 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2025-05-06 13:35:14,854 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7158] in chat [private:5169943586]
+2025-05-06 13:35:14,856 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611818]: [success] (in 2 ms)
+2025-05-06 13:35:18,526 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7159] in chat [private:5169943586]
+2025-05-06 13:35:18,625 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611819]: [success] (in 99 ms)
+2025-05-06 13:35:19,804 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7161] in chat [private:5169943586]
+2025-05-06 13:35:20,113 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611820]: [success] (in 309 ms)
+2025-05-06 13:35:21,324 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994552218710028] from user [ID:5169943586] for message [ID:7162] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:35:21,675 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994552218710028] from user [ID:5169943586] for message [ID:7162] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:35:21,676 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611821]: [success] (in 352 ms)
+2025-05-06 13:36:13,926 - aiogram.dispatcher.dispatcher - INFO - Stop polling...
+2025-05-06 13:36:13,927 - aiogram - WARNING - Goodbye!
+2025-05-06 13:36:15,674 - aiogram - INFO - Bot: CDEK [@Cdek_ru_net_bot]
+2025-05-06 13:36:15,759 - aiogram - WARNING - Updates were skipped successfully.
+2025-05-06 13:36:15,759 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2025-05-06 13:36:44,244 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7164] in chat [private:5169943586]
+2025-05-06 13:36:44,311 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611822]: [success] (in 67 ms)
+2025-05-06 13:36:45,785 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7166] in chat [private:5169943586]
+2025-05-06 13:36:46,135 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611823]: [success] (in 350 ms)
+2025-05-06 13:36:48,323 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994553187711363] from user [ID:5169943586] for message [ID:7167] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:36:48,845 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994553187711363] from user [ID:5169943586] for message [ID:7167] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:36:48,845 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611824]: [success] (in 523 ms)
+2025-05-06 13:37:25,774 - aiogram.dispatcher.dispatcher - INFO - Stop polling...
+2025-05-06 13:37:25,775 - aiogram - WARNING - Goodbye!
+2025-05-06 13:37:27,626 - aiogram - INFO - Bot: CDEK [@Cdek_ru_net_bot]
+2025-05-06 13:37:27,738 - aiogram - WARNING - Updates were skipped successfully.
+2025-05-06 13:37:27,738 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2025-05-06 13:40:26,458 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7169] in chat [private:5169943586]
+2025-05-06 13:40:26,529 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611825]: [success] (in 71 ms)
+2025-05-06 13:40:28,304 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7171] in chat [private:5169943586]
+2025-05-06 13:40:28,576 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611826]: [success] (in 272 ms)
+2025-05-06 13:40:29,789 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994552548061285] from user [ID:5169943586] for message [ID:7172] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:40:30,223 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994552548061285] from user [ID:5169943586] for message [ID:7172] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:40:30,224 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611827]: [success] (in 434 ms)
+2025-05-06 13:41:24,006 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994552191454248] from user [ID:5169943586] for message [ID:7172] in chat [private:5169943586] with data: change_order originally posted by user [ID:7351691962]
+2025-05-06 13:41:24,077 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994552191454248] from user [ID:5169943586] for message [ID:7172] in chat [private:5169943586] with data: change_order originally posted by user [ID:7351691962]
+2025-05-06 13:41:24,078 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611828]: [success] (in 73 ms)
+2025-05-06 13:41:27,478 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994552231958531] from user [ID:5169943586] for message [ID:7174] in chat [private:5169943586] with data: change_address originally posted by user [ID:7351691962]
+2025-05-06 13:41:27,570 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994552231958531] from user [ID:5169943586] for message [ID:7174] in chat [private:5169943586] with data: change_address originally posted by user [ID:7351691962]
+2025-05-06 13:41:27,571 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611829]: [success] (in 92 ms)
+2025-05-06 13:41:29,939 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994550987693653] from user [ID:5169943586] for message [ID:7175] in chat [private:5169943586] with data: address originally posted by user [ID:7351691962]
+2025-05-06 13:41:30,041 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994550987693653] from user [ID:5169943586] for message [ID:7175] in chat [private:5169943586] with data: address originally posted by user [ID:7351691962]
+2025-05-06 13:41:30,042 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611830]: [success] (in 103 ms)
+2025-05-06 13:41:43,468 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7177] in chat [private:5169943586]
+2025-05-06 13:41:44,129 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611831]: [success] (in 661 ms)
+2025-05-06 13:41:50,527 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7180] in chat [private:5169943586]
+2025-05-06 13:41:50,597 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611832]: [success] (in 71 ms)
+2025-05-06 13:41:52,379 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7182] in chat [private:5169943586]
+2025-05-06 13:41:52,570 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611833]: [success] (in 191 ms)
+2025-05-06 13:41:53,972 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994553469521318] from user [ID:5169943586] for message [ID:7183] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:41:54,418 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994553469521318] from user [ID:5169943586] for message [ID:7183] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:41:54,419 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611834]: [success] (in 447 ms)
+2025-05-06 13:43:11,284 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7185] in chat [private:5169943586]
+2025-05-06 13:43:11,462 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611835]: [success] (in 178 ms)
+2025-05-06 13:47:59,664 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7187] in chat [private:5169943586]
+2025-05-06 13:47:59,732 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611836]: [success] (in 68 ms)
+2025-05-06 13:48:01,283 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7189] in chat [private:5169943586]
+2025-05-06 13:48:01,488 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611837]: [success] (in 205 ms)
+2025-05-06 13:48:02,559 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994550982382944] from user [ID:5169943586] for message [ID:7190] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:48:03,047 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994550982382944] from user [ID:5169943586] for message [ID:7190] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:48:03,048 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611838]: [success] (in 489 ms)
+2025-05-06 13:52:02,077 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7192] in chat [private:5169943586]
+2025-05-06 13:52:02,214 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611839]: [success] (in 137 ms)
+2025-05-06 13:52:03,367 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7194] in chat [private:5169943586]
+2025-05-06 13:52:03,759 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611840]: [success] (in 392 ms)
+2025-05-06 13:52:04,897 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994552383613959] from user [ID:5169943586] for message [ID:7195] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:52:05,438 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994552383613959] from user [ID:5169943586] for message [ID:7195] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-06 13:52:05,439 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611841]: [success] (in 543 ms)
+2025-05-06 16:19:00,593 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7197] in chat [private:5169943586]
+2025-05-06 16:19:00,665 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611842]: [success] (in 72 ms)
+2025-05-06 16:19:02,439 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994554069185459] from user [ID:5169943586] for message [ID:7198] in chat [private:5169943586] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-06 16:19:02,492 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994554069185459] from user [ID:5169943586] for message [ID:7198] in chat [private:5169943586] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-06 16:19:02,492 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611843]: [success] (in 53 ms)
+2025-05-06 16:19:25,963 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7199] in chat [private:5169943586]
+2025-05-06 16:19:25,997 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611844]: [failed] (in 34 ms)
+2025-05-06 16:19:25,998 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-572' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=TypeError("get_token() missing 1 required positional argument: 'id'")>
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\Documents\GitHub\telegram_bot-main\main.py", line 2318, in process_list_offices
+    from spisok_ofise import city_info
+  File "C:\Users\User\Documents\GitHub\telegram_bot-main\spisok_ofise.py", line 51, in <module>
+    data = city_info1()  # замените 'your_token_here' на свой токен
+  File "C:\Users\User\Documents\GitHub\telegram_bot-main\spisok_ofise.py", line 42, in city_info1
+    'Authorization': f'Bearer {get_token()}',
+TypeError: get_token() missing 1 required positional argument: 'id'
+2025-05-06 16:19:46,700 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7200] in chat [private:5169943586]
+2025-05-06 16:19:46,702 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611845]: [failed] (in 2 ms)
+2025-05-06 16:19:46,703 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-576' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=TypeError("get_token() missing 1 required positional argument: 'id'")>
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\Documents\GitHub\telegram_bot-main\main.py", line 2318, in process_list_offices
+    from spisok_ofise import city_info
+  File "C:\Users\User\Documents\GitHub\telegram_bot-main\spisok_ofise.py", line 51, in <module>
+    data = city_info1()  # замените 'your_token_here' на свой токен
+  File "C:\Users\User\Documents\GitHub\telegram_bot-main\spisok_ofise.py", line 42, in city_info1
+    'Authorization': f'Bearer {get_token()}',
+TypeError: get_token() missing 1 required positional argument: 'id'
+2025-05-06 16:19:55,846 - aiogram.dispatcher.dispatcher - INFO - Stop polling...
+2025-05-06 16:19:55,847 - aiogram - WARNING - Goodbye!
+2025-05-06 16:19:58,929 - aiogram - INFO - Bot: CDEK [@Cdek_ru_net_bot]
+2025-05-06 16:19:59,016 - aiogram - WARNING - Updates were skipped successfully.
+2025-05-06 16:19:59,017 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2025-05-10 16:33:53,450 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7201] in chat [private:6536870230]
+2025-05-10 16:33:53,569 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611846]: [success] (in 120 ms)
+2025-05-10 16:34:01,666 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7203] in chat [private:6536870230]
+2025-05-10 16:34:01,948 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611847]: [success] (in 282 ms)
+2025-05-10 16:34:04,873 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527745590991863] from user [ID:6536870230] for message [ID:7204] in chat [private:6536870230] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-10 16:34:05,479 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527745590991863] from user [ID:6536870230] for message [ID:7204] in chat [private:6536870230] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-10 16:34:05,479 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611848]: [success] (in 606 ms)
+2025-05-10 16:34:12,940 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527746527098648] from user [ID:6536870230] for message [ID:7205] in chat [private:6536870230] with data: delivery_office_phone originally posted by user [ID:7351691962]
+2025-05-10 16:34:13,022 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527746527098648] from user [ID:6536870230] for message [ID:7205] in chat [private:6536870230] with data: delivery_office_phone originally posted by user [ID:7351691962]
+2025-05-10 16:34:13,023 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611849]: [success] (in 83 ms)
+2025-05-11 12:43:21,975 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7207] in chat [private:5169943586]
+2025-05-11 12:43:22,054 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611850]: [success] (in 79 ms)
+2025-05-12 11:45:05,323 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7209] in chat [private:6300811200]
+2025-05-12 11:45:05,483 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611851]: [success] (in 160 ms)
+2025-05-12 11:45:21,289 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:8615033968569147243] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: register_ek5 originally posted by user [ID:7351691962]
+2025-05-12 11:45:21,422 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:8615033968569147243] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: register_ek5 originally posted by user [ID:7351691962]
+2025-05-12 11:45:21,423 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611852]: [success] (in 134 ms)
+2025-05-12 11:45:31,235 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:8615033968628318568] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: docs originally posted by user [ID:7351691962]
+2025-05-12 11:45:31,236 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:8615033968628318568] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: docs originally posted by user [ID:7351691962]
+2025-05-12 11:45:31,237 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611853]: [success] (in 2 ms)
+2025-05-12 11:45:43,017 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:8615033972046234915] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: docs originally posted by user [ID:7351691962]
+2025-05-12 11:45:43,018 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:8615033972046234915] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: docs originally posted by user [ID:7351691962]
+2025-05-12 11:45:43,018 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611854]: [success] (in 1 ms)
+2025-05-12 11:45:55,493 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:8615033969473507129] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: docs originally posted by user [ID:7351691962]
+2025-05-12 11:45:55,493 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:8615033969473507129] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: docs originally posted by user [ID:7351691962]
+2025-05-12 11:45:55,494 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611855]: [success] (in 2 ms)
+2025-05-12 11:46:09,652 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:8615033969658379534] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: docs originally posted by user [ID:7351691962]
+2025-05-12 11:46:09,653 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:8615033969658379534] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: docs originally posted by user [ID:7351691962]
+2025-05-12 11:46:09,653 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611856]: [success] (in 1 ms)
+2025-05-12 11:46:12,375 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:8615033970176750953] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: docs originally posted by user [ID:7351691962]
+2025-05-12 11:46:12,376 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:8615033970176750953] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: docs originally posted by user [ID:7351691962]
+2025-05-12 11:46:12,377 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611857]: [success] (in 1 ms)
+2025-05-12 11:46:47,443 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:8615033970816563037] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: docs originally posted by user [ID:7351691962]
+2025-05-12 11:46:47,444 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:8615033970816563037] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: docs originally posted by user [ID:7351691962]
+2025-05-12 11:46:47,444 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611858]: [success] (in 1 ms)
+2025-05-12 11:46:54,543 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:8615033972534733473] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: register_1 originally posted by user [ID:7351691962]
+2025-05-12 11:46:54,544 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:8615033972534733473] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: register_1 originally posted by user [ID:7351691962]
+2025-05-12 11:46:54,545 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611859]: [success] (in 2 ms)
+2025-05-12 11:47:35,164 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:8615033971027107565] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: docs originally posted by user [ID:7351691962]
+2025-05-12 11:47:35,165 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:8615033971027107565] from user [ID:6300811200] for message [ID:7210] in chat [private:6300811200] with data: docs originally posted by user [ID:7351691962]
+2025-05-12 11:47:35,165 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611860]: [success] (in 1 ms)
+2025-05-12 11:47:47,415 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7212] in chat [private:6498008697]
+2025-05-12 11:47:47,481 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611861]: [success] (in 66 ms)
+2025-05-12 11:47:49,057 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:238618735557898531] from user [ID:6498008697] for message [ID:7213] in chat [private:6498008697] with data: docs originally posted by user [ID:7351691962]
+2025-05-12 11:47:49,168 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:238618735557898531] from user [ID:6498008697] for message [ID:7213] in chat [private:6498008697] with data: docs originally posted by user [ID:7351691962]
+2025-05-12 11:47:49,169 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611862]: [success] (in 112 ms)
+2025-05-12 11:48:13,735 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7215] in chat [private:6498008697]
+2025-05-12 11:48:13,923 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611863]: [success] (in 188 ms)
+2025-05-12 11:48:15,871 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:238618733793388441] from user [ID:6498008697] for message [ID:7216] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:48:15,939 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:238618733793388441] from user [ID:6498008697] for message [ID:7216] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:48:15,940 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611864]: [failed] (in 69 ms)
+2025-05-12 11:48:15,940 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-25241' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=BadRequest('Message_too_long')>
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\Documents\GitHub\telegram_bot-main\main.py", line 1161, in handle_list_offices
+    await message.answer(f"Данный функционал доступен только договорным клиентам компании СДЭК. Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет или заключить договор с группой компании СДЭК. Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. \u274c")
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\types\callback_query.py", line 57, in answer
+    return await self.bot.answer_callback_query(callback_query_id=self.id,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 2758, in answer_callback_query
+    return await self.request(api.Methods.ANSWER_CALLBACK_QUERY, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 115, in check_result
+    exceptions.BadRequest.detect(description)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\utils\exceptions.py", line 141, in detect
+    raise cls(description)
+aiogram.utils.exceptions.BadRequest: Message_too_long
+2025-05-12 11:48:24,985 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:238618733434268840] from user [ID:6498008697] for message [ID:7216] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:48:25,078 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:238618733434268840] from user [ID:6498008697] for message [ID:7216] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:48:25,079 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611865]: [failed] (in 95 ms)
+2025-05-12 11:48:25,080 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-25245' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=BadRequest('Message_too_long')>
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\Documents\GitHub\telegram_bot-main\main.py", line 1161, in handle_list_offices
+    await message.answer(f"Данный функционал доступен только договорным клиентам компании СДЭК. Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет или заключить договор с группой компании СДЭК. Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. \u274c")
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\types\callback_query.py", line 57, in answer
+    return await self.bot.answer_callback_query(callback_query_id=self.id,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 2758, in answer_callback_query
+    return await self.request(api.Methods.ANSWER_CALLBACK_QUERY, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 115, in check_result
+    exceptions.BadRequest.detect(description)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\utils\exceptions.py", line 141, in detect
+    raise cls(description)
+aiogram.utils.exceptions.BadRequest: Message_too_long
+2025-05-12 11:48:30,054 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:238618735401753322] from user [ID:6498008697] for message [ID:7216] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:48:30,110 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:238618735401753322] from user [ID:6498008697] for message [ID:7216] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:48:30,111 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611866]: [failed] (in 57 ms)
+2025-05-12 11:48:30,111 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-25249' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=BadRequest('Message_too_long')>
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\Documents\GitHub\telegram_bot-main\main.py", line 1161, in handle_list_offices
+    await message.answer(f"Данный функционал доступен только договорным клиентам компании СДЭК. Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет или заключить договор с группой компании СДЭК. Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. \u274c")
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\types\callback_query.py", line 57, in answer
+    return await self.bot.answer_callback_query(callback_query_id=self.id,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 2758, in answer_callback_query
+    return await self.request(api.Methods.ANSWER_CALLBACK_QUERY, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 115, in check_result
+    exceptions.BadRequest.detect(description)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\utils\exceptions.py", line 141, in detect
+    raise cls(description)
+aiogram.utils.exceptions.BadRequest: Message_too_long
+2025-05-12 11:48:30,253 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:238618734162109579] from user [ID:6498008697] for message [ID:7216] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:48:30,305 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:238618734162109579] from user [ID:6498008697] for message [ID:7216] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:48:30,306 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611867]: [failed] (in 53 ms)
+2025-05-12 11:48:30,306 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-25253' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=BadRequest('Message_too_long')>
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\Documents\GitHub\telegram_bot-main\main.py", line 1161, in handle_list_offices
+    await message.answer(f"Данный функционал доступен только договорным клиентам компании СДЭК. Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет или заключить договор с группой компании СДЭК. Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. \u274c")
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\types\callback_query.py", line 57, in answer
+    return await self.bot.answer_callback_query(callback_query_id=self.id,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 2758, in answer_callback_query
+    return await self.request(api.Methods.ANSWER_CALLBACK_QUERY, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 115, in check_result
+    exceptions.BadRequest.detect(description)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\utils\exceptions.py", line 141, in detect
+    raise cls(description)
+aiogram.utils.exceptions.BadRequest: Message_too_long
+2025-05-12 11:48:40,131 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7217] in chat [private:6498008697]
+2025-05-12 11:48:40,132 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611868]: [success] (in 1 ms)
+2025-05-12 11:48:41,848 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:238618732393119610] from user [ID:6498008697] for message [ID:7216] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:48:41,900 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:238618732393119610] from user [ID:6498008697] for message [ID:7216] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:48:41,900 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611869]: [failed] (in 52 ms)
+2025-05-12 11:48:41,901 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-25260' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=BadRequest('Message_too_long')>
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\Documents\GitHub\telegram_bot-main\main.py", line 1161, in handle_list_offices
+    await message.answer(f"Данный функционал доступен только договорным клиентам компании СДЭК. Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет или заключить договор с группой компании СДЭК. Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. \u274c")
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\types\callback_query.py", line 57, in answer
+    return await self.bot.answer_callback_query(callback_query_id=self.id,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 2758, in answer_callback_query
+    return await self.request(api.Methods.ANSWER_CALLBACK_QUERY, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 115, in check_result
+    exceptions.BadRequest.detect(description)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\utils\exceptions.py", line 141, in detect
+    raise cls(description)
+aiogram.utils.exceptions.BadRequest: Message_too_long
+2025-05-12 11:48:44,595 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7218] in chat [private:6498008697]
+2025-05-12 11:48:44,692 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611870]: [success] (in 97 ms)
+2025-05-12 11:48:45,669 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:238618735032825383] from user [ID:6498008697] for message [ID:7219] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:48:45,738 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:238618735032825383] from user [ID:6498008697] for message [ID:7219] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:48:45,738 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611871]: [failed] (in 69 ms)
+2025-05-12 11:48:45,739 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-25268' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=BadRequest('Message_too_long')>
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\Documents\GitHub\telegram_bot-main\main.py", line 1161, in handle_list_offices
+    await message.answer(f"Данный функционал доступен только договорным клиентам компании СДЭК. Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет или заключить договор с группой компании СДЭК. Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. \u274c")
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\types\callback_query.py", line 57, in answer
+    return await self.bot.answer_callback_query(callback_query_id=self.id,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 2758, in answer_callback_query
+    return await self.request(api.Methods.ANSWER_CALLBACK_QUERY, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 115, in check_result
+    exceptions.BadRequest.detect(description)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\utils\exceptions.py", line 141, in detect
+    raise cls(description)
+aiogram.utils.exceptions.BadRequest: Message_too_long
+2025-05-12 11:48:55,971 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:238618734759343264] from user [ID:6498008697] for message [ID:7216] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:48:56,046 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:238618734759343264] from user [ID:6498008697] for message [ID:7216] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:48:56,047 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611872]: [failed] (in 76 ms)
+2025-05-12 11:48:56,047 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-25272' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=BadRequest('Message_too_long')>
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\Documents\GitHub\telegram_bot-main\main.py", line 1161, in handle_list_offices
+    await message.answer(f"Данный функционал доступен только договорным клиентам компании СДЭК. Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет или заключить договор с группой компании СДЭК. Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. \u274c")
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\types\callback_query.py", line 57, in answer
+    return await self.bot.answer_callback_query(callback_query_id=self.id,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 2758, in answer_callback_query
+    return await self.request(api.Methods.ANSWER_CALLBACK_QUERY, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 115, in check_result
+    exceptions.BadRequest.detect(description)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\utils\exceptions.py", line 141, in detect
+    raise cls(description)
+aiogram.utils.exceptions.BadRequest: Message_too_long
+2025-05-12 11:50:31,128 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:238618734343967879] from user [ID:6498008697] for message [ID:7216] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:50:31,235 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:238618734343967879] from user [ID:6498008697] for message [ID:7216] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:50:31,236 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611873]: [failed] (in 108 ms)
+2025-05-12 11:50:31,237 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-25280' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=BadRequest('Message_too_long')>
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\Documents\GitHub\telegram_bot-main\main.py", line 1161, in handle_list_offices
+    await message.answer(f"Данный функционал доступен только договорным клиентам компании СДЭК. Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет или заключить договор с группой компании СДЭК. Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. \u274c")
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\types\callback_query.py", line 57, in answer
+    return await self.bot.answer_callback_query(callback_query_id=self.id,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 2758, in answer_callback_query
+    return await self.request(api.Methods.ANSWER_CALLBACK_QUERY, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 115, in check_result
+    exceptions.BadRequest.detect(description)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\utils\exceptions.py", line 141, in detect
+    raise cls(description)
+aiogram.utils.exceptions.BadRequest: Message_too_long
+2025-05-12 11:50:35,040 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7220] in chat [private:6498008697]
+2025-05-12 11:50:35,164 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611874]: [success] (in 125 ms)
+2025-05-12 11:50:36,382 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:238618732538044526] from user [ID:6498008697] for message [ID:7221] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:50:36,442 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:238618732538044526] from user [ID:6498008697] for message [ID:7221] in chat [private:6498008697] with data: list_offices originally posted by user [ID:7351691962]
+2025-05-12 11:50:36,443 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611875]: [failed] (in 61 ms)
+2025-05-12 11:50:36,443 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-25289' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=BadRequest('Message_too_long')>
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "C:\Users\User\Documents\GitHub\telegram_bot-main\main.py", line 1161, in handle_list_offices
+    await message.answer(f"Данный функционал доступен только договорным клиентам компании СДЭК. Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет или заключить договор с группой компании СДЭК. Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. \u274c")
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\types\callback_query.py", line 57, in answer
+    return await self.bot.answer_callback_query(callback_query_id=self.id,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 2758, in answer_callback_query
+    return await self.request(api.Methods.ANSWER_CALLBACK_QUERY, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 115, in check_result
+    exceptions.BadRequest.detect(description)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\utils\exceptions.py", line 141, in detect
+    raise cls(description)
+aiogram.utils.exceptions.BadRequest: Message_too_long
+2025-05-12 11:50:44,442 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7222] in chat [private:6498008697]
+2025-05-12 11:50:44,626 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611876]: [success] (in 184 ms)
+2025-05-12 11:51:05,753 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7224] in chat [private:6498008697]
+2025-05-12 11:51:05,833 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611877]: [success] (in 80 ms)
+2025-05-13 16:11:30,255 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7226] in chat [private:5169943586]
+2025-05-13 16:11:30,352 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611878]: [success] (in 97 ms)
+2025-05-14 00:47:56,893 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 111, in check_result
+    raise exceptions.RetryAfter(parameters.retry_after)
+aiogram.utils.exceptions.RetryAfter: Flood control exceeded. Retry in 5 seconds.
+2025-05-14 00:48:02,279 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 128, in check_result
+    raise exceptions.TelegramAPIError(description)
+aiogram.utils.exceptions.TelegramAPIError: Bad Gateway
+2025-05-14 12:46:32,611 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7228] in chat [private:5169943586]
+2025-05-14 12:46:32,691 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611879]: [success] (in 83 ms)
+2025-05-14 12:46:34,294 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7230] in chat [private:5169943586]
+2025-05-14 12:46:34,404 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611880]: [success] (in 111 ms)
+2025-05-14 23:01:30,233 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 1167, in __aenter__
+    self._resp = await self._coro
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 586, in _request
+    await resp.start(conn)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client_reqrep.py", line 905, in start
+    message, payload = await protocol.read()  # type: ignore[union-attr]
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\streams.py", line 616, in read
+    await self._waiter
+aiohttp.client_exceptions.ClientOSError: [WinError 121] Превышен таймаут семафора
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 142, in make_request
+    raise exceptions.NetworkError(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientOSError: [WinError 121] Превышен таймаут семафора
+2025-05-14 23:01:45,312 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1155, in _create_direct_connection
+    hosts = await asyncio.shield(host_resolved)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 874, in _resolve_host
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\resolver.py", line 33, in resolve
+    infos = await self._loop.getaddrinfo(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 863, in getaddrinfo
+    return await self.run_in_executor(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11002] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 1167, in __aenter__
+    self._resp = await self._coro
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 562, in _request
+    conn = await self._connector.connect(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 540, in connect
+    proto = await self._create_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 901, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1169, in _create_direct_connection
+    raise ClientConnectorError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 142, in make_request
+    raise exceptions.NetworkError(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2025-05-14 23:01:58,332 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1155, in _create_direct_connection
+    hosts = await asyncio.shield(host_resolved)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 874, in _resolve_host
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\resolver.py", line 33, in resolve
+    infos = await self._loop.getaddrinfo(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 863, in getaddrinfo
+    return await self.run_in_executor(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11002] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 1167, in __aenter__
+    self._resp = await self._coro
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 562, in _request
+    conn = await self._connector.connect(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 540, in connect
+    proto = await self._create_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 901, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1169, in _create_direct_connection
+    raise ClientConnectorError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 142, in make_request
+    raise exceptions.NetworkError(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2025-05-14 23:02:11,346 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1155, in _create_direct_connection
+    hosts = await asyncio.shield(host_resolved)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 874, in _resolve_host
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\resolver.py", line 33, in resolve
+    infos = await self._loop.getaddrinfo(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 863, in getaddrinfo
+    return await self.run_in_executor(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11002] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 1167, in __aenter__
+    self._resp = await self._coro
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 562, in _request
+    conn = await self._connector.connect(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 540, in connect
+    proto = await self._create_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 901, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1169, in _create_direct_connection
+    raise ClientConnectorError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 142, in make_request
+    raise exceptions.NetworkError(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2025-05-14 23:02:37,354 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 980, in _wrap_create_connection
+    return await self._loop.create_connection(*args, **kwargs)  # type: ignore[return-value]  # noqa
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\proactor_events.py", line 709, in sock_connect
+    return await self._proactor.connect(sock, address)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 826, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 613, in finish_connect
+    ov.getresult()
+OSError: [WinError 121] Превышен таймаут семафора
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 1167, in __aenter__
+    self._resp = await self._coro
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 562, in _request
+    conn = await self._connector.connect(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 540, in connect
+    proto = await self._create_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 901, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1209, in _create_direct_connection
+    raise last_exc
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1178, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 988, in _wrap_create_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Превышен таймаут семафора]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 142, in make_request
+    raise exceptions.NetworkError(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Превышен таймаут семафора]
+2025-05-14 23:03:03,404 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 980, in _wrap_create_connection
+    return await self._loop.create_connection(*args, **kwargs)  # type: ignore[return-value]  # noqa
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\proactor_events.py", line 709, in sock_connect
+    return await self._proactor.connect(sock, address)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 826, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 613, in finish_connect
+    ov.getresult()
+OSError: [WinError 121] Превышен таймаут семафора
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 1167, in __aenter__
+    self._resp = await self._coro
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 562, in _request
+    conn = await self._connector.connect(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 540, in connect
+    proto = await self._create_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 901, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1209, in _create_direct_connection
+    raise last_exc
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1178, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 988, in _wrap_create_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Превышен таймаут семафора]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 142, in make_request
+    raise exceptions.NetworkError(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Превышен таймаут семафора]
+2025-05-14 23:03:29,410 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 980, in _wrap_create_connection
+    return await self._loop.create_connection(*args, **kwargs)  # type: ignore[return-value]  # noqa
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\proactor_events.py", line 709, in sock_connect
+    return await self._proactor.connect(sock, address)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 826, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 613, in finish_connect
+    ov.getresult()
+OSError: [WinError 121] Превышен таймаут семафора
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 1167, in __aenter__
+    self._resp = await self._coro
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 562, in _request
+    conn = await self._connector.connect(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 540, in connect
+    proto = await self._create_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 901, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1209, in _create_direct_connection
+    raise last_exc
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1178, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 988, in _wrap_create_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Превышен таймаут семафора]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 142, in make_request
+    raise exceptions.NetworkError(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Превышен таймаут семафора]
+2025-05-14 23:03:55,422 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 980, in _wrap_create_connection
+    return await self._loop.create_connection(*args, **kwargs)  # type: ignore[return-value]  # noqa
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\proactor_events.py", line 709, in sock_connect
+    return await self._proactor.connect(sock, address)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 826, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\asyncio\windows_events.py", line 613, in finish_connect
+    ov.getresult()
+OSError: [WinError 121] Превышен таймаут семафора
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 1167, in __aenter__
+    self._resp = await self._coro
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\client.py", line 562, in _request
+    conn = await self._connector.connect(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 540, in connect
+    proto = await self._create_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 901, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1209, in _create_direct_connection
+    raise last_exc
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 1178, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiohttp\connector.py", line 988, in _wrap_create_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Превышен таймаут семафора]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\aiogram\bot\api.py", line 142, in make_request
+    raise exceptions.NetworkError(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Превышен таймаут семафора]
+2025-05-15 11:24:44,426 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7232] in chat [private:5169943586]
+2025-05-15 11:24:44,532 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611881]: [success] (in 106 ms)
+2025-05-15 11:24:45,804 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7234] in chat [private:5169943586]
+2025-05-15 11:24:46,418 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611882]: [success] (in 614 ms)
+2025-05-15 11:24:47,794 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994550726651491] from user [ID:5169943586] for message [ID:7235] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-15 11:24:48,460 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994550726651491] from user [ID:5169943586] for message [ID:7235] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-15 11:24:48,461 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611883]: [success] (in 667 ms)
+2025-05-15 11:25:02,345 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7237] in chat [private:5169943586]
+2025-05-15 11:25:02,416 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611884]: [success] (in 71 ms)
+2025-05-15 11:25:04,530 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7239] in chat [private:5169943586]
+2025-05-15 11:25:04,815 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611885]: [success] (in 285 ms)
+2025-05-15 11:25:06,481 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994553845411700] from user [ID:5169943586] for message [ID:7240] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-15 11:25:06,966 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994553845411700] from user [ID:5169943586] for message [ID:7240] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-15 11:25:06,967 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611886]: [success] (in 486 ms)
+2025-05-15 11:29:27,649 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7242] in chat [private:5169943586]
+2025-05-15 11:29:27,747 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611887]: [success] (in 98 ms)
+2025-05-15 11:29:30,558 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7244] in chat [private:5169943586]
+2025-05-15 11:29:30,900 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611888]: [success] (in 342 ms)
+2025-05-15 11:29:32,557 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994550905240884] from user [ID:5169943586] for message [ID:7245] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-15 11:29:32,918 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994550905240884] from user [ID:5169943586] for message [ID:7245] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-15 11:29:32,918 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611889]: [success] (in 361 ms)
+2025-05-16 10:21:40,239 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7247] in chat [private:5169943586]
+2025-05-16 10:21:40,315 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611890]: [success] (in 76 ms)
+2025-05-16 10:21:41,869 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994553440463474] from user [ID:5169943586] for message [ID:7248] in chat [private:5169943586] with data: otsl originally posted by user [ID:7351691962]
+2025-05-16 10:21:42,071 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994553440463474] from user [ID:5169943586] for message [ID:7248] in chat [private:5169943586] with data: otsl originally posted by user [ID:7351691962]
+2025-05-16 10:21:42,072 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611891]: [success] (in 203 ms)
+2025-05-16 10:21:43,938 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7250] in chat [private:5169943586]
+2025-05-16 10:21:44,303 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611892]: [success] (in 365 ms)
+2025-05-21 16:34:18,708 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7252] in chat [private:6536870230]
+2025-05-21 16:35:24,789 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7253] in chat [private:6536870230]
+2025-05-21 16:35:24,790 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611894]: [success] (in 2 ms)
+2025-05-21 16:35:24,791 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7254] in chat [private:5169943586]
+2025-05-21 16:35:24,824 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611893]: [success] (in 66116 ms)
+2025-05-21 16:35:24,907 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611895]: [success] (in 117 ms)
+2025-05-21 16:35:25,097 - aiogram.dispatcher.dispatcher - INFO - Stop polling...
+2025-05-21 16:35:25,098 - aiogram - WARNING - Goodbye!
+2025-05-21 16:35:37,894 - aiogram - INFO - Bot: CDEK [@Cdek_ru_net_bot]
+2025-05-21 16:35:37,983 - aiogram - WARNING - Updates were skipped successfully.
+2025-05-21 16:35:37,984 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2025-05-21 16:35:48,640 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527748081007378] from user [ID:6536870230] for message [ID:7255] in chat [private:6536870230] with data: cancel_order_im originally posted by user [ID:7351691962]
+2025-05-21 16:35:48,642 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527748081007378] from user [ID:6536870230] for message [ID:7255] in chat [private:6536870230] with data: cancel_order_im originally posted by user [ID:7351691962]
+2025-05-21 16:35:48,643 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611898]: [success] (in 2 ms)
+2025-05-21 16:35:51,293 - aiogram.dispatcher.dispatcher - INFO - Stop polling...
+2025-05-21 16:35:51,294 - aiogram - WARNING - Goodbye!
+2025-05-21 16:35:54,375 - aiogram - INFO - Bot: CDEK [@Cdek_ru_net_bot]
+2025-05-21 16:35:54,465 - aiogram - WARNING - Updates were skipped successfully.
+2025-05-21 16:35:54,466 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2025-05-21 16:35:58,298 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7259] in chat [private:5169943586]
+2025-05-21 16:35:58,449 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611899]: [success] (in 151 ms)
+2025-05-21 16:36:05,232 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7261] in chat [private:6536870230]
+2025-05-21 16:36:05,315 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611900]: [success] (in 83 ms)
+2025-05-21 16:36:08,198 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7263] in chat [private:6536870230]
+2025-05-21 16:36:08,537 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611901]: [success] (in 339 ms)
+2025-05-21 16:36:11,011 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:405527747059451353] from user [ID:6536870230] for message [ID:7264] in chat [private:6536870230] with data: track_parcel originally posted by user [ID:7351691962]
+2025-05-21 16:36:11,018 - __main__ - INFO - User 6536870230: Displaying tracking history for 10114781871
+2025-05-21 16:36:11,142 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:405527747059451353] from user [ID:6536870230] for message [ID:7264] in chat [private:6536870230] with data: track_parcel originally posted by user [ID:7351691962]
+2025-05-21 16:36:11,143 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611902]: [success] (in 132 ms)
+2025-05-21 16:36:11,597 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7266] in chat [private:5169943586]
+2025-05-21 16:36:11,664 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611903]: [success] (in 67 ms)
+2025-05-21 16:36:13,142 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7268] in chat [private:5169943586]
+2025-05-21 16:36:13,302 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611904]: [success] (in 160 ms)
+2025-05-21 16:36:14,499 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994553512912171] from user [ID:5169943586] for message [ID:7269] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-21 16:36:14,571 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994553512912171] from user [ID:5169943586] for message [ID:7269] in chat [private:5169943586] with data: parcel_data originally posted by user [ID:7351691962]
+2025-05-21 16:36:14,571 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611905]: [success] (in 72 ms)
+2025-05-21 16:37:25,281 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7271] in chat [private:5169943586]
+2025-05-21 16:37:25,423 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611906]: [success] (in 142 ms)
+2025-05-21 16:37:27,427 - aiogram.contrib.middlewares.logging - INFO - Received callback query [ID:3757994553270461437] from user [ID:5169943586] for message [ID:7272] in chat [private:5169943586] with data: otsl originally posted by user [ID:7351691962]
+2025-05-21 16:37:27,594 - aiogram.contrib.middlewares.logging - INFO - Unhandled callback query [ID:3757994553270461437] from user [ID:5169943586] for message [ID:7272] in chat [private:5169943586] with data: otsl originally posted by user [ID:7351691962]
+2025-05-21 16:37:27,594 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611907]: [success] (in 167 ms)
+2025-05-21 16:37:28,916 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7274] in chat [private:5169943586]
+2025-05-21 16:37:29,269 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611908]: [success] (in 353 ms)
+2025-05-21 16:40:15,882 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:7276] in chat [private:6536870230]
+2025-05-21 16:40:15,958 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:426611909]: [success] (in 76 ms)
