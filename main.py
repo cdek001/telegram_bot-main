@@ -31,8 +31,14 @@ from aiogram.utils.exceptions import TelegramAPIError
 from token_generator import get_token
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from cedek_blizh_office import get_nearest_gdp_offices
-
-
+import os
+BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+if not BOT_TOKEN:
+    raise ValueError("Необходимо установить переменную окружения TELEGRAM_BOT_TOKEN")
+bot = Bot(token=BOT_TOKEN)
+token = os.getenv("TOKEN")
+secret = os.getenv("SEKRET")
+web_app_info  = os.getenv("WebAppInfo")
 MANAGER_ID = 6536870230
 
 logging.basicConfig(level=logging.INFO,
@@ -50,8 +56,9 @@ console_handler.setFormatter(console_formatter)
 # Добавление обработчика к логгеру aiogram
 logger.addHandler(console_handler)
 
-bot = Bot(token="")
-
+bot = Bot(token="7351691962:AAGASpTq7J-uif9R7p0bphxbqs8gmx7oPP4")
+token = "28f0c46ebf7a04748add3fc4f2990d2b2b979d44"  # Replace with your Dadata token
+secret = "576db248eb70b56c0f1649f1242cddeecabc9d92"
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
 dp.middleware.setup(LoggingMiddleware())
@@ -1215,8 +1222,7 @@ async def handle_change_pickup_point(callback_query: types.CallbackQuery, state:
 
 async def api_address(address):
     #  Replace with your actual Dadata token and secret
-    token = "28f0c46ebf7a04748add3fc4f2990d2b2b979d44"  # Replace with your Dadata token
-    secret = "576db248eb70b56c0f1649f1242cddeecabc9d92"
+
 
     #  Replace with your actual Dadata token and secret
     from dadata import Dadata  # Import here to avoid global scope issues if dadata is not always needed
@@ -1961,7 +1967,6 @@ async def zaborgruz(message: Message):
     if check_user_id_exists(user_id_to_check):
         print(f'Данные для user_id {user_id_to_check} найдены! ✅')
         keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
-        web_app_info = WebAppInfo(url="https://mikforce.github.io/cdek.github.io/")
         keyboard.add(KeyboardButton(text="Открыть веб-приложение", web_app=web_app_info))
         await message.answer("Нажмите кнопку, чтобы открыть веб-приложение.", reply_markup=keyboard)
     else:
