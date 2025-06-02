@@ -3,7 +3,6 @@ import sqlite3
 import os
 import json
 from datetime import timedelta, datetime
-
 import requests
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
@@ -18,6 +17,7 @@ from aiogram.dispatcher.filters import Text
 from aiogram.types import Message
 from aiohttp.web import Request, json_response
 import logging
+from dotenv import load_dotenv
 from aiogram.dispatcher.filters import Command
 from aiogram.utils.markdown import escape_md
 from datetime import datetime
@@ -27,14 +27,17 @@ from token_generator import get_token
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from cedek_blizh_office import get_nearest_gdp_offices
 import os
+load_dotenv() # Загружает переменные из .env файла в окружение
+
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+print(BOT_TOKEN)
 if not BOT_TOKEN:
     raise ValueError("Необходимо установить переменную окружения TELEGRAM_BOT_TOKEN")
 bot = Bot(token=BOT_TOKEN)
 token = os.getenv("TOKEN")
 secret = os.getenv("SEKRET")
 web_app_info  = os.getenv("WebAppInfo")
-MANAGER_ID = 6536870230
+MANAGER_ID = os.getenv("MANAGER_ID")
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -4131,3 +4134,7 @@ if __name__ == '__main__':
 # info_delivery_problem - информация о проблеме доставки
 # faq - FAQ
 # del - Выйти из аккаунта
+
+
+
+

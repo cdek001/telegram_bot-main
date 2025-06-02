@@ -1598,3 +1598,12 @@ aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientCon
 2025-05-30 11:11:00,509 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:348632960]: [success] (in 600 ms)
 2025-05-30 11:11:41,970 - aiogram.dispatcher.dispatcher - INFO - Stop polling...
 2025-05-30 11:11:41,971 - aiogram - WARNING - Goodbye!
+2025-06-02 15:22:36,230 - aiogram - INFO - Bot: CDEK [@Cdek_ru_net_bot]
+2025-06-02 15:22:36,320 - aiogram - WARNING - Updates were skipped successfully.
+2025-06-02 15:22:36,321 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2025-06-02 15:22:45,589 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:4] in chat [private:1252672778]
+2025-06-02 15:22:45,679 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:400516706]: [success] (in 90 ms)
+2025-06-02 15:22:57,941 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:6] in chat [private:5169943586]
+2025-06-02 15:22:58,065 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:400516707]: [success] (in 124 ms)
+2025-06-02 15:23:00,409 - aiogram.dispatcher.dispatcher - INFO - Stop polling...
+2025-06-02 15:23:00,410 - aiogram - WARNING - Goodbye!
