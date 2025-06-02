@@ -50,9 +50,8 @@ console_handler.setFormatter(console_formatter)
 # Добавление обработчика к логгеру aiogram
 logger.addHandler(console_handler)
 
-# Initialize bot and dispatcher   7020285176:AAEr9NQt7m3pljwWAMfYANb1EjdMeQKmgVQ
-# для теста 7207186878:AAGGEFlLavEBD0GXGTvRIgQZ7SLwHzlDHz8
-bot = Bot(token="7351691962:AAGASpTq7J-uif9R7p0bphxbqs8gmx7oPP4")
+bot = Bot(token="")
+
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
 dp.middleware.setup(LoggingMiddleware())
