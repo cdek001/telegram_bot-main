@@ -23,11 +23,6 @@ from aiogram.utils.markdown import escape_md
 from datetime import datetime
 from aiogram.utils.markdown import code
 from aiogram.utils.exceptions import TelegramAPIError
-# 10006324754 склад-дверь
-# 10007168378 до пвз
-# lYV0wvt14fYGgE7MoWosaIyvOavEqqUm
-# 2ABI0GEJN5giKtlgHh2ZZ1rCsz2iWoHZ
-# Настройка базового логирования
 from token_generator import get_token
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from cedek_blizh_office import get_nearest_gdp_offices
@@ -55,10 +50,6 @@ console_handler.setFormatter(console_formatter)
 
 # Добавление обработчика к логгеру aiogram
 logger.addHandler(console_handler)
-
-bot = Bot(token="7351691962:AAGASpTq7J-uif9R7p0bphxbqs8gmx7oPP4")
-token = "28f0c46ebf7a04748add3fc4f2990d2b2b979d44"  # Replace with your Dadata token
-secret = "576db248eb70b56c0f1649f1242cddeecabc9d92"
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
 dp.middleware.setup(LoggingMiddleware())
