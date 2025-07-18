@@ -2226,6 +2226,7 @@ async def process_izmenit_za_dop(message: types.Message, state: FSMContext):
         from izmeneniya import nalozh_pay_dop_cbor  # Под вопросом: лучше импортировать в начале файла
 
         text = message.text
+        user_id = message.from_user.id
 
         # Добавляем кнопку отмены
         keyboard = InlineKeyboardMarkup()
@@ -2251,7 +2252,7 @@ async def process_izmenit_za_dop(message: types.Message, state: FSMContext):
 
                 order_info_dict = ast.literal_eval(order_info_str)
                 uuid = order_info_dict['entity']['uuid']
-                result = nalozh_pay_dop_cbor(uuid, text) # Используется text, а не amount
+                result = nalozh_pay_dop_cbor(user_id, uuid, text) # Используется text, а не amount
                 keyboard = InlineKeyboardMarkup()
                 keyboard.add(
                     InlineKeyboardButton("Назад", callback_data='go_back_menu')
