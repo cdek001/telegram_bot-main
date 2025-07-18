@@ -999,8 +999,8 @@ def get_date_keyboard():
 
 def get_time_keyboard():
     keyboard = InlineKeyboardMarkup(row_width=2)
-    for hour in range(10, 14):  # From 10 to 13
-        time_str = f"{hour:02d}:00"
+    for hour in range(10, 18):  # From 10 to 13
+        time_str = f"{hour:02d}:00 до {hour + 3:02d}:00"
         keyboard.add(InlineKeyboardButton(time_str, callback_data=f"time_{time_str}"))
     # Добавляем кнопку отмены
     keyboard.add(InlineKeyboardButton("❌ Отменить ввод", callback_data="cancel_input"))
