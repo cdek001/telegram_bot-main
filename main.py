@@ -908,83 +908,7 @@ async def cancel_input(callback_query: types.CallbackQuery, state: FSMContext):
     await callback_query.message.edit_text("✅ Ввод отменен. Вы можете начать заново.", reply_markup=None) # Отправляем сообщение
     await callback_query.answer() # Убираем "часики"
 
-# def get_date_keyboard():
-#     keyboard = InlineKeyboardMarkup(row_width=1)
-#     today = datetime.now()
-#     for i in range(1, 6):  # Next 5 days
-#         date = today + timedelta(days=i)
-#         date_str = date.strftime("%Y-%m-%d")
-#         keyboard.add(InlineKeyboardButton(date_str, callback_data=f"date_{date_str}"))
-#     return keyboard
-#
-#
-# def get_time_keyboard():
-#     keyboard = InlineKeyboardMarkup(row_width=1)
-#     for hour in range(10, 14):  # From 10 to 13
-#         time_str = f"{hour:02d}:00"
-#         keyboard.add(InlineKeyboardButton(time_str, callback_data=f"time_{time_str}"))
-#     return keyboard
-#
-#
-# @dp.message_handler(commands=['zabor_konsalid'])
-# async def zabor_konsalid(message: types.Message):
-#     user_id_to_check = message.from_user.id
-#     if check_user_id_exists(user_id_to_check):
-#         await message.answer("Выберите дату:", reply_markup=get_date_keyboard())
-#         await Form.date.set()
-#     else:
-#         await message.answer(f"Данный функционал доступен только договорным клиентам компании СДЭК. Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет или заключить договор с группой компании СДЭК. Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. ❌")
-#
-#
-# @dp.callback_query_handler(lambda c: c.data.startswith('date_'), state=Form.date)
-# async def process_date(callback_query: types.CallbackQuery, state: FSMContext):
-#     await bot.answer_callback_query(callback_query.id)
-#     selected_date = callback_query.data.split('_')[1]
-#     await state.update_data(date=selected_date)
-#     await bot.send_message(callback_query.from_user.id, "Выберите время начала:", reply_markup=get_time_keyboard())
-#     await Form.time.set()
-#
-#
-# @dp.callback_query_handler(lambda c: c.data.startswith('time_'), state=Form.time)
-# async def process_time(callback_query: types.CallbackQuery, state: FSMContext):
-#     await bot.answer_callback_query(callback_query.id)
-#     selected_time = callback_query.data.split('_')[1]
-#     data = await state.get_data()
-#     selected_date = data['date']
-#
-#     # Assume the duration is 5 hours
-#     start_time = datetime.strptime(selected_time, "%H:%M")
-#     end_time = (start_time + timedelta(hours=5)).strftime("%H:%M")
-#
-#     full_data = f"{selected_date} {selected_time} {end_time}"
-#     await state.update_data(konsalid=full_data)
-#     print("------")
-#     await bot.send_message(
-#         callback_query.from_user.id,
-#         f"Вы выбрали следующие данные: {full_data}. Ожидайте, идет обработка данных"
-#     )
-#     print("------")
-#     # Process the data
-#     user_id = callback_query.from_user.id
-#     cursor.execute("""
-#         SELECT weight, name, comment, phone_number, city, address
-#         FROM user_zakaz
-#         WHERE user_id = ?
-#         ORDER BY created_at DESC
-#         LIMIT 1
-#     """, (user_id,))
-#     user_data = cursor.fetchone()
-#     print("------")
-#     if user_data:
-#         from dublikat_zayavki import create_call_request_kurier_konsol
-#         weight, name, comment, phone_number, city, address = user_data
-#         konsol = create_call_request_kurier_konsol(weight, name, comment, phone_number, city, address, selected_date,
-#                                                    selected_time, end_time, user_id)
-#         await bot.send_message(callback_query.from_user.id, konsol)
-#     else:
-#         await bot.send_message(callback_query.from_user.id, f"Пользователь с ID {user_id} не найден в базе данных. Заполните форму /dan_zakaz и вернитесь в это меню")
-#
-#     await state.finish()
+
 def get_date_keyboard():
     keyboard = InlineKeyboardMarkup(row_width=2)
     today = datetime.now()
@@ -999,8 +923,8 @@ def get_date_keyboard():
 
 def get_time_keyboard():
     keyboard = InlineKeyboardMarkup(row_width=2)
-    for hour in range(10, 18):  # From 10 to 13
-        time_str = f"{hour:02d}:00 до {hour + 3:02d}:00"
+    for hour in range(10, 14):  # From 10 to 13
+        time_str = f"{hour:02d}:00"
         keyboard.add(InlineKeyboardButton(time_str, callback_data=f"time_{time_str}"))
     # Добавляем кнопку отмены
     keyboard.add(InlineKeyboardButton("❌ Отменить ввод", callback_data="cancel_input"))
