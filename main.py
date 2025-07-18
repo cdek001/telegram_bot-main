@@ -923,7 +923,7 @@ def get_date_keyboard():
 
 def get_time_keyboard():
     keyboard = InlineKeyboardMarkup(row_width=2)
-    for hour in range(10, 14):  # From 10 to 13
+    for hour in range(10, 17):  # From 10 to 13
         time_str = f"{hour:02d}:00"
         end_time = (datetime.strptime(time_str, "%H:%M") + timedelta(hours=3)).strftime("%H:%M")
         button_text = f"{time_str} - {end_time}"  # Формат "10:00 - 13:00"
