@@ -925,7 +925,9 @@ def get_time_keyboard():
     keyboard = InlineKeyboardMarkup(row_width=2)
     for hour in range(10, 14):  # From 10 to 13
         time_str = f"{hour:02d}:00"
-        keyboard.add(InlineKeyboardButton(time_str, callback_data=f"time_{time_str}"))
+        end_time = (datetime.strptime(time_str, "%H:%M") + timedelta(hours=3)).strftime("%H:%M")
+        button_text = f"{time_str} - {end_time}"  # Формат "10:00 - 13:00"
+        keyboard.add(InlineKeyboardButton(button_text, callback_data=f"time_{time_str}"))
     # Добавляем кнопку отмены
     keyboard.add(InlineKeyboardButton("❌ Отменить ввод", callback_data="cancel_input"))
     return keyboard
@@ -984,7 +986,7 @@ async def process_time(callback_query: types.CallbackQuery, state: FSMContext):
     start_time = datetime.strptime(selected_time, "%H:%M")
     end_time = (start_time + timedelta(hours=3)).strftime("%H:%M")
 
-    full_data = f"{selected_date} {selected_time} {end_time}"
+    full_data = f"{selected_date} с {selected_time} до {end_time}"
     await state.update_data(konsalid=full_data)
 
     await bot.send_message(
