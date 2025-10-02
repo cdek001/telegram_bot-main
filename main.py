@@ -1031,7 +1031,11 @@ async def process_time(callback_query: types.CallbackQuery, state: FSMContext):
             city, address, selected_date,
             selected_time, end_time, user_id
         )
+        # Добавляем пояснение для пользователя
+        if "тариф недоступен" in konsol:
+            konsol += "\n\nℹ️ Возможные причины:\n• Неправильно указан город\n• Ограничения по весу\n• Недоступность услуги в вашем регионе\n\nОбратитесь в поддержку СДЭК."
 
+        await bot.send_message(callback_query.from_user.id, konsol)
         logger.info(f"📤 Результат создания заявки: {konsol}")
         await bot.send_message(callback_query.from_user.id, konsol)
     else:
