@@ -947,13 +947,19 @@ async def cancel_input(callback_query: types.CallbackQuery, state: FSMContext):
 @dp.message_handler(commands=['zabor_konsalid'])
 async def zabor_konsalid(message: types.Message):
     user_id_to_check = message.from_user.id
+    logger.info(f"🔄 Команда /zabor_konsalid от пользователя {user_id_to_check}")
+
     if check_user_id_exists(user_id_to_check):
+        logger.info(f"✅ Пользователь {user_id_to_check} найден в базе, показываем даты")
+
         await message.answer(
             "Выберите дату:",
             reply_markup=get_date_keyboard()
         )
         await Form.date.set()
     else:
+        logger.warning(f"❌ Пользователь {user_id_to_check} не найден в базе")
+
         await message.answer(
             "Данный функционал доступен только договорным клиентам компании СДЭК. "
             "Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет "
@@ -962,10 +968,14 @@ async def zabor_konsalid(message: types.Message):
         )
 
 
-@dp.callback_query_handler(lambda c: c.data.startswith('date_'), state=Form.date)
+# ПРАВИЛЬНЫЙ обработчик даты - убрано состояние из декоратора
+@dp.callback_query_handler(lambda c: c.data.startswith('date_'))
 async def process_date(callback_query: types.CallbackQuery, state: FSMContext):
     await bot.answer_callback_query(callback_query.id)
     selected_date = callback_query.data.split('_')[1]
+
+    logger.info(f"📅 Пользователь {callback_query.from_user.id} выбрал дату: {selected_date}")
+
     await state.update_data(date=selected_date)
     await bot.send_message(
         callback_query.from_user.id,
@@ -975,19 +985,21 @@ async def process_date(callback_query: types.CallbackQuery, state: FSMContext):
     await Form.time.set()
 
 
-@dp.callback_query_handler(lambda c: c.data.startswith('time_'), state=Form.time)
+# ПРАВИЛЬНЫЙ обработчик времени - убрано состояние из декоратора
+@dp.callback_query_handler(lambda c: c.data.startswith('time_'))
 async def process_time(callback_query: types.CallbackQuery, state: FSMContext):
     await bot.answer_callback_query(callback_query.id)
     selected_time = callback_query.data.split('_')[1]
     data = await state.get_data()
     selected_date = data['date']
 
-    # Assume the duration is 5 hours
     start_time = datetime.strptime(selected_time, "%H:%M")
     end_time = (start_time + timedelta(hours=3)).strftime("%H:%M")
 
     full_data = f"{selected_date} с {selected_time} до {end_time}"
     await state.update_data(konsalid=full_data)
+
+    logger.info(f"⏰ Пользователь {callback_query.from_user.id} выбрал время: {full_data}")
 
     await bot.send_message(
         callback_query.from_user.id,
@@ -996,6 +1008,8 @@ async def process_time(callback_query: types.CallbackQuery, state: FSMContext):
 
     # Process the data
     user_id = callback_query.from_user.id
+
+    logger.info(f"🔍 Поиск данных пользователя {user_id} в базе...")
     cursor.execute("""
         SELECT weight, name, comment, phone_number, city, address 
         FROM user_zakaz 
@@ -1006,15 +1020,22 @@ async def process_time(callback_query: types.CallbackQuery, state: FSMContext):
     user_data = cursor.fetchone()
 
     if user_data:
-        from dublikat_zayavki import create_call_request_kurier_konsol
         weight, name, comment, phone_number, city, address = user_data
+        logger.info(f"✅ Данные пользователя найдены: {city}, {address}, вес: {weight}кг")
+
+        from dublikat_zayavki import create_call_request_kurier_konsol
+        logger.info("🔄 Вызов функции create_call_request_kurier_konsol...")
+
         konsol = create_call_request_kurier_konsol(
             weight, name, comment, phone_number,
             city, address, selected_date,
             selected_time, end_time, user_id
         )
+
+        logger.info(f"📤 Результат создания заявки: {konsol}")
         await bot.send_message(callback_query.from_user.id, konsol)
     else:
+        logger.error(f"❌ Данные пользователя {user_id} не найдены в базе")
         await bot.send_message(
             callback_query.from_user.id,
             f"Пользователь с ID {user_id} не найден в базе данных. "
@@ -1022,6 +1043,67 @@ async def process_time(callback_query: types.CallbackQuery, state: FSMContext):
         )
 
     await state.finish()
+    logger.info(f"✅ Сессия пользователя {user_id} завершена")
+# @dp.callback_query_handler(lambda c: c.data.startswith('date_'), state=Form.date)
+# async def process_date(callback_query: types.CallbackQuery, state: FSMContext):
+#     await bot.answer_callback_query(callback_query.id)
+#     selected_date = callback_query.data.split('_')[1]
+#     await state.update_data(date=selected_date)
+#     await bot.send_message(
+#         callback_query.from_user.id,
+#         "Выберите время начала:",
+#         reply_markup=get_time_keyboard()
+#     )
+#     await Form.time.set()
+#
+#
+# @dp.callback_query_handler(lambda c: c.data.startswith('time_'), state=Form.time)
+# async def process_time(callback_query: types.CallbackQuery, state: FSMContext):
+#     await bot.answer_callback_query(callback_query.id)
+#     selected_time = callback_query.data.split('_')[1]
+#     data = await state.get_data()
+#     selected_date = data['date']
+#
+#     # Assume the duration is 5 hours
+#     start_time = datetime.strptime(selected_time, "%H:%M")
+#     end_time = (start_time + timedelta(hours=3)).strftime("%H:%M")
+#
+#     full_data = f"{selected_date} с {selected_time} до {end_time}"
+#     await state.update_data(konsalid=full_data)
+#
+#     await bot.send_message(
+#         callback_query.from_user.id,
+#         f"Вы выбрали следующие данные: {full_data}. Ожидайте, идет обработка данных"
+#     )
+#
+#     # Process the data
+#     user_id = callback_query.from_user.id
+#     cursor.execute("""
+#         SELECT weight, name, comment, phone_number, city, address
+#         FROM user_zakaz
+#         WHERE user_id = ?
+#         ORDER BY created_at DESC
+#         LIMIT 1
+#     """, (user_id,))
+#     user_data = cursor.fetchone()
+#
+#     if user_data:
+#         from dublikat_zayavki import create_call_request_kurier_konsol
+#         weight, name, comment, phone_number, city, address = user_data
+#         konsol = create_call_request_kurier_konsol(
+#             weight, name, comment, phone_number,
+#             city, address, selected_date,
+#             selected_time, end_time, user_id
+#         )
+#         await bot.send_message(callback_query.from_user.id, konsol)
+#     else:
+#         await bot.send_message(
+#             callback_query.from_user.id,
+#             f"Пользователь с ID {user_id} не найден в базе данных. "
+#             "Заполните форму /dan_zakaz и вернитесь в это меню"
+#         )
+#
+#     await state.finish()
 
 
 @dp.message_handler(lambda message: message.text == '/nomer')

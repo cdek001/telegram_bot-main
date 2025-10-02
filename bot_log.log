@@ -1607,3 +1607,54 @@ aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientCon
 2025-06-02 15:22:58,065 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:400516707]: [success] (in 124 ms)
 2025-06-02 15:23:00,409 - aiogram.dispatcher.dispatcher - INFO - Stop polling...
 2025-06-02 15:23:00,410 - aiogram - WARNING - Goodbye!
+2025-08-11 13:25:24,189 - aiogram - INFO - Bot: CDEK [@Cdek_ru_net_bot]
+2025-08-11 13:25:24,342 - aiogram - WARNING - Updates were skipped successfully.
+2025-08-11 13:25:24,342 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2025-08-11 13:25:29,547 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\mikfo\AppData\Roaming\Python\Python310\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\mikfo\AppData\Roaming\Python\Python310\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\mikfo\AppData\Roaming\Python\Python310\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\mikfo\AppData\Roaming\Python\Python310\site-packages\aiogram\bot\api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\mikfo\AppData\Roaming\Python\Python310\site-packages\aiogram\bot\api.py", line 119, in check_result
+    exceptions.ConflictError.detect(description)
+  File "C:\Users\mikfo\AppData\Roaming\Python\Python310\site-packages\aiogram\utils\exceptions.py", line 140, in detect
+    raise err(cls.text or description)
+aiogram.utils.exceptions.TerminatedByOtherGetUpdates: Terminated by other getupdates request; make sure that only one bot instance is running
+2025-08-11 13:25:39,700 - aiogram.dispatcher.dispatcher - ERROR - Cause exception while getting updates.
+Traceback (most recent call last):
+  File "C:\Users\mikfo\AppData\Roaming\Python\Python310\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "C:\Users\mikfo\AppData\Roaming\Python\Python310\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "C:\Users\mikfo\AppData\Roaming\Python\Python310\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "C:\Users\mikfo\AppData\Roaming\Python\Python310\site-packages\aiogram\bot\api.py", line 140, in make_request
+    return check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\mikfo\AppData\Roaming\Python\Python310\site-packages\aiogram\bot\api.py", line 119, in check_result
+    exceptions.ConflictError.detect(description)
+  File "C:\Users\mikfo\AppData\Roaming\Python\Python310\site-packages\aiogram\utils\exceptions.py", line 140, in detect
+    raise err(cls.text or description)
+aiogram.utils.exceptions.TerminatedByOtherGetUpdates: Terminated by other getupdates request; make sure that only one bot instance is running
+2025-08-11 13:25:45,149 - aiogram.dispatcher.dispatcher - INFO - Stop polling...
+2025-08-11 13:25:45,149 - aiogram - WARNING - Goodbye!
+2025-08-11 13:26:54,709 - aiogram - INFO - Bot: test_notesbot [@vottestnotesBot]
+2025-08-11 13:26:54,864 - aiogram - WARNING - Updates were skipped successfully.
+2025-08-11 13:26:54,864 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2025-08-11 13:26:58,334 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:81] in chat [private:5169943586]
+2025-08-11 13:26:58,429 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:786788490]: [success] (in 94 ms)
+2025-08-11 13:27:27,337 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:83] in chat [private:5169943586]
+2025-08-11 13:27:27,571 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:786788491]: [success] (in 234 ms)
+2025-08-11 13:27:31,007 - aiogram.dispatcher.dispatcher - INFO - Stop polling...
+2025-08-11 13:27:31,007 - aiogram - WARNING - Goodbye!
+2025-08-11 13:27:32,618 - aiogram - INFO - Bot: test_notesbot [@vottestnotesBot]
+2025-08-11 13:27:32,770 - aiogram - WARNING - Updates were skipped successfully.
+2025-08-11 13:27:32,771 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2025-08-11 13:27:33,380 - aiogram.contrib.middlewares.logging - INFO - Received message [ID:85] in chat [private:5169943586]
+2025-08-11 13:27:33,519 - aiogram.contrib.middlewares.logging - INFO - Process update [ID:786788492]: [success] (in 139 ms)
+2025-08-11 13:27:52,150 - aiogram.dispatcher.dispatcher - INFO - Stop polling...
+2025-08-11 13:27:52,151 - aiogram - WARNING - Goodbye!

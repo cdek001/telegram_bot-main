@@ -256,17 +256,6 @@ def nalozh_pay_otmena_vse_3(cdek_number, tariff_code=None, sender_city_id=None, 
     return response_patch.json()
 
 
-
-
-
-
-
-
-
-
-
-
-
 # Удаление заказа
 
 def delete_order(id, uuid: str) -> requests.Response:
@@ -296,16 +285,3 @@ def delete_order(id, uuid: str) -> requests.Response:
     except requests.exceptions.RequestException as e:
         print(f"Ошибка при выполнении запроса удаления заказа: {e}")
         return None
-
-# # Пример использования
-# if __name__ == '__main__':
-#     order_uuid = "72753034-96b7-43f3-a555-6c660fed6020"  # Замените на реальный UUID заказа, который хотите удалить
-#
-#
-#     response = delete_order(order_uuid)
-#
-#     if response:
-#         print(f"Статус код: {response.status_code}")
-#         print(f"Ответ API: {response.json()}")
-#     else:
-#         print("Не удалось выполнить запрос удаления заказа.")
