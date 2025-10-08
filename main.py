@@ -909,6 +909,19 @@ async def cancel_input(callback_query: types.CallbackQuery, state: FSMContext):
     await callback_query.answer() # Убираем "часики"
 
 
+
+# Обработчик отмены ввода
+# @dp.callback_query_handler(lambda c: c.data == "cancel_input", state='*')
+# async def cancel_input(callback_query: types.CallbackQuery, state: FSMContext):
+#     await bot.answer_callback_query(callback_query.id)
+#     await state.finish()
+#     await bot.send_message(
+#         callback_query.from_user.id,
+#         "❌ Ввод отменен. Для начала нового ввода используйте команду /zabor_konsalid"
+#     )
+
+
+
 def get_date_keyboard():
     keyboard = InlineKeyboardMarkup(row_width=2)
     today = datetime.now()
@@ -932,16 +945,6 @@ def get_time_keyboard():
     keyboard.add(InlineKeyboardButton("❌ Отменить ввод", callback_data="cancel_input"))
     return keyboard
 
-
-# Обработчик отмены ввода
-@dp.callback_query_handler(lambda c: c.data == "cancel_input", state='*')
-async def cancel_input(callback_query: types.CallbackQuery, state: FSMContext):
-    await bot.answer_callback_query(callback_query.id)
-    await state.finish()
-    await bot.send_message(
-        callback_query.from_user.id,
-        "❌ Ввод отменен. Для начала нового ввода используйте команду /zabor_konsalid"
-    )
 
 
 @dp.message_handler(commands=['zabor_konsalid'])
