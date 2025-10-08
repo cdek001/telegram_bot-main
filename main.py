@@ -923,7 +923,7 @@ def get_date_keyboard():
 
 def get_time_keyboard():
     keyboard = InlineKeyboardMarkup(row_width=2)
-    for hour in range(10, 17):  # From 10 to 13
+    for hour in range(10, 16):  # From 10 to 13
         time_str = f"{hour:02d}:00"
         end_time = (datetime.strptime(time_str, "%H:%M") + timedelta(hours=3)).strftime("%H:%M")
         button_text = f"{time_str} - {end_time}"  # Формат "10:00 - 13:00"
@@ -1031,11 +1031,7 @@ async def process_time(callback_query: types.CallbackQuery, state: FSMContext):
             city, address, selected_date,
             selected_time, end_time, user_id
         )
-        # Добавляем пояснение для пользователя
-        if "тариф недоступен" in konsol:
-            konsol += "\n\nℹ️ Возможные причины:\n• Неправильно указан город\n• Ограничения по весу\n• Недоступность услуги в вашем регионе\n\nОбратитесь в поддержку СДЭК."
 
-        await bot.send_message(callback_query.from_user.id, konsol)
         logger.info(f"📤 Результат создания заявки: {konsol}")
         await bot.send_message(callback_query.from_user.id, konsol)
     else:
