@@ -897,30 +897,32 @@ async def process_address(message: types.Message, state: FSMContext):
     # Завершение состояний
     await state.finish()
 
+
+
+
+
+
+
 # Создаем кнопку для отмены
 cancel_button = InlineKeyboardButton("❌ Отменить ввод", callback_data='cancel')
 cancel_keyboard = InlineKeyboardMarkup().add(cancel_button)
 
-# Обработчик для отмены ввода
+# Обработчик для отмены ввода (изменил имя функции)
 @dp.callback_query_handler(lambda c: c.data == 'cancel', state='*')
-async def cancel_input(callback_query: types.CallbackQuery, state: FSMContext):
+async def cancel_handler(callback_query: types.CallbackQuery, state: FSMContext):  # Изменил имя
     await state.finish()  # Завершаем состояние
-    await callback_query.message.edit_text("✅ Ввод отменен. Вы можете начать заново.", reply_markup=None) # Отправляем сообщение
+    await callback_query.message.edit_text("✅ Ввод отменен. Вы можете начать заново.", reply_markup=None)
     await callback_query.answer() # Убираем "часики"
 
-
-
-# Обработчик отмены ввода
-# @dp.callback_query_handler(lambda c: c.data == "cancel_input", state='*')
-# async def cancel_input(callback_query: types.CallbackQuery, state: FSMContext):
-#     await bot.answer_callback_query(callback_query.id)
-#     await state.finish()
-#     await bot.send_message(
-#         callback_query.from_user.id,
-#         "❌ Ввод отменен. Для начала нового ввода используйте команду /zabor_konsalid"
-#     )
-
-
+# Обработчик отмены ввода (изменил имя функции)
+@dp.callback_query_handler(lambda c: c.data == "cancel_input", state='*')
+async def cancel_input_handler(callback_query: types.CallbackQuery, state: FSMContext):  # Изменил имя
+    await bot.answer_callback_query(callback_query.id)
+    await state.finish()
+    await bot.send_message(
+        callback_query.from_user.id,
+        "❌ Ввод отменен. Для начала нового ввода используйте команду /zabor_konsalid"
+    )
 
 def get_date_keyboard():
     keyboard = InlineKeyboardMarkup(row_width=2)
@@ -933,19 +935,16 @@ def get_date_keyboard():
     keyboard.add(InlineKeyboardButton("❌ Отменить ввод", callback_data="cancel_input"))
     return keyboard
 
-
 def get_time_keyboard():
     keyboard = InlineKeyboardMarkup(row_width=2)
-    for hour in range(10, 16):  # From 10 to 13
+    for hour in range(10, 16):  # From 10 to 15
         time_str = f"{hour:02d}:00"
         end_time = (datetime.strptime(time_str, "%H:%M") + timedelta(hours=3)).strftime("%H:%M")
-        button_text = f"{time_str} - {end_time}"  # Формат "10:00 - 13:00"
+        button_text = f"{time_str} - {end_time}"
         keyboard.add(InlineKeyboardButton(button_text, callback_data=f"time_{time_str}"))
     # Добавляем кнопку отмены
     keyboard.add(InlineKeyboardButton("❌ Отменить ввод", callback_data="cancel_input"))
     return keyboard
-
-
 
 @dp.message_handler(commands=['zabor_konsalid'])
 async def zabor_konsalid(message: types.Message):
@@ -962,7 +961,6 @@ async def zabor_konsalid(message: types.Message):
         await Form.date.set()
     else:
         logger.warning(f"❌ Пользователь {user_id_to_check} не найден в базе")
-
         await message.answer(
             "Данный функционал доступен только договорным клиентам компании СДЭК. "
             "Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет "
@@ -970,9 +968,8 @@ async def zabor_konsalid(message: types.Message):
             f"Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. ❌"
         )
 
-
-# ПРАВИЛЬНЫЙ обработчик даты - убрано состояние из декоратора
-@dp.callback_query_handler(lambda c: c.data.startswith('date_'))
+# Обработчик даты - ДОБАВИЛ состояние в декоратор
+@dp.callback_query_handler(lambda c: c.data.startswith('date_'), state=Form.date)
 async def process_date(callback_query: types.CallbackQuery, state: FSMContext):
     await bot.answer_callback_query(callback_query.id)
     selected_date = callback_query.data.split('_')[1]
@@ -987,9 +984,8 @@ async def process_date(callback_query: types.CallbackQuery, state: FSMContext):
     )
     await Form.time.set()
 
-
-# ПРАВИЛЬНЫЙ обработчик времени - убрано состояние из декоратора
-@dp.callback_query_handler(lambda c: c.data.startswith('time_'))
+# Обработчик времени - ДОБАВИЛ состояние в декоратор
+@dp.callback_query_handler(lambda c: c.data.startswith('time_'), state=Form.time)
 async def process_time(callback_query: types.CallbackQuery, state: FSMContext):
     await bot.answer_callback_query(callback_query.id)
     selected_time = callback_query.data.split('_')[1]
@@ -1047,6 +1043,149 @@ async def process_time(callback_query: types.CallbackQuery, state: FSMContext):
 
     await state.finish()
     logger.info(f"✅ Сессия пользователя {user_id} завершена")
+
+
+    
+# # Создаем кнопку для отмены
+# cancel_button = InlineKeyboardButton("❌ Отменить ввод", callback_data='cancel')
+# cancel_keyboard = InlineKeyboardMarkup().add(cancel_button)
+#
+# # Обработчик для отмены ввода
+# @dp.callback_query_handler(lambda c: c.data == 'cancel', state='*')
+# async def cancel_input(callback_query: types.CallbackQuery, state: FSMContext):
+#     await state.finish()  # Завершаем состояние
+#     await callback_query.message.edit_text("✅ Ввод отменен. Вы можете начать заново.", reply_markup=None) # Отправляем сообщение
+#     await callback_query.answer() # Убираем "часики"
+#
+#
+#
+# def get_date_keyboard():
+#     keyboard = InlineKeyboardMarkup(row_width=2)
+#     today = datetime.now()
+#     for i in range(1, 6):  # Next 5 days
+#         date = today + timedelta(days=i)
+#         date_str = date.strftime("%Y-%m-%d")
+#         keyboard.add(InlineKeyboardButton(date_str, callback_data=f"date_{date_str}"))
+#     # Добавляем кнопку отмены
+#     keyboard.add(InlineKeyboardButton("❌ Отменить ввод", callback_data="cancel_input"))
+#     return keyboard
+#
+#
+# def get_time_keyboard():
+#     keyboard = InlineKeyboardMarkup(row_width=2)
+#     for hour in range(10, 16):  # From 10 to 13
+#         time_str = f"{hour:02d}:00"
+#         end_time = (datetime.strptime(time_str, "%H:%M") + timedelta(hours=3)).strftime("%H:%M")
+#         button_text = f"{time_str} - {end_time}"  # Формат "10:00 - 13:00"
+#         keyboard.add(InlineKeyboardButton(button_text, callback_data=f"time_{time_str}"))
+#     # Добавляем кнопку отмены
+#     keyboard.add(InlineKeyboardButton("❌ Отменить ввод", callback_data="cancel_input"))
+#     return keyboard
+#
+#
+#
+# @dp.message_handler(commands=['zabor_konsalid'])
+# async def zabor_konsalid(message: types.Message):
+#     user_id_to_check = message.from_user.id
+#     logger.info(f"🔄 Команда /zabor_konsalid от пользователя {user_id_to_check}")
+#
+#     if check_user_id_exists(user_id_to_check):
+#         logger.info(f"✅ Пользователь {user_id_to_check} найден в базе, показываем даты")
+#
+#         await message.answer(
+#             "Выберите дату:",
+#             reply_markup=get_date_keyboard()
+#         )
+#         await Form.date.set()
+#     else:
+#         logger.warning(f"❌ Пользователь {user_id_to_check} не найден в базе")
+#
+#         await message.answer(
+#             "Данный функционал доступен только договорным клиентам компании СДЭК. "
+#             "Чтобы воспользоваться данным функционалом вам необходимо войти в личный кабинет "
+#             "или заключить договор с группой компании СДЭК.\n\n"
+#             f"Вы не зарегистрированы. Данные для user_id {user_id_to_check} не найдены. ❌"
+#         )
+#
+#
+# # ПРАВИЛЬНЫЙ обработчик даты - убрано состояние из декоратора
+# @dp.callback_query_handler(lambda c: c.data.startswith('date_'))
+# async def process_date(callback_query: types.CallbackQuery, state: FSMContext):
+#     await bot.answer_callback_query(callback_query.id)
+#     selected_date = callback_query.data.split('_')[1]
+#
+#     logger.info(f"📅 Пользователь {callback_query.from_user.id} выбрал дату: {selected_date}")
+#
+#     await state.update_data(date=selected_date)
+#     await bot.send_message(
+#         callback_query.from_user.id,
+#         "Выберите время начала:",
+#         reply_markup=get_time_keyboard()
+#     )
+#     await Form.time.set()
+#
+#
+# # ПРАВИЛЬНЫЙ обработчик времени - убрано состояние из декоратора
+# @dp.callback_query_handler(lambda c: c.data.startswith('time_'))
+# async def process_time(callback_query: types.CallbackQuery, state: FSMContext):
+#     await bot.answer_callback_query(callback_query.id)
+#     selected_time = callback_query.data.split('_')[1]
+#     data = await state.get_data()
+#     selected_date = data['date']
+#
+#     start_time = datetime.strptime(selected_time, "%H:%M")
+#     end_time = (start_time + timedelta(hours=3)).strftime("%H:%M")
+#
+#     full_data = f"{selected_date} с {selected_time} до {end_time}"
+#     await state.update_data(konsalid=full_data)
+#
+#     logger.info(f"⏰ Пользователь {callback_query.from_user.id} выбрал время: {full_data}")
+#
+#     await bot.send_message(
+#         callback_query.from_user.id,
+#         f"Вы выбрали следующие данные: {full_data}. Ожидайте, идет обработка данных"
+#     )
+#
+#     # Process the data
+#     user_id = callback_query.from_user.id
+#
+#     logger.info(f"🔍 Поиск данных пользователя {user_id} в базе...")
+#     cursor.execute("""
+#         SELECT weight, name, comment, phone_number, city, address
+#         FROM user_zakaz
+#         WHERE user_id = ?
+#         ORDER BY created_at DESC
+#         LIMIT 1
+#     """, (user_id,))
+#     user_data = cursor.fetchone()
+#
+#     if user_data:
+#         weight, name, comment, phone_number, city, address = user_data
+#         logger.info(f"✅ Данные пользователя найдены: {city}, {address}, вес: {weight}кг")
+#
+#         from dublikat_zayavki import create_call_request_kurier_konsol
+#         logger.info("🔄 Вызов функции create_call_request_kurier_konsol...")
+#
+#         konsol = create_call_request_kurier_konsol(
+#             weight, name, comment, phone_number,
+#             city, address, selected_date,
+#             selected_time, end_time, user_id
+#         )
+#
+#         logger.info(f"📤 Результат создания заявки: {konsol}")
+#         await bot.send_message(callback_query.from_user.id, konsol)
+#     else:
+#         logger.error(f"❌ Данные пользователя {user_id} не найдены в базе")
+#         await bot.send_message(
+#             callback_query.from_user.id,
+#             f"Пользователь с ID {user_id} не найден в базе данных. "
+#             "Заполните форму /dan_zakaz и вернитесь в это меню"
+#         )
+#
+#     await state.finish()
+#     logger.info(f"✅ Сессия пользователя {user_id} завершена")
+
+
 # @dp.callback_query_handler(lambda c: c.data.startswith('date_'), state=Form.date)
 # async def process_date(callback_query: types.CallbackQuery, state: FSMContext):
 #     await bot.answer_callback_query(callback_query.id)
