@@ -219,8 +219,6 @@ def create_call_request_kurier_konsol(weight, name, comment, phone_number, city,
     logger.info(f"📥 Ответ API: статус {response.status_code}")
     logger.debug(f"Тело ответа: {response.text}")
 
-    # Sending the request
-    response = requests.post(url, json=payload, headers=headers)
     # Checking the response
     if response.status_code == 202:
         # Successful response

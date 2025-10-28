@@ -1045,7 +1045,7 @@ async def process_time(callback_query: types.CallbackQuery, state: FSMContext):
     logger.info(f"✅ Сессия пользователя {user_id} завершена")
 
 
-    
+
 # # Создаем кнопку для отмены
 # cancel_button = InlineKeyboardButton("❌ Отменить ввод", callback_data='cancel')
 # cancel_keyboard = InlineKeyboardMarkup().add(cancel_button)
