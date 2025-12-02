@@ -180,7 +180,7 @@ def create_call_request_kurier_konsol(weight, name, comment, phone_number, city,
     logger.info(f"📅 Дата: {date}, время: {start_time}-{end_time}")
     print("Creating call request")
     print(user_id)
-    url = "	https://api.cdek.ru/v2/intakes"
+    url = "https://api.cdek.ru/v2/intakes"
 
     headers = {
         'Authorization': f'Bearer {get_token(user_id)}',
